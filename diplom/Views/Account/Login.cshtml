@@ -1,0 +1,35 @@
+﻿@model Cloth.Models.UserModel.LoginModel;
+
+<h1>Login</h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <h3>Hi @User.Identity.Name</h3>
+}
+
+
+<div class="text-danger" asp-validation-surnmary="All"></div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-auto">
+            <form asp-action="Login" method="post">
+
+                <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+                <div class="form-group">
+                    <label>Email</label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input asp-for="Password" class="form-control" />
+                </div>
+                <div style="margin-top: 10px">
+                    <button type="submit" class="btn btn-success">Войти</button>
+                    <a class="btn btn-success" asp-action="CreateUser">Регистрация</a>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>

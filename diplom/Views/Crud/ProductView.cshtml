@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Products>
+
+<div>
+    <a class="btn btn-success" asp-action="ProductAdd">Добавить продукт</a>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Имя продукта</th>
+        <th>Id категории</th>
+        <th>Id бренда</th>
+        <th>Цена</th>
+        <th>Цвет</th>
+        <th>Размер</th>
+        <th>Рейтинг</th>
+    </tr>
+    @foreach (Products p in Model)
+    {
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.Name</td>
+            <td>@p.CategoryId</td>
+            <td>@p.BrandId</td>
+            <td>@p.Price</td>
+            <td>@p.Color</td>
+            <td>@p.Size</td>
+            <td>@p.Rating</td>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@p.Id">Удалить</a></td>
+                <td><a class="btn btn-success" asp-action="UpdateForm" asp-route-id="@p.Id">Обновить</a></td>
+            }
+        </tr>
+    }
+</table>

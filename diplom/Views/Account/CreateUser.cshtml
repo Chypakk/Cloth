@@ -1,0 +1,21 @@
+﻿@model Cloth.Models.UserModel.UserViewModel;
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="CreateUser" method="post">
+
+            <div asp-validation-summary=" All" class="text-danger"></div>
+
+            <label>Имя пользователя</label>
+            <input asp-for="Name" class="form-control" />
+
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" />
+
+            <label>Пароль</label>
+            <input asp-for="Password" class="form-control" />
+
+            <button type="submit" class="btn btn-success">Создать</button>
+        </form>
+    </div>
+</div>

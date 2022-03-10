@@ -1,0 +1,11 @@
+﻿@model Category
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="CategoriesAdd" method="post">
+            <label>Имя</label>
+            <input class="form-control" asp-for="Name" />
+            <button type="submit" class="btn btn-success">Отправить</button>
+        </form>
+    </div>
+</div>

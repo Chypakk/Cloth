@@ -1,0 +1,23 @@
+﻿@model Products
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="ProductAdd" method="post">
+            <label>Имя</label>
+            <input class="form-control" asp-for="Name" />
+            <label>Id категории</label>
+            <input class="form-control" asp-for="CategoryId" />
+            <label>Id бренда</label>
+            <input class="form-control" asp-for="BrandId" />
+            <label>Цена</label>
+            <input class="form-control" asp-for="Price" />
+            <label>Цвет</label>
+            <input class="form-control" asp-for="Color" />
+            <label>Размер</label>
+            <input class="form-control" asp-for="Size" />
+            <label>Рейтинг</label>
+            <input class="form-control" asp-for="Rating" />
+            <button type="submit" class="btn btn-success">Отправить</button>
+        </form>
+    </div>
+</div>
