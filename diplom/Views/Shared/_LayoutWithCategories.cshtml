@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/diplom.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/ab4899f3b5.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -30,7 +31,11 @@
                         </li>
                     </ul>
                 </div>
-
+                <div class="row">
+                    <div class="col-4 text-right">
+                        @await Component.InvokeAsync("CartSummary")
+                    </div>
+                </div>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="nav-item">

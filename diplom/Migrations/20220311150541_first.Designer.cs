@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cloth.Migrations
 {
     [DbContext(typeof(AddDbConnect))]
-    [Migration("20220306162442_first")]
+    [Migration("20220311150541_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,32 @@ namespace Cloth.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
+                });
+
+            modelBuilder.Entity("Cloth.Models.CartLine", b =>
+                {
+                    b.Property<int>("CartLineId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartLineId"), 1L, 1);
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartLineId");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartLine");
                 });
 
             modelBuilder.Entity("Cloth.Models.Category", b =>
@@ -213,8 +239,6 @@ namespace Cloth.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
                     b.HasIndex("WarehouseId");
 
                     b.ToTable("Deliveries");
@@ -228,40 +252,19 @@ namespace Cloth.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CardId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductName")
+                    b.Property<string>("Adress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Promocode")
+                    b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CardId");
-
-                    b.HasIndex("ClientId");
 
                     b.ToTable("Orders");
                 });
@@ -511,19 +514,19 @@ namespace Cloth.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("OrderProducts", b =>
+            modelBuilder.Entity("Cloth.Models.CartLine", b =>
                 {
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("int");
+                    b.HasOne("Cloth.Models.Order", null)
+                        .WithMany("Lines")
+                        .HasForeignKey("OrderId");
 
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
+                    b.HasOne("Cloth.Models.Products", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("OrdersId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("OrderProducts", (string)null);
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Cloth.Models.CreditCard", b =>
@@ -539,40 +542,13 @@ namespace Cloth.Migrations
 
             modelBuilder.Entity("Cloth.Models.Deliveries", b =>
                 {
-                    b.HasOne("Cloth.Models.Products", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Cloth.Models.Warehouse", "Warehouse")
                         .WithMany("Deliveries")
                         .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
 
                     b.Navigation("Warehouse");
-                });
-
-            modelBuilder.Entity("Cloth.Models.Order", b =>
-                {
-                    b.HasOne("Cloth.Models.CreditCard", "CreditCard")
-                        .WithMany("Orders")
-                        .HasForeignKey("CardId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Cloth.Models.ClientsData", "ClientsData")
-                        .WithMany("Orders")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ClientsData");
-
-                    b.Navigation("CreditCard");
                 });
 
             modelBuilder.Entity("Cloth.Models.Products", b =>
@@ -656,21 +632,6 @@ namespace Cloth.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OrderProducts", b =>
-                {
-                    b.HasOne("Cloth.Models.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Cloth.Models.Products", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Cloth.Models.Brand", b =>
                 {
                     b.Navigation("Products");
@@ -684,13 +645,11 @@ namespace Cloth.Migrations
             modelBuilder.Entity("Cloth.Models.ClientsData", b =>
                 {
                     b.Navigation("CreditCard");
-
-                    b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Cloth.Models.CreditCard", b =>
+            modelBuilder.Entity("Cloth.Models.Order", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Lines");
                 });
 
             modelBuilder.Entity("Cloth.Models.Remains", b =>

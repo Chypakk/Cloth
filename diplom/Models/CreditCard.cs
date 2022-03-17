@@ -8,6 +8,6 @@
         public DateTime DateCard { get; set; }
 
         public ClientsData ClientsData { get; set; }
-        public List<Order> Orders { get; set; }
+        //public List<Order> Orders { get; set; }
     }
 }

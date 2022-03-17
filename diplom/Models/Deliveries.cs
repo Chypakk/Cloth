@@ -9,7 +9,7 @@
         public int Quantity { get; set; }
         public double Price { get; set; }
 
-        public Products Product { get; set; }
+        //public Products Product { get; set; }
         public Warehouse Warehouse { get; set; }
     }
 }

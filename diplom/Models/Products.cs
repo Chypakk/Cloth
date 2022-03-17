@@ -16,7 +16,7 @@
 
         public Brand Brands { get; set; }
         public Category Categories { get; set; }
-        public List<Order> Orders { get; set; }
+        //public List<Order> Orders { get; set; }
         //public Remains Remains { get; set; }
     }
 }

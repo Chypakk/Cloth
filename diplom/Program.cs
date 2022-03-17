@@ -18,6 +18,15 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
 }).AddEntityFrameworkStores<AddDbConnect>().AddDefaultTokenProviders();
 builder.Services.AddMvc(s => s.EnableEndpointRouting = false);
 
+builder.Services.AddTransient<IOrderRepository, EFOrderRepository>();
+builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+
+
+
 builder.Host.UseDefaultServiceProvider(options => options.ValidateScopes = false) ;
 
 var app = builder.Build();
@@ -41,6 +50,8 @@ app.UseAuthorization();
 app.UseAuthentication();
 
 //app.UseMvcWithDefaultRoute();
+
+app.UseSession();
 
 app.UseMvc(routes =>
 {
