@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Cloth.Models;
 using Microsoft.AspNetCore.Identity;
+using Cloth.Models.ViewModel;
 
 namespace Cloth.Models
 {

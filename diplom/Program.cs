@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Cloth.Models;
 using Microsoft.AspNetCore.Identity;
+using Cloth.Models.ViewModel;
 
 var builder = WebApplication.CreateBuilder(args);
 string ConnectionString =  builder.Configuration.GetConnectionString("MyConnection");
@@ -20,6 +21,7 @@ builder.Services.AddMvc(s => s.EnableEndpointRouting = false);
 
 builder.Services.AddTransient<IOrderRepository, EFOrderRepository>();
 builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+builder.Services.AddScoped<AnalyticsModel>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddMemoryCache();

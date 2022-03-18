@@ -84,5 +84,7 @@ namespace Cloth.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
+
+
     }
 }

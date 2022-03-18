@@ -1,48 +1,81 @@
-﻿@model IEnumerable<CartLine>
+﻿@model AnalyticsModel
 
 <table>
     <tr>
-        <th>Количество</th>
-        <th>Продукт</th>
+        <th>Name</th>
+        <th>Price</th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Products.Where(q => ((q.Price - Model.Min) / (Model.FourthPoint - Model.Min)) > 0.7))
     {
         <tr>
-            <td>@item.Quantity</td>
-            <td>@item.Product.Name</td>
+
+            <td>@item.Name</td>
+            <td>@item.Price</td>
         </tr>
     }
 </table>
 
-<canvas id="myChart" width="50" height="50"></canvas>
-<canvas id="Total" width="50" height="50"></canvas>
 
-<button asp-action="Test">asd</button>
-     
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+    @foreach (var item in Model.Products.Where(q => ((Model.FirstPoint - q.Price) / (Model.Max - Model.FirstPoint)) + 1 > 0.7))
+    {
+        <tr>
+
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+        </tr>
+    }
+</table>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+    @foreach (var item in Model.Products.Where(q => 
+        (
+            ((q.Price - Model.Min) / (Model.SecondPoint - Model.Min)) > 0.7) 
+        && 
+            ((Model.ThirdPoint - q.Price) / (Model.Max - Model.ThirdPoint) + 1 > 0.7))
+        )
+    {
+        <tr>
+
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+        </tr>
+    }
+</table>
+
+<canvas id="myChart" width="200" height="50"></canvas>
+<canvas id="Total" width="200" height="50"></canvas>
+
 
 <script src="~/js/chart.min.js"></script>
 
 <script>
 
-    @{
-        
+    @*@{
         var ListData = new List<string>();
         var ListLabel = new List<string>();
+
         foreach (var item in Model)
         {
             ListData.Add(item.Quantity.ToString() + ",");
             ListLabel.Add(item.Product.Id.ToString() + ",");
         }
-    }
 
-    const ctx = document.getElementById('myChart').getContext('2d');
+    }*@
+
+    @*const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: [@foreach (var item in ListLabel)
-            {
-                @item;
-            }],
+            labels: [@foreach (var item in ListLabel){@item;}],
             datasets: [{
             label: ' продано: ',
                 data: [@foreach (var item in ListData)
@@ -75,42 +108,68 @@
                 }
             }
         }
-    });
-
-
+    });*@
 
     const ctx2 = document.getElementById('Total').getContext('2d');
     const myChart2 = new Chart(ctx2, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: [@foreach (var item in ListLabel)
-            {
-                @item;
-            }],
-            datasets: [{
-            label: ' продано: ',
-                data: [@foreach (var item in ListData)
+            labels: [@foreach (var item in Model.QuantityPoint)
+	{
+		 @item;
+	}],
+            datasets: [
                 {
-                    @item
-                }],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
+                    label: '',
+                    data: [@foreach (var item in Model.MidlePrice)
+                    {
+                        @item;
+                    }],
+                    backgroundColor: ['rgba(255, 99, 132, 1)'],
+                    borderColor: ['rgba(255, 99, 132, 1)'],
+                    borderWidth: 2
+                },
+                {
+                    label: '',
+                    data: [@foreach (var item in Model.TopPrice)
+	{
+		 @item;
+	}],
+                    backgroundColor: ['rgba(255, 159, 64, 1)'],
+                    borderColor: ['rgba(255, 159, 64, 1)'],
+                    borderWidth: 2
+                },
+                {
+                    label: '',
+                    data: [@foreach (var item in Model.First)
+                    {
+                        @item;
+                    }],
+                    backgroundColor: ['rgba(40, 66, 158, 1)'],
+                    borderColor: ['rgba(40, 66, 158, 1)'],
+                    borderWidth: 3
+                },
+                {
+                    label: '',
+                    data: [@foreach (var item in Model.Second)
+                    {
+                        @item;
+                    }],
+                    backgroundColor: ['#5E1756'],
+                    borderColor: ['#5E1756'],
+                    borderWidth: 3
+                },
+                {
+                    label: '',
+                    data: [@foreach (var item in Model.Third)
+                    {
+                        @item;
+                    }],
+                    backgroundColor: ['#2FCA0C'],
+                    borderColor: ['#2FCA0C'],
+                    borderWidth: 3
+                }
+            ]
         },
         options: {
             scales: {
