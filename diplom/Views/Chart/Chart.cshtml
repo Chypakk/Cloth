@@ -1,61 +1,84 @@
 ﻿@model AnalyticsModel
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-    </tr>
-    @foreach (var item in Model.Products.Where(q => ((q.Price - Model.Min) / (Model.FourthPoint - Model.Min)) > 0.7))
-    {
-        <tr>
+    <div class="row">
 
-            <td>@item.Name</td>
-            <td>@item.Price</td>
-        </tr>
-    }
-</table>
+        <div class="col">
+            <h6>Дешевая категория</h6>
+            <table class="table">
+                <tr>
+                    <th scope="col">Название товара</th>
+                    <th scope="col">Цена</th>
+                </tr>
+                @foreach (var item in Model.Products.Where(q => ((Model.FirstPoint - q.Price) / (Model.Max - Model.FirstPoint)) + 1 > 0.7))
+                {
+                    <tr>
+
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="col">
+            <h6>Средняя категория</h6>
+            <table class="table">
+                <tr>
+                    <th>Название товара</th>
+                    <th>Цена</th>
+                </tr>
+                @foreach (var item in Model.Products.Where(q =>
+                   (
+                       ((q.Price - Model.Min) / (Model.SecondPoint - Model.Min)) > 0.7)
+                   &&
+                       ((Model.ThirdPoint - q.Price) / (Model.Max - Model.ThirdPoint) + 1 > 0.7))
+                   )
+                {
+                    <tr>
+
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="col">
+            <h6>Дорогая категория</h6>
+            <table class="table">
+                <tr>
+                    <th>Название товара</th>
+                    <th>Цена</th>
+                </tr>
+                @foreach (var item in Model.Products.Where(q => ((q.Price - Model.Min) / (Model.FourthPoint - Model.Min)) > 0.7))
+                {
+                    <tr>
+
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
 
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-    </tr>
-    @foreach (var item in Model.Products.Where(q => ((Model.FirstPoint - q.Price) / (Model.Max - Model.FirstPoint)) + 1 > 0.7))
-    {
-        <tr>
 
-            <td>@item.Name</td>
-            <td>@item.Price</td>
-        </tr>
-    }
-</table>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Price</th>
-    </tr>
-    @foreach (var item in Model.Products.Where(q => 
-        (
-            ((q.Price - Model.Min) / (Model.SecondPoint - Model.Min)) > 0.7) 
-        && 
-            ((Model.ThirdPoint - q.Price) / (Model.Max - Model.ThirdPoint) + 1 > 0.7))
-        )
-    {
-        <tr>
 
-            <td>@item.Name</td>
-            <td>@item.Price</td>
-        </tr>
-    }
-</table>
+
+
+
+
 
 <canvas id="myChart" width="200" height="50"></canvas>
 <canvas id="Total" width="200" height="50"></canvas>
 
 
 <script src="~/js/chart.min.js"></script>
+
+<a class="btn btn-outline-success" asp-action="AdminProfile" asp-controller="Account">Вернуться</a>
 
 <script>
 
@@ -120,7 +143,7 @@
 	}],
             datasets: [
                 {
-                    label: '',
+                    label: 'Максимальная принадлежность',
                     data: [@foreach (var item in Model.MidlePrice)
                     {
                         @item;
@@ -130,7 +153,7 @@
                     borderWidth: 2
                 },
                 {
-                    label: '',
+                    label: 'Минимальная принадлежность',
                     data: [@foreach (var item in Model.TopPrice)
 	{
 		 @item;
@@ -140,7 +163,7 @@
                     borderWidth: 2
                 },
                 {
-                    label: '',
+                    label: 'Дорогая категория',
                     data: [@foreach (var item in Model.First)
                     {
                         @item;
@@ -150,7 +173,7 @@
                     borderWidth: 3
                 },
                 {
-                    label: '',
+                    label: 'Дешевая категория',
                     data: [@foreach (var item in Model.Second)
                     {
                         @item;
@@ -160,7 +183,7 @@
                     borderWidth: 3
                 },
                 {
-                    label: '',
+                    label: 'Средняя категория',
                     data: [@foreach (var item in Model.Third)
                     {
                         @item;

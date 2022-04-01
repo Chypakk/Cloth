@@ -42,6 +42,7 @@ namespace Cloth.Controllers
 
         //public IActionResult WarehouseView() => View(Context.)
         public IActionResult ProductView() => View(Context.Products.OrderBy(a => a.Id));
+        public IActionResult ProductUpdate(int Id) => View(Context.Products.Where(p => p.Id == Id).FirstOrDefault());
         public IActionResult ProductAdd() => View();
         [HttpPost]
         public IActionResult ProductAdd(Products products)
@@ -49,6 +50,21 @@ namespace Cloth.Controllers
             Context.Products.Add(products);
             Context.SaveChanges();
             return RedirectToAction("ProductView", Context.Products);
+        }
+        [HttpPost]
+        public IActionResult ProductUpdate(Products product)
+        {
+            Products up = Context.Products.FirstOrDefault(Product => Product.Id == product.Id);
+            up.Id = product.Id;
+            up.Name = product.Name;
+            up.CategoryId = product.CategoryId;
+            up.Price = product.Price;
+            up.BrandId = product.BrandId;
+            up.Color = product.Color;
+            up.Rating = product.Rating;
+            up.Size = product.Size;
+            Context.SaveChanges();
+            return RedirectToAction("ProductView");
         }
 
     }

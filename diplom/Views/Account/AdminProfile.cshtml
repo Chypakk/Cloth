@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Picture>
+
+@foreach (var item in Model)
+{
+    if (item.Name == User.Identity.Name)
+    {
+        @Html.Raw("<img style='width:80px; height:200px;' src=\"data:image/jpeg;base64,"
+                                        + Convert.ToBase64String(item.Image) + "\" />")
+    }
+}
+
+<a class="btn btn-outline-success" asp-area="" asp-controller="RoleAdmin" asp-action="AdminPage">Настройка ролей</a>
+
+
+<a class="btn btn-outline-success" asp-area="" asp-controller="Chart" asp-action="Chart">Chart</a>
+<a class="btn btn-outline-success" asp-action="CrudView" asp-controller="Crud">Crud</a>
+<a class="btn btn-outline-success" asp-action="Picture" asp-controller="Picture">Picture</a>
+

@@ -11,11 +11,13 @@ namespace Cloth.Controllers
     {
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
+        private AddDbConnect picture;
 
-        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr)
+        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, AddDbConnect pictures)
         {
             userManager = userMngr;
             signInManager = signInMngr;
+            picture = pictures;
         }
 
         [AllowAnonymous]
@@ -32,7 +34,7 @@ namespace Cloth.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser user = await userManager.FindByEmailAsync(details.Email);
+                AppUser user = await userManager.FindByNameAsync(details.Login);
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
@@ -42,7 +44,7 @@ namespace Cloth.Controllers
                         return Redirect(returnUrl ?? "/");
                     }
                 }
-                ModelState.AddModelError(nameof(LoginModel.Email), "Неверный пароль или логин");
+                ModelState.AddModelError(nameof(LoginModel.Password), "Неверный пароль или логин");
             }
             return View(details);
         }
@@ -58,7 +60,7 @@ namespace Cloth.Controllers
             {
                 AppUser user = new AppUser
                 {
-                    UserName = model.Name,
+                    UserName = model.Login,
                     Email = model.Email
                 };
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
@@ -85,6 +87,7 @@ namespace Cloth.Controllers
             return RedirectToAction("Login");
         }
 
-
+        public IActionResult AdminProfile() => View(picture.Pictures);
+        public IActionResult Profile() => View();
     }
 }

@@ -30,8 +30,10 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@p.Id">Удалить</a></td>
-                <td><a class="btn btn-success" asp-action="UpdateForm" asp-route-id="@p.Id">Обновить</a></td>
+                <td><a class="btn btn-success" asp-action="ProductUpdate" asp-route-id="@p.Id">Обновить</a></td>
             }
         </tr>
     }
 </table>
+
+<a class="btn btn-outline-success" asp-action="CrudView">Вернуться</a>

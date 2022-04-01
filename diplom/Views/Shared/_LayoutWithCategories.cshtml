@@ -21,21 +21,52 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="RoleAdmin" asp-action="AdminPage">Admin</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Catalog">Каталог</a>
                         </li>
                     </ul>
                 </div>
-                <div class="row">
-                    <div class="col-4 text-right">
-                        @await Component.InvokeAsync("CartSummary")
+                
+                <form class="d-flex" method="post" asp-action="Catalog" asp-controller="Home">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+
+                    <div class="nav-item text-right">
+                        @*@await Component.InvokeAsync("CartSummary")*@
+                        <a class="btn btn-sm btn-secondary navbar-btn" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
                     </div>
-                </div>
+                
+            
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        <div class="nav-item">
+                            <a class="nav__link" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25"/></a>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="nav-item">
+                            <a class="nav__link" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25"/></a>
+                        </div>
+
+                    }
+
+                }
+                else
+                {
+                    <div class="nav-item">
+                        <a class="nav__link" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/img/user.png" width="25" height="25" /></a>
+                    </div>
+
+                }
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="nav-item">

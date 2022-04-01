@@ -53,6 +53,7 @@ namespace Cloth.Models
         public DbSet<Remains> Remains { get; set; }
         public DbSet<Deliveries> Deliveries { get; set; }
         public DbSet<CartLine> CartLine { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
