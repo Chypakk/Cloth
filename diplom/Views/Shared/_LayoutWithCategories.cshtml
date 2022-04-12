@@ -24,12 +24,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Catalog">Каталог</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Catalog" asp-action="Catalog">Каталог</a>
                         </li>
                     </ul>
                 </div>
                 
-                <form class="d-flex" method="post" asp-action="Catalog" asp-controller="Home">
+                <form class="d-flex" method="get" asp-action="Catalog" asp-controller="Catalog">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>

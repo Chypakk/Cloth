@@ -57,25 +57,30 @@ app.UseSession();
 
 app.UseMvc(routes =>
 {
+
+
     routes.MapRoute(
         name: null,
         template: "{Category}/Page{productPage}",
-        defaults: new {controller = "Home", action = "Catalog" }
+        defaults: new { controller = "Catalog", action = "Catalog" }
         );
     routes.MapRoute(
         name: null,
         template: "Page{productPage:int}",
-        defaults: new {controller = "Home", action = "Catalog", productPage = 1}
-        );
-    routes.MapRoute(
-        name : null,
-        template: "{category}",
-        defaults: new {controller = "Home", action = "Catalog", productPage = 1}
+        defaults: new { controller = "Catalog", action = "Catalog", productPage = 1 }
         );
     routes.MapRoute(
         name: null,
+        template: "{category}",
+        defaults: new { controller = "Catalog", action = "Catalog", productPage = 1 }
+        );
+
+
+
+    routes.MapRoute(
+        name: null,
         template: "",
-        defaults: new {controller = "Home", action = "Index", productPage = 1}
+        defaults: new { controller = "Home", action = "Index", productPage = 1 }
         );
     routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
 });
