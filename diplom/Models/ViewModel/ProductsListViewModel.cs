@@ -7,5 +7,7 @@ namespace Cloth.Models.ViewModel
         public IEnumerable<Products> Products { get; set; }
         public PagingInfo PagingInfo { get; set; }
         public string CurrentCategory { get; set; }
+        public string Search { get; set; }
+        public string CurrentBrand { get; set; }
     }
 }

@@ -3,21 +3,33 @@
 <div class="row">
     <div class="col-auto">
         <form asp-action="ProductUpdate" method="post">
+
             <input type="hidden" asp-for="@Model.Id" />
+
             <label>Имя</label>
             <input class="form-control" asp-for="@Model.Name" />
+
             <label>Id категории</label>
             <input class="form-control" asp-for="@Model.CategoryId" />
+
             <label>Id бренда</label>
             <input class="form-control" asp-for="@Model.BrandId" />
+
             <label>Цена</label>
             <input class="form-control" asp-for="@Model.Price" />
+
             <label>Цвет</label>
             <input class="form-control" asp-for="@Model.Color" />
+
             <label>Размер</label>
             <input class="form-control" asp-for="@Model.Size" />
+
             <label>Рейтинг</label>
             <input class="form-control" asp-for="@Model.Rating" />
+
+            <label>Картинка</label>
+            <input class="form-control" type="file" asp-for="@Model.ProductImage"/>
+
             <button type="submit" class="btn btn-success">Отправить</button>
         </form>
     </div>

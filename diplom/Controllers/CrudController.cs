@@ -6,6 +6,17 @@ namespace Cloth.Controllers
     public class CrudController : Controller
     {
         private AddDbConnect Context { get; set; }
+
+        private byte[] ConvertToBytes(IFormFile file)
+        {
+            Stream stream = file.OpenReadStream();
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
+
         public CrudController(AddDbConnect ctx) { Context = ctx; }
 
         public IActionResult CrudView() => View();
@@ -45,15 +56,20 @@ namespace Cloth.Controllers
         public IActionResult ProductUpdate(int Id) => View(Context.Products.Where(p => p.Id == Id).FirstOrDefault());
         public IActionResult ProductAdd() => View();
         [HttpPost]
-        public IActionResult ProductAdd(Products products)
+        public IActionResult ProductAdd(Products products, IFormFile file)
         {
+            byte[] ImageData = ConvertToBytes(file);
+            products.ProductImage = ImageData;
+
             Context.Products.Add(products);
             Context.SaveChanges();
-            return RedirectToAction("ProductView", Context.Products);
+            return RedirectToAction("ProductView");
         }
         [HttpPost]
-        public IActionResult ProductUpdate(Products product)
+        public IActionResult ProductUpdate(Products product, IFormFile file)
         {
+            byte[] ImageData = ConvertToBytes(file);
+
             Products up = Context.Products.FirstOrDefault(Product => Product.Id == product.Id);
             up.Id = product.Id;
             up.Name = product.Name;
@@ -63,6 +79,7 @@ namespace Cloth.Controllers
             up.Color = product.Color;
             up.Rating = product.Rating;
             up.Size = product.Size;
+            up.ProductImage = ImageData;
             Context.SaveChanges();
             return RedirectToAction("ProductView");
         }

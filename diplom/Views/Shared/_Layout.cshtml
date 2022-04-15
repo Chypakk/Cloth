@@ -31,7 +31,9 @@
                 </div>
 
                 <form class="d-flex" method="get" asp-action="Catalog" asp-controller="Catalog">
-                    <input class="form-control me-2" type="search" placeholder="Search" @*aria-label="Search"*@ name="Search">
+                    <input class="form-control me-2" type="search" placeholder="Search"
+                           aria-label="Search"
+                           name="search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
 
@@ -67,7 +69,9 @@
                     </div>
 
                 }
-                @if (User.Identity.IsAuthenticated)
+
+
+                @*@if (User.Identity.IsAuthenticated)
                 {
                     <div class="nav-item">
                         <a class="btn btn-danger" asp-action="LogOut" asp-controller="Account">Выйти</a>
@@ -78,7 +82,7 @@
                     <div class="nav-item">
                         <a class="btn btn-success" asp-action="Login" asp-controller="Account">Войти</a>
                     </div>
-                }
+                }*@
 
 
             </div>

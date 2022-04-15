@@ -313,6 +313,10 @@ namespace Cloth.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("ProductImage")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<double>("Rating")
                         .HasColumnType("float");
 

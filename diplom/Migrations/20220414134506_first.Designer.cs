@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cloth.Migrations
 {
     [DbContext(typeof(AddDbConnect))]
-    [Migration("20220325213332_second")]
-    partial class second
+    [Migration("20220414134506_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -314,6 +314,10 @@ namespace Cloth.Migrations
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("ProductImage")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<double>("Rating")
                         .HasColumnType("float");

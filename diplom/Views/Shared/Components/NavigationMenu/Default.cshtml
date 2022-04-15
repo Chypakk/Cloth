@@ -1,20 +1,30 @@
 ﻿@model IEnumerable<string>
+@*<a class="btn btn-block btn-secondary"
+       asp-action="Catalog"
+       asp-controller="Catalog"
+       asp-route-category="">
+        Home
+    </a>*@
 
-<a class="btn btn-block btn-secondary"
-   asp-action="Catalog"
-   asp-controller="Catalog"
-   asp-route-category="">
-    Home
-</a>
 
-@foreach (string category in Model)
-	{
-		 <a class="btn btn-block 
+
+<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#category" aria-expanded="false" aria-controls="category">
+    Категории:
+</button>
+
+<div class="collapse multi-collapse" id="category">
+    <div class="card card-body">
+        @foreach (string category in Model)
+        {
+            <a class="btn btn-block
 			@(category == ViewBag.SelectedCategory ? "btn-primary" : "btn-seconadry")"
-			asp-action="Catalog"
-			asp-controller="Catalog"
-			asp-route-category="@category"
-			asp-route-productPage="1">
-			 @category
-		 </a>
-	}
+               asp-action="Catalog"
+               asp-controller="Catalog"
+               asp-route-category="@category"
+               asp-route-productPage="1">
+                @category
+            </a>
+        }
+    </div>
+</div>
+

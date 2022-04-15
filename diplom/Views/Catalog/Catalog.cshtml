@@ -2,6 +2,7 @@
 
 @{
     Layout = "_LayoutWithCategories";
+    ViewData["Tittle"] = "Каталог";
 }
 
 
@@ -10,22 +11,27 @@
     @ViewBag.SearchString;
 }
 
-
-@foreach (var p in Model.Products)
-{
-    @Html.Partial("_Catalog", p);
-}
-
-@*@if (Model.SearchString == null)
-{
-    <div page-model="@Model.PagingInfo" page-action="Catalog" page-classes-enabled="true"
-         page-class="btn" page-class-normal="btn-secondary"
-         page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory"
-         class="btn-group pull-right m-1"></div>
-}*@
+<div class="row">
+    @foreach (var p in Model.Products)
+    {
+        @Html.Partial("_Catalog", p);
+    }
+</div>
 
 
-<div page-model="@Model.PagingInfo" page-action="Catalog" page-classes-enabled="true"
+
+
+
+<div page-model="@Model" page-action="Catalog" page-classes-enabled="true"
      page-class="btn" page-class-normal="btn-secondary"
-     page-class-selected="btn-primary" page-url-category="@Model.CurrentCategory"
+     page-class-selected="btn-primary" 
+
+     page-url-category="@Model.CurrentCategory"
+     
+     page-url-search="@Model.Search"
+
+     page-url-brand="@Model.CurrentBrand"
+
      class="btn-group pull-right m-1"></div>
+
+

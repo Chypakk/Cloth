@@ -20,8 +20,10 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
 builder.Services.AddMvc(s => s.EnableEndpointRouting = false);
 
 builder.Services.AddTransient<IOrderRepository, EFOrderRepository>();
+
 builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
 builder.Services.AddScoped<AnalyticsModel>();
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddMemoryCache();
@@ -51,39 +53,39 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 
-//app.UseMvcWithDefaultRoute();
-
 app.UseSession();
 
-app.UseMvc(routes =>
-{
+app.UseMvcWithDefaultRoute();
+
+//app.UseMvc(routes =>
+//{
 
 
-    routes.MapRoute(
-        name: null,
-        template: "{Category}/Page{productPage}",
-        defaults: new { controller = "Catalog", action = "Catalog" }
-        );
-    routes.MapRoute(
-        name: null,
-        template: "Page{productPage:int}",
-        defaults: new { controller = "Catalog", action = "Catalog", productPage = 1 }
-        );
-    routes.MapRoute(
-        name: null,
-        template: "{category}",
-        defaults: new { controller = "Catalog", action = "Catalog", productPage = 1 }
-        );
+//    routes.MapRoute(
+//        name: null,
+//        template: "{Category}/Page{productPage}",
+//        defaults: new { controller = "Catalog", action = "Catalog" }
+//        );
+//    routes.MapRoute(
+//        name: null,
+//        template: "Page{productPage:int}",
+//        defaults: new { controller = "Catalog", action = "Catalog", productPage = 1 }
+//        );
+//    routes.MapRoute(
+//        name: null,
+//        template: "{category}",
+//        defaults: new { controller = "Catalog", action = "Catalog", productPage = 1 }
+//        );
 
 
 
-    routes.MapRoute(
-        name: null,
-        template: "",
-        defaults: new { controller = "Home", action = "Index", productPage = 1 }
-        );
-    routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
-});
+//    routes.MapRoute(
+//        name: null,
+//        template: "",
+//        defaults: new { controller = "Home", action = "Index", productPage = 1 }
+//        );
+//    routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
+//});
 
 AddDbConnect.CreateAdminUser(app.Services, app.Configuration).Wait();
 
