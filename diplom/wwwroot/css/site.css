@@ -16,3 +16,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.button-text:active, .button-text:focus, .button-text:hover, .button-text{
+    outline: 0 !important;
+    border: 0 !important;
+    background-color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.button-text::-moz-focus-inner {
+    border: 0 !important;
+}
+
+.img-carousel{
+    text-align: -webkit-center;
+}

@@ -28,7 +28,7 @@ namespace Cloth.Controllers
                 CategoryId = a.CategoryId,
                 BrandId = a.BrandId,
                 Price = a.Price,
-                Color = a.Color,
+                OptionsId = a.OptionsId,
                 Size = a.Size,
                 Rating = a.Rating,
             });

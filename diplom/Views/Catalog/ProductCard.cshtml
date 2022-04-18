@@ -1,1 +1,71 @@
-﻿@model  Products
+﻿@model ProductCardViewModel
+
+
+<div class="row">
+
+    <div class="col-5">
+
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active img-carousel">
+
+                    @Html.Raw("<img class='d-block img-carousel', style='height: 210px; ' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Products.ProductImage) + "\" />")
+
+                </div>
+                @foreach (var item in Model.Picture)
+                {
+                    @Html.Partial("_ProductPicture", item);
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
+        </div>
+        
+
+    </div>
+
+    <div class="col">
+
+        @Html.Partial("_ProductCard", Model.Products)
+
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col">
+        @Html.Partial("_ProductOptions", Model.Options)
+    </div>
+
+    <div class="col">
+        <p>Успей купить</p>
+    </div>
+</div>
+
+<div>
+    <form asp-action="Commentaries" asp-controller="Crud" method="post">
+        <input type="hidden" asp-for="ProductId" /> 
+        <input type="hidden" asp-for="UserName" />
+        <input type="hidden" asp-for="CreatedDate" />
+        <div class="mb-3 w-50">
+            <label for="exampleFormControlTextarea1" class="form-label">Оставьте ваш отзыв</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" asp-for="Text" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+    
+    @foreach (var item in Model.Commentaries)
+    {
+        <div>@item.UserName data: @item.CreatedDate</div>
+        <div>@item.Text</div>
+    }
+
+</div>

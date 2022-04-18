@@ -44,7 +44,9 @@ namespace Cloth.Models
         }
 
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Options> Options { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Commentaries> Commentaries { get; set; }
         public DbSet<ClientsData> Clients { get; set; }
         public DbSet<CreditCard> CreditCards { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -60,7 +62,7 @@ namespace Cloth.Models
             base.OnModelCreating(modelBuilder);
 
 
-            //продукт - бренд - категория
+            //продукт - бренд - категория - доп инфа - комментарии
             modelBuilder.Entity<Products>()
                 .HasOne(b => b.Brands)
                 .WithMany(a => a.Products)
@@ -70,6 +72,17 @@ namespace Cloth.Models
                 .HasOne(b => b.Categories)
                 .WithMany(a => a.Products)
                 .HasForeignKey(b => b.CategoryId);
+
+            modelBuilder.Entity<Products>()
+                .HasOne(b => b.Options)
+                .WithMany(a => a.Products)
+                .HasForeignKey(b => b.OptionsId);
+
+            modelBuilder.Entity<Commentaries>()
+                .HasOne(b => b.Product)
+                .WithMany(a => a.Commentaries)
+                .HasForeignKey(b => b.ProductId);
+
 
             ////заказ - продукты - кредитка - клиент
             //modelBuilder.Entity<Order>()

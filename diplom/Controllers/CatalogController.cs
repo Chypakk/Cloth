@@ -16,7 +16,7 @@ namespace Cloth.Controllers
             Context = ctx;
         }
 
-        public IActionResult Catalog(string search, string category, string brands, int productPage = 1)
+        public IActionResult Catalog(string search, string category, string brand, int productPage = 1)
         {
             ViewBag.SearchString = search;
             var result = new ProductsListViewModel
@@ -24,7 +24,7 @@ namespace Cloth.Controllers
                 Products = Context.Products.Include(b => b.Brands).Include(b => b.Categories)
                 .OrderBy(p => p.Id)
                 .Where(p => category == null || p.Categories.Name == category)
-                .Where(p => brands == null || p.Brands.Name == brands)
+                .Where(p => brand == null || p.Brands.Name == brand)
                 .Where(p =>
                     (search == null || p.Name.ToLower().Contains(search.ToLower())
                     || p.Categories.Name.ToLower().Contains(search.ToLower())
@@ -38,10 +38,10 @@ namespace Cloth.Controllers
                     ItemsPerPage = PageSize,
                     TotalItems = Context.Products.Count()
                 },
-                
+
                 CurrentCategory = category,
                 Search = search,
-                CurrentBrand = brands
+                CurrentBrand = brand
             };
 
             if (search != null)
@@ -56,7 +56,8 @@ namespace Cloth.Controllers
                         p.Brands.Name.ToLower().Contains(search.ToLower())
                     ).Count()
                 };
-            } else
+            }
+            else
             if (category != null)
             {
                 result.PagingInfo = new PagingInfo
@@ -65,20 +66,35 @@ namespace Cloth.Controllers
                     ItemsPerPage = PageSize,
                     TotalItems = Context.Products.Include(p => p.Categories).Where(p => p.Categories.Name == category).Count()
                 };
-            } else
-            if (brands != null)
+            }
+            else
+            if (brand != null)
             {
                 result.PagingInfo = new PagingInfo
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = Context.Products.Include(p => p.Brands).Where(p => p.Brands.Name == brands).Count()
+                    TotalItems = Context.Products.Include(p => p.Brands).Where(p => p.Brands.Name == brand).Count()
                 };
             }
 
             return View(result);
         }
 
-        public IActionResult ProductCard() => View();
+        public IActionResult ProductCard(int Id, int OptionsId, string Name)
+        {
+            var result = new ProductCardViewModel
+            {
+                Products = Context.Products.Include(a => a.Brands).Include(a => a.Categories)
+                    .Where(a => a.Id == Id).FirstOrDefault(),
+                Options = Context.Options.Where(a => a.Id == OptionsId).FirstOrDefault(),
+                Picture = Context.Pictures.Where(a => a.Name == Name),
+                ProductId = Id,
+                Commentaries = Context.Commentaries.Where(a => a.ProductId == Id),
+                UserName = User.Identity.Name,
+            };
+            return View(result);
+
+        }
     }
 }

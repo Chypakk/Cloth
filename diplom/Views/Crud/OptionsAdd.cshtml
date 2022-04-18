@@ -1,0 +1,25 @@
+﻿@model Options
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="OptionsAdd" method="post">
+
+            <label>Материал</label>
+            <input class="form-control" asp-for="Material" />
+
+            <label>Цвет</label>
+            <input class="form-control" asp-for="Color" />
+
+            <label>Узор</label>
+            <input class="form-control" asp-for="Design" />
+
+            <label>Примечание по уходу</label>
+            <input class="form-control" asp-for="CareNote" />
+
+            <label>Описание</label>
+            <input class="form-control" asp-for="Description" />
+
+            <button type="submit" class="btn btn-success">Отправить</button>
+        </form>
+    </div>
+</div>

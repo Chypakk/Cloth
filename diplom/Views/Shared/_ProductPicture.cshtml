@@ -1,0 +1,5 @@
+﻿@model Picture
+
+<div class="carousel-item img-carousel">
+    @Html.Raw("<img class='d-block img-carousel', style='height: 210px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Image) + "\" />")
+</div>

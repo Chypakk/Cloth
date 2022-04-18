@@ -21,6 +21,7 @@ namespace Cloth.Controllers
 
         public IActionResult CrudView() => View();
 
+        //бренды
         public IActionResult BrandsView() => View(Context.Brands.OrderBy(a => a.Id));
         public IActionResult BrandsAdd() => View();
         [HttpPost]
@@ -31,6 +32,7 @@ namespace Cloth.Controllers
             return RedirectToAction("BrandsView", Context.Brands);
         }
 
+        //категории
         public IActionResult CategoriesView() => View(Context.Categories.OrderBy(a => a.Id));
         public IActionResult CategoriesAdd() => View();
         [HttpPost]
@@ -52,6 +54,8 @@ namespace Cloth.Controllers
         }
 
         //public IActionResult WarehouseView() => View(Context.)
+
+        //продукты
         public IActionResult ProductView() => View(Context.Products.OrderBy(a => a.Id));
         public IActionResult ProductUpdate(int Id) => View(Context.Products.Where(p => p.Id == Id).FirstOrDefault());
         public IActionResult ProductAdd() => View();
@@ -74,9 +78,9 @@ namespace Cloth.Controllers
             up.Id = product.Id;
             up.Name = product.Name;
             up.CategoryId = product.CategoryId;
+            up.OptionsId = product.OptionsId;
             up.Price = product.Price;
             up.BrandId = product.BrandId;
-            up.Color = product.Color;
             up.Rating = product.Rating;
             up.Size = product.Size;
             up.ProductImage = ImageData;
@@ -84,5 +88,26 @@ namespace Cloth.Controllers
             return RedirectToAction("ProductView");
         }
 
+        //доп инфа
+        public IActionResult OptionsView() => View(Context.Options.OrderBy(a => a.Id));
+        public IActionResult OptionsAdd() => View();
+        [HttpPost]
+        public IActionResult OptionsAdd(Options options)
+        {
+            Context.Options.Add(options);
+            Context.SaveChanges();
+            return RedirectToAction("OptionsView");
+        }
+
+
+        //комментарии
+        [HttpPost]
+        public IActionResult Commentaries(Commentaries commentaries)
+        {
+            commentaries.CreatedDate = DateTime.Now;
+            Context.Commentaries.Add(commentaries);
+            Context.SaveChanges();
+            return RedirectToAction("Catalog", "Catalog");
+        }
     }
 }

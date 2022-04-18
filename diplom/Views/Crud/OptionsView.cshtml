@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Options>
+
+<div>
+    <a class="btn btn-success" asp-action="OptionsAdd">Добавить продукт</a>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Материал</th>
+        <th>Цвет</th>
+        <th>Узор</th>
+
+        <th>Примечание по уходу</th>
+
+    </tr>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.Material</td>
+            <td>@p.Color</td>
+            <td>@p.Design</td>
+            <td>@p.CareNote</td>
+            <td>@p.Description</td>
+
+
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@p.Id">Удалить</a></td>
+                <td><a class="btn btn-success" asp-action="OptionsUpdate" asp-route-id="@p.Id">Обновить</a></td>
+            }
+        </tr>
+    }
+</table>
+
+<a class="btn btn-outline-success" asp-action="CrudView">Вернуться</a>

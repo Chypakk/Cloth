@@ -1,5 +1,25 @@
 ﻿@model IEnumerable<string>
 
+
+
+
+@*Бренды:
+
+
+@foreach (string brand in Model)
+{
+    <a class="btn btn-block
+			@(brand == ViewBag.SelectedBrand ? "btn-primary" : "btn-seconadry")"
+       asp-action="Catalog"
+       asp-controller="Catalog"
+       asp-route-brand="@brand"
+       asp-route-productPage="1">
+        @brand
+    </a>
+}*@
+
+
+
 <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#brand" aria-expanded="false" aria-controls="brand">
     Бренды:
 </button>

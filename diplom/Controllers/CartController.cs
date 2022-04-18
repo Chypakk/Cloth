@@ -21,7 +21,7 @@ namespace Cloth.Controllers
             {
                 cart.AddItem(product, 1);
             }
-            return RedirectToAction("Index", new {returnUrl});
+            return RedirectToAction("Index", new { returnUrl });
         }
 
         public RedirectToActionResult RemoveFromCart(int Id, string returnUrl)

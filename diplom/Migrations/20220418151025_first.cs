@@ -93,6 +93,23 @@ namespace Cloth.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Options",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Material = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Design = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CareNote = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Options", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -258,6 +275,28 @@ namespace Cloth.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CreditCards",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CardCode = table.Column<int>(type: "int", nullable: false),
+                    DateCard = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ClientsDataId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CreditCards", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CreditCards_Clients_ClientsDataId",
+                        column: x => x.ClientsDataId,
+                        principalTable: "Clients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -266,8 +305,8 @@ namespace Cloth.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     BrandId = table.Column<int>(type: "int", nullable: false),
+                    OptionsId = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<double>(type: "float", nullable: false),
                     ProductImage = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
@@ -287,26 +326,10 @@ namespace Cloth.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CreditCards",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OwnerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CardCode = table.Column<int>(type: "int", nullable: false),
-                    DateCard = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ClientsDataId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CreditCards", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CreditCards_Clients_ClientsDataId",
-                        column: x => x.ClientsDataId,
-                        principalTable: "Clients",
+                        name: "FK_Products_Options_OptionsId",
+                        column: x => x.OptionsId,
+                        principalTable: "Options",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -352,6 +375,28 @@ namespace Cloth.Migrations
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CartLine_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Commentaries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Commentaries", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Commentaries_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -431,6 +476,11 @@ namespace Cloth.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Commentaries_ProductId",
+                table: "Commentaries",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CreditCards_ClientsDataId",
                 table: "CreditCards",
                 column: "ClientsDataId");
@@ -449,6 +499,11 @@ namespace Cloth.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_OptionsId",
+                table: "Products",
+                column: "OptionsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Warehouse_RemainsId",
@@ -475,6 +530,9 @@ namespace Cloth.Migrations
 
             migrationBuilder.DropTable(
                 name: "CartLine");
+
+            migrationBuilder.DropTable(
+                name: "Commentaries");
 
             migrationBuilder.DropTable(
                 name: "CreditCards");
@@ -511,6 +569,9 @@ namespace Cloth.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Options");
 
             migrationBuilder.DropTable(
                 name: "Remains");

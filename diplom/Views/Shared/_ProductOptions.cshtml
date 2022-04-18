@@ -1,0 +1,26 @@
+﻿@model Options
+
+<ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>Описание:</b></li>
+    <li class="list-group-item"></li>
+</ul>
+
+<div class="row">
+
+    <div class="col">
+        <p><b>Материал</b></p>
+        <p><b>Цвет</b></p>
+        <p><b>Узор</b></p>
+        <p><b>Примечание по уходу</b></p>
+        <p><b>Описание</b></p>
+    </div>
+
+    <div class="col">
+        <p>@Model.Material</p>
+        <p>@Model.Color</p>
+        <p>@Model.Design</p>
+        <p>@Model.CareNote</p>
+        <p>@Model.Description</p>
+    </div>
+
+</div>

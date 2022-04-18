@@ -1,10 +1,6 @@
 ﻿@model Cloth.Models.UserModel.LoginModel;
 
-<h1>Login</h1>
-@if (User.Identity.IsAuthenticated)
-{
-    <h3>Hi @User.Identity.Name</h3>
-}
+<h1>Вход</h1>
 
 
 <div class="text-danger" asp-validation-surnmary="All"></div>
@@ -16,17 +12,18 @@
             <form asp-action="Login" method="post">
 
                 <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
-                <div class="form-group">
-                    <label>Login</label>
-                    <input asp-for="Login" class="form-control" />
+                <div class="form-group form-floating">
+                    <input asp-for="Login" class="form-control" id="floatingInput" placeholder="name@example.com" />
+                    <label for="floatingInput">Логин</label>
                 </div>
-                <div class="form-group">
-                    <label>Пароль</label>
-                    <input asp-for="Password" class="form-control" />
+                <div class="form-group form-floating" style="margin-top: 10px;">
+
+                    <input class="form-control" id="floatingInput" placeholder="Password" asp-for="Password" />
+                    <label for="floatingInput">Пароль</label>
                 </div>
                 <div style="margin-top: 10px">
                     <button type="submit" class="btn btn-success">Войти</button>
-                    <a class="btn btn-success" asp-action="CreateUser">Регистрация</a>
+                    <a class="btn btn-success" asp-action="CreateUser" style="float: right">Регистрация</a>
                 </div>
                 
             </form>
