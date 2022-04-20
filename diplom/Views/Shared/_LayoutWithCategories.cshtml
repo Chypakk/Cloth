@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <script src="https://kit.fontawesome.com/ab4899f3b5.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="bg-light">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -70,17 +70,17 @@
 
 
                 @*@if (User.Identity.IsAuthenticated)
-                {
-                    <div class="nav-item">
-                        <a class="btn btn-danger" asp-action="LogOut" asp-controller="Account">Выйти</a>
-                    </div>
-                }
-                else
-                {
-                    <div class="nav-item">
-                        <a class="btn btn-success" asp-action="Login" asp-controller="Account">Войти</a>
-                    </div>
-                }*@
+                    {
+                        <div class="nav-item">
+                            <a class="btn btn-danger" asp-action="LogOut" asp-controller="Account">Выйти</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="nav-item">
+                            <a class="btn btn-success" asp-action="Login" asp-controller="Account">Войти</a>
+                        </div>
+                    }*@
 
 
             </div>
@@ -90,13 +90,16 @@
     <div class="container">
 
         <div class="row m-1 p-1">
-            <div class="col-3">
-                <a class="btn btn-block btn-secondary"
-                   asp-action="Catalog"
-                   asp-controller="Catalog"
-                   asp-route-category="">
-                    Home
-                </a>
+            <div class="col-3 bg-white">
+                <div class="border-bottom">
+                    <a class="btn btn-block button-text"
+                       asp-action="Catalog"
+                       asp-controller="Catalog"
+                       asp-route-category="">
+                        Отменить фильтры
+                    </a>
+                </div>
+
                 <div id="categories">
                     @await Component.InvokeAsync("NavigationMenu")
                 </div>

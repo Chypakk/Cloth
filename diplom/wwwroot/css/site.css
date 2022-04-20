@@ -1,23 +1,23 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
-.button-text:active, .button-text:focus, .button-text:hover, .button-text{
+.button-text:active, .button-text:focus, .button-text:hover, .button-text {
     outline: 0 !important;
     border: 0 !important;
     background-color: #fff;
@@ -26,10 +26,25 @@ body {
     display: block;
 }
 
-.button-text::-moz-focus-inner {
+    .button-text::-moz-focus-inner {
+        border: 0 !important;
+    }
+
+.button-text-left:active, .button-text-left:focus, .button-text-left:hover, .button-text-left {
+    outline: 0 !important;
     border: 0 !important;
+    background-color: #fff;
+    display: block;
 }
 
-.img-carousel{
+    .button-text-left::-moz-focus-inner {
+        border: 0 !important;
+    }
+
+.img-carousel {
     text-align: -webkit-center;
+}
+
+.bg-white {
+    background-color: #fff;
 }

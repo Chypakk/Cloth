@@ -93,6 +93,7 @@ namespace Cloth.Controllers
                 Commentaries = Context.Commentaries.Where(a => a.ProductId == Id),
                 UserName = User.Identity.Name,
             };
+            Console.WriteLine($" IT'S ID - {Id}");
             return View(result);
 
         }

@@ -1,0 +1,118 @@
+﻿<!doctype html>
+<html>
+<head>
+   
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="~/css/dashboard.css" rel="stylesheet">
+    <link href="~/css/sidebars.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+        
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="#">Sign out</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+
+
+                <div class="position-sticky pt-3">
+                    <div class="flex-shrink-0 p-3 bg-white">
+                        <ul class="list-unstyled ps-0">
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                                    Home
+                                </button>
+                                <div class="collapse" id="home-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="#" class="link-dark rounded">Overview</a></li>
+                                        <li><a href="#" class="link-dark rounded">Updates</a></li>
+                                        <li><a href="#" class="link-dark rounded">Reports</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                                    Dashboard
+                                </button>
+                                <div class="collapse" id="dashboard-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="#" class="link-dark rounded">Overview</a></li>
+                                        <li><a href="#" class="link-dark rounded">Weekly</a></li>
+                                        <li><a href="#" class="link-dark rounded">Monthly</a></li>
+                                        <li><a href="#" class="link-dark rounded">Annually</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+                                    Orders
+                                </button>
+                                <div class="collapse" id="orders-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="#" class="link-dark rounded">New</a></li>
+                                        <li><a href="#" class="link-dark rounded">Processed</a></li>
+                                        <li><a href="#" class="link-dark rounded">Shipped</a></li>
+                                        <li><a href="#" class="link-dark rounded">Returned</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="border-top my-3"></li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                                    Account
+                                </button>
+                                <div class="collapse" id="account-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li><a href="#" class="link-dark rounded">New...</a></li>
+                                        <li><a href="#" class="link-dark rounded">Profile</a></li>
+                                        <li><a href="#" class="link-dark rounded">Settings</a></li>
+                                        <li><a href="#" class="link-dark rounded">Sign out</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <div>
+                        @RenderBody()
+                    </div>
+                </div>
+
+               
+                
+            </main>
+        </div>
+    </div>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/sidebars.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+
+    <script src="~/js/dashboard.js"></script>
+</body>
+</html>

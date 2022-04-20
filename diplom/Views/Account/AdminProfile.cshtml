@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Picture>
 
+@{ 
+    Layout = "_AdminLayout";
+}
+
 @foreach (var item in Model)
 {
     if (item.Name == User.Identity.Name)
