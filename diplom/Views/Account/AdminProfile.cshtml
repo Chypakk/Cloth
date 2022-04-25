@@ -1,10 +1,11 @@
-﻿@model IEnumerable<Picture>
+﻿@model ProfileViewModel
 
-@{ 
+
+@{
     Layout = "_AdminLayout";
 }
 
-@foreach (var item in Model)
+@foreach (var item in Model.Picture)
 {
     if (item.Name == User.Identity.Name)
     {
@@ -13,10 +14,40 @@
     }
 }
 
+<h1>Добро пожаловать @User.Identity.Name</h1>
+
+<table class="table">
+
+    
+
+    @foreach (var item in Model.Order)
+    {
+        <tr>
+           
+            @if (User.Identity.Name == item.Name)
+            {
+                foreach (var i in Model.CartLines)
+                {
+                    foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                    {
+                        <td>
+                            @product.Product.Name
+                        </td>
+                    }
+
+                }
+            }
+            
+        </tr>
+    }
+
+
+
+</table>
+
 <a class="btn btn-outline-success" asp-area="" asp-controller="RoleAdmin" asp-action="AdminPage">Настройка ролей</a>
 
-
 <a class="btn btn-outline-success" asp-area="" asp-controller="Chart" asp-action="Chart">Chart</a>
-<a class="btn btn-outline-success" asp-action="CrudView" asp-controller="Crud">Crud</a>
+
 <a class="btn btn-outline-success" asp-action="Picture" asp-controller="Picture">Picture</a>
 

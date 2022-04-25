@@ -1,3 +1,27 @@
-﻿@model Picture
+﻿@model ProfileViewModel
 
 <h1>Hello @User.Identity.Name</h1>
+
+<table class="table">
+
+    @foreach (var item in Model.Order)
+    {
+        <tr>
+
+            @if (User.Identity.Name == item.Name)
+            {
+                foreach (var i in Model.CartLines)
+                {
+                    foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                    {
+                        <td>
+                            @product.Product.Name
+                        </td>
+                    }
+
+                }
+            }
+
+        </tr>
+    }
+</table>

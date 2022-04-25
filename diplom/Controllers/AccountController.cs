@@ -1,8 +1,10 @@
 ﻿using Cloth.Models;
+using Cloth.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static Cloth.Models.UserModel;
 
 namespace Cloth.Controllers
@@ -11,13 +13,13 @@ namespace Cloth.Controllers
     {
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
-        private AddDbConnect picture;
+        private AddDbConnect Context;
 
-        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, AddDbConnect pictures)
+        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, AddDbConnect ctx)
         {
             userManager = userMngr;
             signInManager = signInMngr;
-            picture = pictures;
+            Context = ctx;
         }
 
         [AllowAnonymous]
@@ -84,10 +86,28 @@ namespace Cloth.Controllers
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult AdminProfile() => View(picture.Pictures);
-        public IActionResult Profile() => View();
+        public IActionResult AdminProfile()
+        {
+            var result = new ProfileViewModel
+            {
+                Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
+                CartLines = Context.CartLine.Include(a => a.Product),
+                Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
+            };
+            return View(result);
+        } 
+        public IActionResult Profile()
+        {
+            var result = new ProfileViewModel
+            {
+                Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
+                CartLines = Context.CartLine.Include(a => a.Product),
+                Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
+            };
+            return View(result);
+        }
     }
 }

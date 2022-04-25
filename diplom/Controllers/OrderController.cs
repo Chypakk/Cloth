@@ -23,6 +23,7 @@ namespace Cloth.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
+            order.Name = User.Identity.Name;
             if (cart.Lines.Count() == 0)
             {
                 ModelState.AddModelError("", "Корзина пуста");

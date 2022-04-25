@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<Brand>
 
-    <div>
-        <a class="btn btn-success" asp-action="BrandsAdd">Добавить бренд</a>
-    </div>
+@{
+    Layout = "_AdminLayout";
+}
+
+<div>
+    <a class="btn btn-success" asp-action="BrandsAdd">Добавить бренд</a>
+</div>
 
 <table class="table">
     <tr>
@@ -14,7 +18,7 @@
         <tr>
             <td>@b.Id</td>
             <td>@b.Name</td>
-            
+
             @if (User.Identity.IsAuthenticated)
             {
                 <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@b.Id">Удалить</a></td>
@@ -24,4 +28,3 @@
     }
 </table>
 
-<a class="btn btn-outline-success" asp-action="CrudView">Вернуться</a>

@@ -43,6 +43,8 @@ namespace Cloth.Infrastructure
                 PageUrlValues["category"] = PageModel.CurrentCategory;
                 PageUrlValues["search"] = PageModel.Search;
                 PageUrlValues["brand"] = PageModel.CurrentBrand;
+                PageUrlValues["minPrice"] = PageModel.MinPrice;
+                PageUrlValues["maxPrice"] = PageModel.MaxPrice;
 
                 tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                 if (PageClassesEnabled)

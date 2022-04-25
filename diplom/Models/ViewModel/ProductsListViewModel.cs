@@ -9,5 +9,7 @@ namespace Cloth.Models.ViewModel
         public string CurrentCategory { get; set; }
         public string Search { get; set; }
         public string CurrentBrand { get; set; }
+        public int MinPrice { get; set; }
+        public int MaxPrice { get; set; }
     }
 }

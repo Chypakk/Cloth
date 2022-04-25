@@ -1,5 +1,9 @@
 ﻿@model Products
 
+@{
+    Layout = "_AdminLayout";
+}
+
 <div class="row">
     <div class="col-auto">
         <form asp-action="ProductUpdate" method="post">
@@ -25,7 +29,7 @@
             <input class="form-control" asp-for="@Model.Rating" />
 
             <label>Картинка</label>
-            <input class="form-control" type="file" asp-for="@Model.ProductImage"/>
+            <input class="form-control" type="file" asp-for="@Model.ProductImage" />
 
             <button type="submit" class="btn btn-success">Отправить</button>
         </form>

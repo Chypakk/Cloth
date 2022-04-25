@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Products>
 
+@{
+    Layout = "_AdminLayout";
+}
+
 <div>
     <a class="btn btn-success" asp-action="ProductAdd">Добавить продукт</a>
 </div>
@@ -10,8 +14,8 @@
         <th>Имя продукта</th>
         <th>Id категории</th>
         <th>Id бренда</th>
+        <th>Id доп инфы</th>
         <th>Цена</th>
-        <th>Цвет</th>
         <th>Размер</th>
         <th>Рейтинг</th>
     </tr>
@@ -36,4 +40,3 @@
     }
 </table>
 
-<a class="btn btn-outline-success" asp-action="CrudView">Вернуться</a>

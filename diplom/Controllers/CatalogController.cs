@@ -16,13 +16,16 @@ namespace Cloth.Controllers
             Context = ctx;
         }
 
-        public IActionResult Catalog(string search, string category, string brand, int productPage = 1)
+        public IActionResult Catalog(string search, string category, string brand, int minPrice, int maxPrice, int productPage = 1)
         {
             ViewBag.SearchString = search;
+            Console.WriteLine($"MINAMAL PRICE = {minPrice} AND MAXIMAL PRICE {maxPrice}");
             var result = new ProductsListViewModel
             {
                 Products = Context.Products.Include(b => b.Brands).Include(b => b.Categories)
                 .OrderBy(p => p.Id)
+                .Where(p => minPrice == 0 || p.Price >= minPrice)
+                .Where(p => maxPrice == 0 || p.Price <= maxPrice)
                 .Where(p => category == null || p.Categories.Name == category)
                 .Where(p => brand == null || p.Brands.Name == brand)
                 .Where(p =>
@@ -41,7 +44,9 @@ namespace Cloth.Controllers
 
                 CurrentCategory = category,
                 Search = search,
-                CurrentBrand = brand
+                CurrentBrand = brand,
+                MinPrice = minPrice,
+                MaxPrice = maxPrice
             };
 
             if (search != null)
@@ -77,7 +82,7 @@ namespace Cloth.Controllers
                     TotalItems = Context.Products.Include(p => p.Brands).Where(p => p.Brands.Name == brand).Count()
                 };
             }
-
+           
             return View(result);
         }
 

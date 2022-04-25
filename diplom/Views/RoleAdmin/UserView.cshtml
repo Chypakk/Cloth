@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Cloth.Models.AppUser>
 
+@{
+    Layout = "_AdminLayout";
+}
+
 <div class="bg-primary m-1 p-1 text-white"><h4>Users</h4></div>
 
 <table class="table table-sm table-bordered">
@@ -24,4 +28,4 @@
 
 </table>
 
-<a class="btn btn-outline-success" asp-action="AdminPage" >Вернуться</a>
+<a class="btn btn-outline-success" asp-action="AdminPage">Вернуться</a>

@@ -10,7 +10,65 @@
     <script src="https://kit.fontawesome.com/ab4899f3b5.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-light">
-    <header>
+
+    <header class="p-3 border-bottom bg-white" style="margin-bottom: 1%">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a asp-action="Index" asp-controller="Home" class="navbar-brand nav-link px-2 text-black">ClotH</a></li>
+                    <li><a asp-action="Index" asp-controller="Home" class="nav-link px-2  text-black">Главная</a></li>
+                    <li><a asp-action="Catalog" asp-controller="Catalog" class="nav-link px-2 text-black">Каталог</a></li>
+                    <li><a href="#" class="nav-link px-2 ">FAQs</a></li>
+                    <li><a href="#" class="nav-link px-2 ">About</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="get" asp-action="Catalog" asp-controller="Catalog">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="search">
+                </form>
+
+                <div class="nav">
+
+
+                    <a class="btn btn-dark px-2 me-2" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+                        <i class="fa fa-shopping-cart"></i>
+                    </a>
+
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+
+                            <a class="nav-link px-2" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a>
+
+
+                        }
+                        else
+                        {
+                            <div class="nav-item">
+                                <a class="nav-link px-2" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
+                            </div>
+
+                        }
+
+                    }
+                    else
+                    {
+                        <div class="nav-item">
+                            <a class="nav-link px-2" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/img/user.png" width="25" height="25" /></a>
+                        </div>
+
+                    }
+                    @*<button type="button" class="btn btn-outline-light me-2">Login</button>
+                        <button type="button" class="btn btn-warning">Sign-up</button>*@
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--<header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ClotH</a>
@@ -34,58 +92,56 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
 
-                <div class="nav-item text-right">
-                    @*@await Component.InvokeAsync("CartSummary")*@
-                    <a class="btn btn-sm btn-secondary navbar-btn" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
-                        <i class="fa fa-shopping-cart"></i>
-                    </a>
-                </div>
+                <div class="nav-item text-right">-->
+    @*@await Component.InvokeAsync("CartSummary")*@
+    <!--<a class="btn btn-sm btn-secondary navbar-btn" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+            <i class="fa fa-shopping-cart"></i>
+        </a>
+    </div>
 
 
-                @if (User.Identity.IsAuthenticated)
-                {
-                    if (User.IsInRole("Admin"))
-                    {
-                        <div class="nav-item">
-                            <a class="nav__link" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a>
-                        </div>
-
-                    }
-                    else
-                    {
-                        <div class="nav-item">
-                            <a class="nav__link" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
-                        </div>
-
-                    }
-
-                }
-                else
-                {
-                    <div class="nav-item">
-                        <a class="nav__link" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/img/user.png" width="25" height="25" /></a>
-                    </div>
-
-                }
-
-
-                @*@if (User.Identity.IsAuthenticated)
-                    {
-                        <div class="nav-item">
-                            <a class="btn btn-danger" asp-action="LogOut" asp-controller="Account">Выйти</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="nav-item">
-                            <a class="btn btn-success" asp-action="Login" asp-controller="Account">Войти</a>
-                        </div>
-                    }*@
-
-
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <div class="nav-item">
+                <a class="nav__link" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a>
             </div>
+
+        }
+        else
+        {
+            <div class="nav-item">
+                <a class="nav__link" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
+            </div>
+
+        }
+
+    }
+    else
+    {
+        <div class="nav-item">
+            <a class="nav__link" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/img/user.png" width="25" height="25" /></a>
+        </div>
+
+    }-->
+    @*@if (User.Identity.IsAuthenticated)
+        {
+            <div class="nav-item">
+                <a class="btn btn-danger" asp-action="LogOut" asp-controller="Account">Выйти</a>
+            </div>
+        }
+        else
+        {
+            <div class="nav-item">
+                <a class="btn btn-success" asp-action="Login" asp-controller="Account">Войти</a>
+            </div>
+        }*@
+
+
+    <!--</div>
         </nav>
-    </header>
+    </header>-->
 
     <div class="container">
 
@@ -100,11 +156,18 @@
                     </a>
                 </div>
 
-                <div id="categories">
+                <div @*id="categories"*@>
                     @await Component.InvokeAsync("NavigationMenu")
                 </div>
                 <div id="brands">
                     @await Component.InvokeAsync("NavigationMenuBrand")
+                </div>
+                <div>
+                    <form class="row" method="get" asp-action="Catalog" asp-controller="Catalog">
+                        <input class="form-control col" name="minPrice" type="number" placeholder="Мин. цена" />
+                        <input class="form-control col" name="maxPrice" type="number" placeholder="Макс. цена" />
+                        <button class="btn btn-dark btn-sm" type="submit" >Найти</button>
+                    </form>
                 </div>
             </div>
             <main class="col-9">
@@ -116,11 +179,73 @@
 
 
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - cloth - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2022 - cloth - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+<div class="bg-white border-top my-5">
+    <div class="container">
+        <footer class="footer text-muted">
+            <div class="row py-5 row-cols-4 ">
+
+                <div class="col">
+                    <h4 class="text-black">Каталог</h4>
+                    <p>
+                        <a class="text-muted" style="text-decoration: none"
+                           asp-action="Catalog"
+                           asp-controller="Catalog"
+                           asp-route-category="Одежда"
+                           asp-route-productPage="1">
+                            Одежда
+                        </a>
+                    </p>
+                    <p>
+                        <a class="text-muted" style="text-decoration: none"
+                           asp-action="Catalog"
+                           asp-controller="Catalog"
+                           asp-route-category="Обувь"
+                           asp-route-productPage="1">
+                            Обувь
+                        </a>
+                    </p>
+                    <p>
+                        <a class="text-muted" style="text-decoration: none"
+                           asp-action="Catalog"
+                           asp-controller="Catalog"
+                           asp-route-category="Аксессуары"
+                           asp-route-productPage="1">
+                            Аксессуары
+                        </a>
+                    </p>
+                </div>
+                <div class="col">
+                    <h4 class="text-black">Коллекции</h4>
+                    <p>Заглушка</p>
+                    <p>Заглушка</p>
+                    <p>Заглушка</p>
+                </div>
+
+                <div class="col">
+                    <h4 class="text-black">Поддержка</h4>
+                    <p>Доставка</p>
+                    <p>Возврат товара</p>
+                    <p>Отмена заказа</p>
+                    <p>Акции и промокоды</p>
+                </div>
+                <div class="col">
+                    <h4 class="text-black">О нас</h4>
+                    <p>Информация о компании</p>
+                    <p>Карьера</p>
+                    <p>Сотрудничество</p>
+                    <p>Блог</p>
+                    <p>Мы в соцсетях</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+   
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Options>
 
+@{
+    Layout = "_AdminLayout";
+}
+
 <div>
     <a class="btn btn-success" asp-action="OptionsAdd">Добавить продукт</a>
 </div>
@@ -10,8 +14,8 @@
         <th>Материал</th>
         <th>Цвет</th>
         <th>Узор</th>
-
         <th>Примечание по уходу</th>
+        <th>Описание</th>
 
     </tr>
     @foreach (var p in Model)
@@ -34,5 +38,3 @@
         </tr>
     }
 </table>
-
-<a class="btn btn-outline-success" asp-action="CrudView">Вернуться</a>

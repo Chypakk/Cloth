@@ -2,11 +2,14 @@
 
     <form asp-action="Checkout" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
-        <h3>Имя</h3>
-        <div class="form-group">
-            <input class="form-control" asp-for="Name" />
-        </div>
 
+        <h3>Имя</h3>
+        <fieldset>
+            <div class="form-group">
+                <input class="form-control disabled" asp-for="Name" value="@User.Identity.Name" />
+            </div>
+        </fieldset>
+            
         <h3>Адрес</h3>
         <div class="form-group">
             <input class="form-control" asp-for="Adress" />
