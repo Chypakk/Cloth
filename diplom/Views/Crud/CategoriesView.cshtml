@@ -21,8 +21,8 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@c.Id">Удалить</a></td>
-                <td><a class="btn btn-success" asp-action="UpdateForm" asp-route-id="@c.Id">Обновить</a></td>
+                <td><a class="btn btn-danger" asp-action="CategoriesDelete" asp-route-id="@c.Id">Удалить</a></td>
+                <td><a class="btn btn-success" asp-action="CategoriesUpdate" asp-route-id="@c.Id">Обновить</a></td>
             }
         </tr>
     }

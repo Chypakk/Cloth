@@ -32,7 +32,7 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <td><a class="btn btn-danger" asp-action="Delete" asp-route-id="@p.Id">Удалить</a></td>
+                <td><a class="btn btn-danger" asp-action="OptionsDelete" asp-route-id="@p.Id">Удалить</a></td>
                 <td><a class="btn btn-success" asp-action="OptionsUpdate" asp-route-id="@p.Id">Обновить</a></td>
             }
         </tr>

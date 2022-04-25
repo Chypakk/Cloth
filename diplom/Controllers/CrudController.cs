@@ -23,6 +23,7 @@ namespace Cloth.Controllers
 
         //бренды
         public IActionResult BrandsView() => View(Context.Brands.OrderBy(a => a.Id));
+        public IActionResult BrandsUpdate(int Id) => View(Context.Brands.FirstOrDefault(a => a.Id == Id));
         public IActionResult BrandsAdd() => View();
         [HttpPost]
         public IActionResult BrandsAdd(Brand brand)
@@ -31,9 +32,26 @@ namespace Cloth.Controllers
             Context.SaveChanges();
             return RedirectToAction("BrandsView", Context.Brands);
         }
+        [HttpPost]
+        public IActionResult BrandsUpdate(Brand brand)
+        {
+            Brand br = Context.Brands.FirstOrDefault(a => a.Id == brand.Id);
+            br.Id = brand.Id;
+            br.Name = brand.Name;
+            Context.SaveChanges();
+            return RedirectToAction("BrandsView");
+        }
+        public IActionResult BrandsDelete(int Id)
+        {
+            Brand DelBrand = Context.Brands.Where(a => a.Id == Id).FirstOrDefault();
+            Context.Brands.Remove(DelBrand);
+            Context.SaveChanges();
+            return RedirectToAction("BrandsView");
+        }
 
         //категории
         public IActionResult CategoriesView() => View(Context.Categories.OrderBy(a => a.Id));
+        public IActionResult CategoriesUpdate(int Id) => View(Context.Categories.FirstOrDefault(a => a.Id == Id));
         public IActionResult CategoriesAdd() => View();
         [HttpPost]
         public IActionResult CategoriesAdd(Category category)
@@ -41,6 +59,22 @@ namespace Cloth.Controllers
             Context.Categories.Add(category);
             Context.SaveChanges();
             return RedirectToActionPermanent("CategoriesView", Context.Categories);
+        }
+        [HttpPost]
+        public IActionResult CategoriesUpdate(Category category)
+        {
+            Category ct = Context.Categories.Where(a => a.Id == category.Id).FirstOrDefault();
+            ct.Id = category.Id;
+            ct.Name = category.Name;
+            Context.SaveChanges();
+            return RedirectToAction("CategoriesView");
+        }
+        public IActionResult CategoriesDelete(int Id)
+        {
+            Category DelCtg = Context.Categories.FirstOrDefault(a => a.Id == Id);
+            Context.Categories.Remove(DelCtg);
+            Context.SaveChanges();
+            return RedirectToAction("CategoriesView");
         }
 
         public IActionResult RemainsView() => View(Context.Remains.OrderBy(a => a.Id));
@@ -52,6 +86,7 @@ namespace Cloth.Controllers
             Context.SaveChanges();
             return RedirectToAction("ReaminsView", Context.Remains);
         }
+
 
         //public IActionResult WarehouseView() => View(Context.)
 
@@ -87,9 +122,18 @@ namespace Cloth.Controllers
             Context.SaveChanges();
             return RedirectToAction("ProductView");
         }
+        public IActionResult ProductDelete(int Id)
+        {
+            Products DelProduct = Context.Products.Where(a => a.Id == Id).FirstOrDefault();
+            Context.Products.Remove(DelProduct);
+            Context.SaveChanges();
+            return RedirectToAction("ProductView");
+        }
+
 
         //доп инфа
         public IActionResult OptionsView() => View(Context.Options.OrderBy(a => a.Id));
+        public IActionResult OptionsUpdate(int Id) => View(Context.Options.FirstOrDefault(a => a.Id == Id));
         public IActionResult OptionsAdd() => View();
         [HttpPost]
         public IActionResult OptionsAdd(Options options)
@@ -98,16 +142,35 @@ namespace Cloth.Controllers
             Context.SaveChanges();
             return RedirectToAction("OptionsView");
         }
+        [HttpPost]
+        public IActionResult OptionsUpdate(Options options)
+        {
+            Options op = Context.Options.FirstOrDefault(o => o.Id == options.Id);
+            op.Id = options.Id;
+            op.Material = options.Material;
+            op.CareNote = options.CareNote;
+            op.Description = options.Description;
+            op.Design = options.Design;
+            Context.SaveChanges();
+            return RedirectToAction("OptionsView");
+        }
+        public IActionResult OptionsDelete(int Id)
+        {
+            Options DelOpt = Context.Options.Where(a => a.Id == Id).FirstOrDefault();
+            Context.Options.Remove(DelOpt);
+            Context.SaveChanges();
+            return RedirectToAction("OptionsView");
+        }
 
 
         //комментарии
         [HttpPost]
-        public IActionResult Commentaries(Commentaries commentaries)
+        public IActionResult Commentaries(Commentaries commentaries, int ComId, int ComOptionId, string ComName)
         {
             commentaries.CreatedDate = DateTime.Now;
             Context.Commentaries.Add(commentaries);
             Context.SaveChanges();
-            return RedirectToAction("Catalog", "Catalog");
+            return RedirectToAction("ProductCard", "Catalog", new {ComId, ComOptionId, ComName });
         }
     }
 }

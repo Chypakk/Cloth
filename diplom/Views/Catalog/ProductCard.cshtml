@@ -56,6 +56,9 @@
         <form asp-action="Commentaries" asp-controller="Crud" method="post">
             <input type="hidden" asp-for="ProductId" />
             <input type="hidden" asp-for="UserName" />
+            <input type="hidden" name="ComId" value="@ViewBag.Id" />
+            <input type="hidden" name="ComName" value="@ViewBag.Name" />
+            <input type="hidden" name="ComOptionId" value="@ViewBag.OptionId" />
 
             <div class="mb-3 w-50">
                 <label for="exampleFormControlTextarea1" class="form-label">Оставьте ваш отзыв</label>

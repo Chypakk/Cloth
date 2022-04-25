@@ -9,9 +9,9 @@
         <div class="card-body">
 
             <form id="@Model.Id" asp-action="ProductCard" asp-controller="Catalog" method="post">
-                <input type="hidden" asp-for="Id" />
-                <input type="hidden" asp-for="OptionsId" />
-                <input type="hidden" asp-for="Name" />
+                <input type="hidden" name="ComId" value="@Model.Id" />
+                <input type="hidden" name="ComOptionId" value="@Model.OptionsId" />
+                <input type="hidden" name="ComName" value="@Model.Name" />
                 <button type="submit" class="button-text">
                     <div class="card-title">
                         <h4>@Model.Name</h4>

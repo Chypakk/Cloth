@@ -4,6 +4,8 @@
     Layout = "_AdminLayout";
 }
 
+<h1>Поле "Изображение" обязательно!</h1>
+
 <div class="row">
     <div class="col-auto">
         <form asp-action="ProductUpdate" method="post">
@@ -28,10 +30,11 @@
             <label>Рейтинг</label>
             <input class="form-control" asp-for="@Model.Rating" />
 
-            <label>Картинка</label>
+            <label>Изображение</label>
             <input class="form-control" type="file" asp-for="@Model.ProductImage" />
 
             <button type="submit" class="btn btn-success">Отправить</button>
         </form>
     </div>
 </div>
+
