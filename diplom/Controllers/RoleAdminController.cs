@@ -87,7 +87,7 @@ namespace Cloth.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(RoleModificationModel model)
+        public async Task<IActionResult> Edit(RoleModificationModel model, string UN)
         {
             IdentityResult result;
             if (ModelState.IsValid)
@@ -106,14 +106,21 @@ namespace Cloth.Controllers
                 }
                 foreach (string UserId in model.IdsToDelete ?? new string[] { })
                 {
+
+                    AppUser usera = await userManager.FindByNameAsync(UN);
                     AppUser user = await userManager.FindByIdAsync(UserId);
-                    if (user != null)
+
+                    if (user != null && usera != null)
                     {
-                        result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
-                        if (!result.Succeeded)
+                        if (user != usera)
                         {
-                            AddErrorsFromResult(result);
+                            result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+                            if (!result.Succeeded)
+                            {
+                                AddErrorsFromResult(result);
+                            }
                         }
+                        
                     }
                 }
             }

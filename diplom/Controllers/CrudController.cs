@@ -165,12 +165,12 @@ namespace Cloth.Controllers
 
         //комментарии
         [HttpPost]
-        public IActionResult Commentaries(Commentaries commentaries, int ComId, int ComOptionId, string ComName)
+        public IActionResult Commentaries(Commentaries commentaries, int ComId, string ComName)
         {
             commentaries.CreatedDate = DateTime.Now;
             Context.Commentaries.Add(commentaries);
             Context.SaveChanges();
-            return RedirectToAction("ProductCard", "Catalog", new {ComId, ComOptionId, ComName });
+            return RedirectToAction("ProductCard", "Catalog", new {ComId, ComName });
         }
     }
 }

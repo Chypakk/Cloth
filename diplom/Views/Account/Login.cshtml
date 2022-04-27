@@ -8,7 +8,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-auto">
+        <div class="col-auto" style="padding-left:0">
             <form asp-action="Login" method="post">
 
                 <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
@@ -22,8 +22,8 @@
                     <label for="floatingInput">Пароль</label>
                 </div>
                 <div style="margin-top: 10px">
-                    <button type="submit" class="btn btn-success">Войти</button>
-                    <a class="btn btn-success" asp-action="CreateUser" style="float: right">Регистрация</a>
+                    <button type="submit" class="btn btn-dark">Войти</button>
+                    <a class="btn btn-dark" asp-action="CreateUser" style="float: right">Регистрация</a>
                 </div>
                 
             </form>

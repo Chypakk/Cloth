@@ -48,3 +48,8 @@ body {
 .bg-white {
     background-color: #fff;
 }
+
+.form-item-center{
+    margin-right:auto;
+    margin-left:auto;
+}

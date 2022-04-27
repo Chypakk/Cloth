@@ -5,8 +5,9 @@
 
     <thead>
         <tr>
-            <th>Количество</th>
             <th>Товар</th>
+            <th>Количество</th>
+
             <th class="text-right">Цена</th>
             <th class="text-right">Subtotal</th>
         </tr>
@@ -14,30 +15,31 @@
     <tbody>
         @foreach (var line in Model.Cart.Lines)
         {
-            <tr>
-                <td class="text-center">@line.Quantity</td>
-                <td class="text-center">@line.Product.Name</td>
-                <td class="text-center">@line.Product.Price.ToString("c")</td>
-                <td class="text-center">@((line.Quantity * line.Product.Price).ToString("c"))</td>
-                <td>
-                    <form method="post" asp-action="RemoveFromCart">
-                        <input type="hidden" name="Id" value="@line.Product.Id" />
-                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
-                        <button type="submit" class="btn btn-danger btn-sm">Удалить товар</button>
-                    </form>
-                </td>
-            </tr>
+        <tr>
+            <td class="text-center">@line.Product.Name</td>
+            <td class="text-center">@line.Quantity</td>
+
+            <td class="text-center">@line.Product.Price.ToString("c")</td>
+            <td class="text-center">@((line.Quantity * line.Product.Price).ToString("c"))</td>
+            <td>
+                <form method="post" asp-action="RemoveFromCart">
+                    <input type="hidden" name="Id" value="@line.Product.Id" />
+                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                    <button type="submit" class="btn btn-danger btn-sm">Удалить товар</button>
+                </form>
+            </td>
+        </tr>
         }
     </tbody>
     <tfoot>
         <tr>
             <td colspan="3" class="text-right">Итого: </td>
             <td class="text-right">
-                @Model.Cart.ComputeTotalValue().ToString()
+                @Model.Cart.ComputeTotalValue().ToString("c")
             </td>
         </tr>
     </tfoot>
 </table>
 
 <a class="btn btn-outline-dark" asp-action="Catalog" asp-controller="Catalog">Вернуться в каталог</a>
-<a class="btn btn-outline-success" asp-action="Checkout" asp-controller="Order">Заказать</a>
+<a class="btn btn-outline-dark" asp-action="Checkout" asp-controller="Order">Заказать</a>

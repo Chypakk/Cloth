@@ -10,6 +10,7 @@
 
 <form asp-action="Edit" method="post">
 
+    <input type="hidden" name="UN" value="@User.Identity.Name" />
     <input type="hidden" name="roleName" value="@Model.Role.Name" />
     <input type="hidden" name="roleId" value="@Model.Role.Id" />
     <h6 class="bg-info p-1 text-white">Add to @Model.Role.Name</h6>

@@ -86,22 +86,20 @@ namespace Cloth.Controllers
             return View(result);
         }
 
-        public IActionResult ProductCard(int ComId, int ComOptionId, string ComName)
+        public IActionResult ProductCard(int ComId, string ComName)
         {
             ViewBag.Id = ComId;
             ViewBag.Name = ComName;
-            ViewBag.OptionId = ComOptionId;
+            
             var result = new ProductCardViewModel
             {
-                Products = Context.Products.Include(a => a.Brands).Include(a => a.Categories)
+                Products = Context.Products.Include(a => a.Brands).Include(a => a.Categories).Include(a => a.Options)
                     .FirstOrDefault(a => a.Id == ComId),
-                Options = Context.Options.FirstOrDefault(a => a.Id == ComOptionId),
                 Picture = Context.Pictures.Where(a => a.Name == ComName),
                 ProductId = ComId,
                 Commentaries = Context.Commentaries.Where(a => a.ProductId == ComId),
                 UserName = User.Identity.Name,
             };
-            Console.WriteLine($" IT'S ID - {ComId}");
             return View(result);
 
         }

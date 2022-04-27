@@ -14,12 +14,16 @@ namespace Cloth.Controllers
             cart = cartServices;
         }
 
-        public RedirectToActionResult AddToCart(int Id, string returnUrl)
+        public RedirectToActionResult AddToCart(int Id, string returnUrl, int Quantity)
         {
             Products product = context.Products.FirstOrDefault(p => p.Id == Id);
+            if (Quantity == 0)
+            {
+                Quantity++;
+            }
             if (product != null)
             {
-                cart.AddItem(product, 1);
+                cart.AddItem(product, Quantity);
             }
             return RedirectToAction("Index", new { returnUrl });
         }
