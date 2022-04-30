@@ -4,7 +4,7 @@
     {
         private List<CartLine> lineCollection = new List<CartLine>();
 
-        public virtual void AddItem(Products product, int quantity)
+        public virtual void AddItem(Products product, int quantity, int size)
         {
             CartLine line = lineCollection
                 .Where(p => p.Product.Id == product.Id)
@@ -14,7 +14,8 @@
                 lineCollection.Add(new CartLine
                 {
                     Product = product,
-                    Quantity = quantity
+                    Quantity = quantity,
+                    Size = size
                 });
             }
             else
@@ -37,5 +38,6 @@
         public int CartLineId { get; set; }
         public Products Product { get; set; }
         public int Quantity { get; set; }
+        public int Size { get; set; }
     }
 }

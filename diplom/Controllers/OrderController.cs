@@ -23,6 +23,8 @@ namespace Cloth.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
+            order.TotalPrice = cart.ComputeTotalValue();
+            order.OrderDate = DateTime.Now;
             order.Name = User.Identity.Name;
             if (cart.Lines.Count() == 0)
             {

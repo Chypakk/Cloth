@@ -24,6 +24,7 @@ namespace Cloth.Controllers
             {
                 Products = Context.Products.Include(b => b.Brands).Include(b => b.Categories)
                 .OrderBy(p => p.Id)
+
                 .Where(p => minPrice == 0 || p.Price >= minPrice)
                 .Where(p => maxPrice == 0 || p.Price <= maxPrice)
                 .Where(p => category == null || p.Categories.Name == category)
@@ -33,6 +34,7 @@ namespace Cloth.Controllers
                     || p.Categories.Name.ToLower().Contains(search.ToLower())
                     || p.Brands.Name.ToLower().Contains(search.ToLower()))
                     )
+
                 .Skip((productPage - 1) * PageSize)
                 .Take(PageSize),
                 PagingInfo = new PagingInfo
@@ -41,7 +43,7 @@ namespace Cloth.Controllers
                     ItemsPerPage = PageSize,
                     TotalItems = Context.Products.Count()
                 },
-
+                
                 CurrentCategory = category,
                 Search = search,
                 CurrentBrand = brand,
@@ -93,7 +95,7 @@ namespace Cloth.Controllers
             
             var result = new ProductCardViewModel
             {
-                Products = Context.Products.Include(a => a.Brands).Include(a => a.Categories).Include(a => a.Options)
+                Products = Context.Products.Include(a => a.Brands).Include(a => a.Categories).Include(a => a.Options).Include(a => a.Remains)
                     .FirstOrDefault(a => a.Id == ComId),
                 Picture = Context.Pictures.Where(a => a.Name == ComName),
                 ProductId = ComId,

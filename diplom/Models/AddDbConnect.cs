@@ -62,7 +62,7 @@ namespace Cloth.Models
             base.OnModelCreating(modelBuilder);
 
 
-            //продукт - бренд - категория - доп инфа - комментарии
+            //продукт - бренд - категория - доп инфа - комментарии - остатки
             modelBuilder.Entity<Products>()
                 .HasOne(b => b.Brands)
                 .WithMany(a => a.Products)
@@ -83,6 +83,10 @@ namespace Cloth.Models
                 .WithMany(a => a.Commentaries)
                 .HasForeignKey(b => b.ProductId);
 
+            modelBuilder.Entity<Remains>()
+                .HasOne(a => a.Products)
+                .WithMany(a => a.Remains)
+                .HasForeignKey(a => a.ProductId);
 
             ////заказ - продукты - кредитка - клиент
             //modelBuilder.Entity<Order>()

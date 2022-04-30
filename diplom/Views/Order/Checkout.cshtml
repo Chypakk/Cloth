@@ -1,27 +1,24 @@
 ﻿@model Order
 
-    <form asp-action="Checkout" method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="Checkout" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
 
-        <h3>Имя</h3>
-        <fieldset>
-            <div class="form-group">
-                <input class="form-control disabled" asp-for="Name" value="@User.Identity.Name" />
-            </div>
-        </fieldset>
-            
-        <h3>Адрес</h3>
-        <div class="form-group">
-            <input class="form-control" asp-for="Adress" />
-        </div>
+    @*<h3>Имя</h3>*@
 
-        <h3>Город</h3>
-        <div class="form-group">
-            <input class="form-control" asp-for="City" />
-        </div>
+    <input type="hidden" class="form-control disabled" asp-for="Name" value="@User.Identity.Name" />
 
-        <div class="text-center">
-            <input type="submit" class="btn btn-success" value="Complete Order">
-        </div>
+    <h3>Адрес</h3>
+    <div class="form-group">
+        <input class="form-control" asp-for="Adress" />
+    </div>
 
-    </form>
+    <h3>Город</h3>
+    <div class="form-group">
+        <input class="form-control" asp-for="City" />
+    </div>
+
+    <div class="text-center">
+        <input type="submit" class="btn btn-success" value="Complete Order">
+    </div>
+
+</form>

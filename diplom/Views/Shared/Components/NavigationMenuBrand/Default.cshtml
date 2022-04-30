@@ -1,21 +1,6 @@
 ﻿@model IEnumerable<string>
-@*Бренды:
 
-
-    @foreach (string brand in Model)
-    {
-        <a class="btn btn-block
-                @(brand == ViewBag.SelectedBrand ? "btn-primary" : "btn-seconadry")"
-           asp-action="Catalog"
-           asp-controller="Catalog"
-           asp-route-brand="@brand"
-           asp-route-productPage="1">
-            @brand
-        </a>
-    }*@
-
-
-<button class="btn button-text-left border-bottom" type="button" data-bs-toggle="collapse" data-bs-target="#brand" aria-expanded="false" aria-controls="brand">
+<button class="btn button-text-left border-bottom my-2" type="button" data-bs-toggle="collapse" data-bs-target="#brand" aria-expanded="false" aria-controls="brand">
     Бренды:
 </button>
 
@@ -23,7 +8,7 @@
     <div class="card card-body border-0">
         @foreach (string brand in Model)
         {
-            <a class="btn btn-block border-bottom
+            <a class="btn btn-block border-bottom my-1
                @(brand == ViewBag.SelectedBrand ? "btn-primary" : "btn-seconadry")"
                asp-action="Catalog"
                asp-controller="Catalog"

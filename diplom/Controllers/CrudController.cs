@@ -77,15 +77,7 @@ namespace Cloth.Controllers
             return RedirectToAction("CategoriesView");
         }
 
-        public IActionResult RemainsView() => View(Context.Remains.OrderBy(a => a.Id));
-        public IActionResult RemainsAdd() => View();
-        [HttpPost]
-        public IActionResult RemainsAdd(Remains remains)
-        {
-            Context.Remains.Add(remains);
-            Context.SaveChanges();
-            return RedirectToAction("ReaminsView", Context.Remains);
-        }
+        
 
 
         //public IActionResult WarehouseView() => View(Context.)
@@ -116,8 +108,8 @@ namespace Cloth.Controllers
             up.OptionsId = product.OptionsId;
             up.Price = product.Price;
             up.BrandId = product.BrandId;
-            up.Rating = product.Rating;
-            up.Size = product.Size;
+            //up.Rating = product.Rating;
+            //up.Size = product.Size;
             up.ProductImage = ImageData;
             Context.SaveChanges();
             return RedirectToAction("ProductView");
@@ -171,6 +163,36 @@ namespace Cloth.Controllers
             Context.Commentaries.Add(commentaries);
             Context.SaveChanges();
             return RedirectToAction("ProductCard", "Catalog", new {ComId, ComName });
+        }
+
+        //остатки
+        public IActionResult RemainsView() => View(Context.Remains.OrderBy(a => a.Id));
+        public IActionResult RemainsUpdate(Guid Id) => View(Context.Remains.FirstOrDefault(a => a.Id == Id));
+        public IActionResult RemainsAdd() => View();
+        [HttpPost]
+        public IActionResult RemainsAdd(Remains remains)
+        {
+            Context.Remains.Add(remains);
+            Context.SaveChanges();
+            return RedirectToAction("RemainsView");
+        }
+        [HttpPost]
+        public IActionResult RemainsUpdate(Remains remains)
+        {
+            Remains r = Context.Remains.Where(a => a.Id == remains.Id).FirstOrDefault();
+            r.Id = remains.Id;
+            r.ProductId = remains.ProductId;
+            r.Size = remains.Size;
+            r.Count = remains.Count;
+            Context.SaveChanges();
+            return RedirectToAction("RemainsView");
+        }
+        public IActionResult RemainsDelete(Guid Id)
+        {
+            Remains DelRem = Context.Remains.FirstOrDefault(a => a.Id == Id);
+            Context.Remains.Remove(DelRem);
+            Context.SaveChanges();
+            return RedirectToAction("RemainsView");
         }
     }
 }

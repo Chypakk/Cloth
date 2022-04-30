@@ -5,36 +5,43 @@
 }
 
 <div>
-    <a class="btn btn-success" asp-action="OptionsAdd">Добавить продукт</a>
+    <a class="btn btn-outline-dark" asp-action="OptionsAdd">Добавить допольнительную информацию</a>
 </div>
 
 <table class="table">
-    <tr>
-        <th>Id</th>
-        <th>Материал</th>
-        <th>Цвет</th>
-        <th>Узор</th>
-        <th>Примечание по уходу</th>
-        <th>Описание</th>
 
-    </tr>
-    @foreach (var p in Model)
-    {
+    <thead>
         <tr>
-            <td>@p.Id</td>
-            <td>@p.Material</td>
-            <td>@p.Color</td>
-            <td>@p.Design</td>
-            <td>@p.CareNote</td>
-            <td>@p.Description</td>
+            <th class="p-2">Id</th>
+            <th class="p-2">Материал</th>
+            <th class="p-2">Цвет</th>
+            <th class="p-2">Узор</th>
+            <th class="p-2">Примечание по уходу</th>
+            <th class="p-2">Описание</th>
 
-
-
-            @if (User.Identity.IsAuthenticated)
-            {
-                <td><a class="btn btn-danger" asp-action="OptionsDelete" asp-route-id="@p.Id">Удалить</a></td>
-                <td><a class="btn btn-success" asp-action="OptionsUpdate" asp-route-id="@p.Id">Обновить</a></td>
-            }
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td class="p-2">@p.Id</td>
+                <td class="p-2">@p.Material</td>
+                <td class="p-2">@p.Color</td>
+                <td class="p-2">@p.Design</td>
+                <td class="p-2">@p.CareNote</td>
+                <td class="p-2">@p.Description</td>
+
+
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td><a class="btn btn-outline-dark" asp-action="OptionsUpdate" asp-route-id="@p.Id">Обновить</a></td>
+                    <td><a class="btn btn-outline-danger" asp-action="OptionsDelete" asp-route-id="@p.Id">Удалить</a></td>
+
+                }
+            </tr>
+        }
+    </tbody>
+    
 </table>

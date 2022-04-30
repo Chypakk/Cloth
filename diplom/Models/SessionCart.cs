@@ -15,9 +15,9 @@ namespace Cloth.Models
         [JsonIgnore]
         
         public ISession Session { get; set; }
-        public override void AddItem(Products product, int quantity)
+        public override void AddItem(Products product, int quantity, int size)
         {
-            base.AddItem(product, quantity);
+            base.AddItem(product, quantity, size);
             Session.SetJson("Cart", this);
         }
 

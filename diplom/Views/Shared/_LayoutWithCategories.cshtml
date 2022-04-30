@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <script src="https://kit.fontawesome.com/ab4899f3b5.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-light">
+<body class="">
 
-    <header class="p-3 border-bottom bg-white" style="margin-bottom: 1%">
+    <header class="p-3 border-bottom bg-white sticky-top" style="margin-bottom: 1%">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
@@ -165,7 +165,7 @@
                     </div>
                     <div class="col">
                         <h4 class="text-black">О нас</h4>
-                        <p>Информация о компании</p>
+                        <a class="text-muted" asp-action="CompanyInfo" asp-controller="Home">Информация о компании</a>
                         <p>Карьера</p>
                         <p>Сотрудничество</p>
                         <p>Блог</p>

@@ -19,6 +19,9 @@ namespace Cloth.Models
 
         [Required(ErrorMessage = "Введите город")]
         public string City { get; set; }
+
+        public DateTime OrderDate { get; set; }
+        public decimal TotalPrice { get; set; }
         //public int ClientId { get; set; }
         //public int CardId { get; set; }
         //public int ProductId { get; set; }

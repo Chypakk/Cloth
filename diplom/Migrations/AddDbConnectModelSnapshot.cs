@@ -121,6 +121,9 @@ namespace Cloth.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
                     b.HasKey("CartLineId");
 
                     b.HasIndex("OrderId");
@@ -324,6 +327,12 @@ namespace Cloth.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -378,13 +387,6 @@ namespace Cloth.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
@@ -424,19 +426,23 @@ namespace Cloth.Migrations
 
             modelBuilder.Entity("Cloth.Models.Remains", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<int>("WarehouseId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Remains");
                 });
@@ -449,20 +455,14 @@ namespace Cloth.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Adress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RemainsId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("RemainsId");
+                    b.HasKey("Id");
 
                     b.ToTable("Warehouse");
                 });
@@ -640,7 +640,7 @@ namespace Cloth.Migrations
             modelBuilder.Entity("Cloth.Models.Deliveries", b =>
                 {
                     b.HasOne("Cloth.Models.Warehouse", "Warehouse")
-                        .WithMany("Deliveries")
+                        .WithMany()
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -675,15 +675,15 @@ namespace Cloth.Migrations
                     b.Navigation("Options");
                 });
 
-            modelBuilder.Entity("Cloth.Models.Warehouse", b =>
+            modelBuilder.Entity("Cloth.Models.Remains", b =>
                 {
-                    b.HasOne("Cloth.Models.Remains", "Remains")
-                        .WithMany("Warehouse")
-                        .HasForeignKey("RemainsId")
+                    b.HasOne("Cloth.Models.Products", "Products")
+                        .WithMany("Remains")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Remains");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -765,16 +765,8 @@ namespace Cloth.Migrations
             modelBuilder.Entity("Cloth.Models.Products", b =>
                 {
                     b.Navigation("Commentaries");
-                });
 
-            modelBuilder.Entity("Cloth.Models.Remains", b =>
-                {
-                    b.Navigation("Warehouse");
-                });
-
-            modelBuilder.Entity("Cloth.Models.Warehouse", b =>
-                {
-                    b.Navigation("Deliveries");
+                    b.Navigation("Remains");
                 });
 #pragma warning restore 612, 618
         }

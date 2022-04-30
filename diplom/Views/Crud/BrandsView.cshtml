@@ -5,24 +5,28 @@
 }
 
 <div>
-    <a class="btn btn-success" asp-action="BrandsAdd">Добавить бренд</a>
+    <a class="btn btn-outline-dark" asp-action="BrandsAdd">Добавить бренд</a>
 </div>
 
 <table class="table">
-    <tr>
-        <th>Id</th>
-        <th>Название бренда</th>
-    </tr>
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Название бренда</th>
+        </tr>
+    </thead>
+    
     @foreach (Brand b in Model)
     {
         <tr>
-            <td>@b.Id</td>
-            <td>@b.Name</td>
+            <td class="p-2">@b.Id</td>
+            <td class="p-2">@b.Name</td>
 
             @if (User.Identity.IsAuthenticated)
             {
-                <td><a class="btn btn-danger" asp-action="BrandsDelete" asp-route-id="@b.Id">Удалить</a></td>
-                <td><a class="btn btn-success" asp-action="BrandsUpdate" asp-route-id="@b.Id">Обновить</a></td>
+
+                <td><a class="btn btn-outline-dark" asp-action="BrandsUpdate" asp-route-id="@b.Id">Обновить</a></td>
+                <td><a class="btn btn-outline-danger" asp-action="BrandsDelete" asp-route-id="@b.Id">Удалить</a></td>
             }
         </tr>
     }

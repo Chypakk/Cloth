@@ -20,6 +20,8 @@ namespace Cloth.Controllers
             Context = ctx;
         }
 
+        public IActionResult CompanyInfo() => View();
+        public IActionResult ContactInfo() => View();
         public IActionResult Index() => View();
         public IActionResult Privacy() => View();
 

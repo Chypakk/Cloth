@@ -29,8 +29,8 @@ namespace Cloth.Controllers
                 BrandId = a.BrandId,
                 Price = a.Price,
                 OptionsId = a.OptionsId,
-                Size = a.Size,
-                Rating = a.Rating,
+                //Size = a.Size,
+                //Rating = a.Rating,
             });
 
             int MostBigPrice = 1;

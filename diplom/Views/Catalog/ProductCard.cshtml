@@ -38,7 +38,7 @@
                 @Html.Partial("_ProductCard", Model.Products)
                 @Html.Partial("_ProductOptions", Model.Products.Options)
 
-               
+
 
             </div>
 
@@ -66,8 +66,6 @@
             <h4 class="mt-3">Комментарии:</h4>
 
             <div style="overflow-y: scroll; height: 30rem;" tabindex="0" class="scrollarea mt-2">
-
-
                 @foreach (var item in Model.Commentaries.OrderByDescending(a => a.CreatedDate))
                 {
                     <div class="col" style="margin-top:10px">
@@ -101,6 +99,16 @@
 
                     <input type="hidden" name="Id" value="@Model.Products.Id" />
                     <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+
+                    <div class="btn-group" role="group">
+
+                        @foreach (var item in Model.Products.Remains)
+                        {
+                            <input type="radio" class="btn-check btn-sm" name="Size" id="@item.Id" value="@item.Size" autocomplete="off">
+                            <label class="btn btn-outline-dark btn-sm" for="@item.Id">@item.Size</label>
+                        }
+
+                    </div>
 
                     <input class="form-control w-50 form-item-center text-center" value="1" type="number" name="Quantity" />
 

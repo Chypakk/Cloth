@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <header class="p-3 border-bottom bg-white" style="margin-bottom: 1%">
+    <header class="p-3 border-bottom bg-white sticky-top" style="margin-bottom: 1%">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
@@ -62,87 +62,11 @@
                         </div>
 
                     }
-                    @*<button type="button" class="btn btn-outline-light me-2">Login</button>
-                        <button type="button" class="btn btn-warning">Sign-up</button>*@
+
                 </div>
             </div>
         </div>
     </header>
-
-    <!--<header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ClotH</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Catalog" asp-action="Catalog">Каталог</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <form class="d-flex" method="get" asp-action="Catalog" asp-controller="Catalog">
-                    <input class="form-control me-2" type="search" placeholder="Search"
-                           aria-label="Search"
-                           name="search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-
-                <div class="text-right nav-item">-->
-    <!--<a class="btn btn-sm btn-secondary navbar-btn" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
-            <i class="fa fa-shopping-cart"></i>
-        </a>
-    </div>
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        if (User.IsInRole("Admin"))
-        {
-            <div class="nav-item">
-                <a class="nav__link" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a>
-            </div>
-
-        }
-        else
-        {
-            <div class="nav-item">
-                <a class="nav__link" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
-            </div>
-
-        }
-
-    }
-    else
-    {
-        <div class="nav-item">
-            <a class="nav__link" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/img/user.png" width="25" height="25" /></a>
-        </div>
-
-    }-->
-    @*@if (User.Identity.IsAuthenticated)
-        {
-            <div class="nav-item">
-                <a class="btn btn-danger" asp-action="LogOut" asp-controller="Account">Выйти</a>
-            </div>
-        }
-        else
-        {
-            <div class="nav-item">
-                <a class="btn btn-success" asp-action="Login" asp-controller="Account">Войти</a>
-            </div>
-        }*@
-
-
-    <!--</div>
-        </nav>
-    </header>-->
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -201,11 +125,8 @@
                     </div>
                     <div class="col">
                         <h4 class="text-black">О нас</h4>
-                        <p>Информация о компании</p>
-                        <p>Карьера</p>
-                        <p>Сотрудничество</p>
-                        <p>Блог</p>
-                        <p>Мы в соцсетях</p>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="CompanyInfo" asp-controller="Home">Информация о компании</a></p>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="ContactInfo" asp-controller="Home">Контакты</a></p>
                     </div>
                 </div>
             </footer>

@@ -15,7 +15,7 @@
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" asp-action="Index" asp-controller="Home">ClotH</a>
 
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <div class="bg-dark w-100"></div>
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
                 <a class="nav-link px-3" asp-action="LogOut" asp-controller="Account">Выйти</a>
@@ -40,35 +40,35 @@
                                         <li><a asp-action="CategoriesView" asp-controller="Crud" class="link-dark rounded">Категории</a></li>
                                         <li><a asp-action="OptionsView" asp-controller="Crud" class="link-dark rounded">Дополнительная информация</a></li>
                                         <li><a asp-action="ProductView" asp-controller="Crud" class="link-dark rounded">Продукты</a></li>
+                                        <li><a asp-action="RemainsView" asp-controller="Crud" class="link-dark rounded">Остатки</a></li>
+                                        <li><a asp-action="Picture" asp-controller="Picture" class="link-dark rounded">Изображения</a></li>
                                     </ul>
                                 </div>
                             </li>
-                            @*<li class="mb-1">
+                            <li class="mb-1">
                                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                                    Dashboard
+                                    Роли
                                 </button>
                                 <div class="collapse" id="dashboard-collapse">
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                        <li><a href="#" class="link-dark rounded">Overview</a></li>
-                                        <li><a href="#" class="link-dark rounded">Weekly</a></li>
-                                        <li><a href="#" class="link-dark rounded">Monthly</a></li>
-                                        <li><a href="#" class="link-dark rounded">Annually</a></li>
+
+                                        <li><a asp-action="AdminPage" asp-controller="RoleAdmin" class="link-dark rounded">Список ролей</a></li>
+                                        <li><a asp-action="Create" asp-controller="RoleAdmin" class="link-dark rounded">Создание роли</a></li>
+                                        <li><a asp-action="UserView" asp-controller="RoleAdmin" class="link-dark rounded">Список пользователей</a></li>
+                                        
                                     </ul>
                                 </div>
-                            </li>*@
-                            @*<li class="mb-1">
+                            </li>
+                            <li class="mb-1">
                                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                                    Orders
+                                    Аналитика
                                 </button>
                                 <div class="collapse" id="orders-collapse">
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                        <li><a href="#" class="link-dark rounded">New</a></li>
-                                        <li><a href="#" class="link-dark rounded">Processed</a></li>
-                                        <li><a href="#" class="link-dark rounded">Shipped</a></li>
-                                        <li><a href="#" class="link-dark rounded">Returned</a></li>
+                                        <li><a asp-action="Chart" asp-controller="Chart" class="link-dark rounded">Категория товаров</a></li>
                                     </ul>
                                 </div>
-                            </li>*@
+                            </li>
                             <li class="border-top my-3"></li>
                             <li class="mb-1">
                                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
@@ -90,7 +90,7 @@
             </nav>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom ">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
                     <div class="">
                         @RenderBody()
                     </div>

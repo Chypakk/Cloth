@@ -5,36 +5,36 @@
 }
 
 <div>
-    <a class="btn btn-success" asp-action="ProductAdd">Добавить продукт</a>
+    <a class="btn btn-outline-dark" asp-action="ProductAdd">Добавить продукт</a>
 </div>
 
 <table class="table">
     <tr>
-        <th>Id</th>
-        <th>Имя продукта</th>
-        <th>Id категории</th>
-        <th>Id бренда</th>
-        <th>Id доп инфы</th>
-        <th>Цена</th>
-        <th>Размер</th>
-        <th>Рейтинг</th>
+        <th class="p-2">Id</th>
+        <th class="p-2">Имя продукта</th>
+        <th class="p-2">Id категории</th>
+        <th class="p-2">Id бренда</th>
+        <th class="p-2">Id доп инфы</th>
+        <th class="p-2">Цена</th>
+        @*<th class="p-2">Размер</th>*@
+        @*<th class="p-2">Рейтинг</th>*@
     </tr>
     @foreach (Products p in Model)
     {
         <tr>
-            <td>@p.Id</td>
-            <td>@p.Name</td>
-            <td>@p.CategoryId</td>
-            <td>@p.BrandId</td>
-            <td>@p.OptionsId</td>
-            <td>@p.Price</td>
-            <td>@p.Size</td>
-            <td>@p.Rating</td>
+            <td class="p-2">@p.Id</td>
+            <td class="p-2">@p.Name</td>
+            <td class="p-2">@p.CategoryId</td>
+            <td class="p-2">@p.BrandId</td>
+            <td class="p-2">@p.OptionsId</td>
+            <td class="p-2">@p.Price</td>
+            @*<td class="p-2">@p.Size</td>*@
+            @*<td class="p-2">@p.Rating</td>*@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <td><a class="btn btn-danger" asp-action="ProductDelete" asp-route-id="@p.Id">Удалить</a></td>
-                <td><a class="btn btn-success" asp-action="ProductUpdate" asp-route-id="@p.Id">Обновить</a></td>
+                <td><a class="btn btn-outline-dark" asp-action="ProductUpdate" asp-route-id="@p.Id">Обновить</a></td>
+                <td><a class="btn btn-outline-danger" asp-action="ProductDelete" asp-route-id="@p.Id">Удалить</a></td>
             }
         </tr>
     }

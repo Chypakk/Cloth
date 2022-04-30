@@ -5,27 +5,30 @@
 }
 
 <div>
-    <a class="btn btn-success" asp-action="CategoriesAdd">Добавить категорию</a>
+    <a class="btn btn-outline-dark" asp-action="CategoriesAdd">Добавить категорию</a>
 </div>
 
 <table class="table">
-    <tr>
-        <th>Id</th>
-        <th>Название категории</th>
-    </tr>
-    @foreach (Category c in Model)
-    {
-        <tr>
-            <td>@c.Id</td>
-            <td>@c.Name</td>
+    <thead>
 
-            @if (User.Identity.IsAuthenticated)
-            {
-                <td><a class="btn btn-danger" asp-action="CategoriesDelete" asp-route-id="@c.Id">Удалить</a></td>
-                <td><a class="btn btn-success" asp-action="CategoriesUpdate" asp-route-id="@c.Id">Обновить</a></td>
-            }
-        </tr>
-    }
+        <tr><th>Id</th><th>Название категории</th></tr>
+
+    </thead>
+    <tbody>
+        @foreach (Category c in Model)
+        {
+            <tr>
+                <td class="p-2">@c.Id</td>
+                <td class="p-2">@c.Name</td>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <td><a class="btn btn-outline-dark" asp-action="CategoriesUpdate" asp-route-id="@c.Id">Обновить</a></td>
+                    <td><a class="btn btn-outline-danger" asp-action="CategoriesDelete" asp-route-id="@c.Id">Удалить</a></td>
+
+                }
+            </tr>
+        }
+    </tbody>
+
 </table>
-
-@*<a class="btn btn-outline-success" asp-action="CrudView">Вернуться</a>*@

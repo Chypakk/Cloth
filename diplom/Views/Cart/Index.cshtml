@@ -1,12 +1,38 @@
 ﻿@model CartIndexViewModel
 
 <h2>Корзина</h2>
-<table class="table table-bordered table-tripped">
+
+<div class="border">
+    <div class="row py-3">
+
+        <div class="col px-4">
+            <form asp-action="CheckPromocode" asp-controller="Cart" class="row">
+                <div class="col-5">
+                    <input name="Promocode" class="form-control" placeholder="Введите промокод" />
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-dark">Проверить</button>
+                </div>
+               
+            </form>
+        </div>
+        <div class="col px-4" >
+            <h4 class="text-center">Итого: @Model.Cart.ComputeTotalValue().ToString("c") <a class="btn btn-dark" asp-action="Checkout" asp-controller="Order">Заказать</a></h4>
+            
+        </div>
+    </div>
+
+</div>
+
+
+
+<table class="table table-bordered table-tripped mt-3">
 
     <thead>
         <tr>
             <th>Товар</th>
             <th>Количество</th>
+            <th>Size</th>
 
             <th class="text-right">Цена</th>
             <th class="text-right">Subtotal</th>
@@ -15,20 +41,24 @@
     <tbody>
         @foreach (var line in Model.Cart.Lines)
         {
-        <tr>
-            <td class="text-center">@line.Product.Name</td>
-            <td class="text-center">@line.Quantity</td>
+            <tr>
+                <td class="text-center">
+                    @*@Html.Raw("<img style='height:50px; width: 50px' src=\"data:image/jpeg;base64," + Convert.ToBase64String(line.Product.ProductImage) + "\"/>")*@
+                    @line.Product.Name
+                </td>
+                <td class="text-center">@line.Size</td>
+                <td class="text-center">@line.Quantity</td>
 
-            <td class="text-center">@line.Product.Price.ToString("c")</td>
-            <td class="text-center">@((line.Quantity * line.Product.Price).ToString("c"))</td>
-            <td>
-                <form method="post" asp-action="RemoveFromCart">
-                    <input type="hidden" name="Id" value="@line.Product.Id" />
-                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
-                    <button type="submit" class="btn btn-danger btn-sm">Удалить товар</button>
-                </form>
-            </td>
-        </tr>
+                <td class="text-center">@line.Product.Price.ToString("c")</td>
+                <td class="text-center">@((line.Quantity * line.Product.Price).ToString("c"))</td>
+                <td>
+                    <form method="post" asp-action="RemoveFromCart">
+                        <input type="hidden" name="Id" value="@line.Product.Id" />
+                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить товар</button>
+                    </form>
+                </td>
+            </tr>
         }
     </tbody>
     <tfoot>
@@ -42,4 +72,3 @@
 </table>
 
 <a class="btn btn-outline-dark" asp-action="Catalog" asp-controller="Catalog">Вернуться в каталог</a>
-<a class="btn btn-outline-dark" asp-action="Checkout" asp-controller="Order">Заказать</a>
