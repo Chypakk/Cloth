@@ -17,7 +17,6 @@ namespace Cloth.Controllers
 
         public RedirectToActionResult AddToCart(int Id, string returnUrl, int Quantity, int Size)
         {
-            //Remains exp = context.Remains.Include(a => a.Products).FirstOrDefault(a => a.ProductId == Id);
             Products product = context.Products.FirstOrDefault(p => p.Id == Id);
             if (Quantity == 0)
             {
