@@ -21,7 +21,8 @@ namespace Cloth.Models
         public string City { get; set; }
 
         public DateTime OrderDate { get; set; }
-        public decimal TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
+        public bool UsingPromocode { get; set; }
         //public int ClientId { get; set; }
         //public int CardId { get; set; }
         //public int ProductId { get; set; }

@@ -1,5 +1,6 @@
 ﻿@model ProductCardViewModel
 
+@{ Layout = "_LayoutCard"; }
 
 <div class="row">
 
@@ -17,8 +18,8 @@
                         </div>
                         @foreach (var item in Model.Picture)
                         {
-                            @Html.Partial("_ProductPicture", item);
-                        }
+            @Html.Partial("_ProductPicture", item);
+        }
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -38,28 +39,25 @@
                 @Html.Partial("_ProductCard", Model.Products)
                 @Html.Partial("_ProductOptions", Model.Products.Options)
 
-
-
             </div>
 
             <div>
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <form asp-action="Commentaries" asp-controller="Crud" method="post">
-                        <input type="hidden" asp-for="ProductId" />
-                        <input type="hidden" asp-for="UserName" />
-                        <input type="hidden" name="ComId" value="@ViewBag.Id" />
-                        <input type="hidden" name="ComName" value="@ViewBag.Name" />
+    <form asp-action="Commentaries" asp-controller="Crud" method="post">
+        <input type="hidden" asp-for="ProductId" />
+        <input type="hidden" asp-for="UserName" />
+        <input type="hidden" name="ComId" value="@ViewBag.Id" />
+        <input type="hidden" name="ComName" value="@ViewBag.Name" />
 
 
-                        <div class="mt-2">
-                            <label for="exampleFormControlTextarea1" class="form-label">Оставьте ваш отзыв</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" asp-for="Text" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-dark mt-3">Отправить</button>
-                    </form>
-                }
+        <div class="mt-2">
+            <label for="exampleFormControlTextarea1" class="form-label">Оставьте ваш отзыв</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" asp-for="Text" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-dark mt-3">Отправить</button>
+    </form>}
 
             </div>
 
@@ -68,19 +66,17 @@
             <div style="overflow-y: scroll; height: 30rem;" tabindex="0" class="scrollarea mt-2">
                 @foreach (var item in Model.Commentaries.OrderByDescending(a => a.CreatedDate))
                 {
-                    <div class="col" style="margin-top:10px">
+    <div class="col" style="margin-top:10px">
 
-                        <div class="card w-100">
-                            <div class="card-body">
-                                <h5 class="card-title"><b>@item.UserName</b></h5>
-                                <p class="card-text">@item.Text</p>
-                                <p class="card-text"><small class="text-muted">Дата: @item.CreatedDate.Day.@item.CreatedDate.Month.@item.CreatedDate.Year @item.CreatedDate.Hour:@item.CreatedDate.Minute</small></p>
-                            </div>
-                        </div>
+        <div class="card w-100">
+            <div class="card-body">
+                <h5 class="card-title"><b>@item.UserName</b></h5>
+                <p class="card-text">@item.Text</p>
+                <p class="card-text"><small class="text-muted">Дата: @item.CreatedDate.Day.@item.CreatedDate.Month.@item.CreatedDate.Year @item.CreatedDate.Hour:@item.CreatedDate.Minute</small></p>
+            </div>
+        </div>
 
-                    </div>
-
-                }
+    </div>}
             </div>
 
 
@@ -93,20 +89,29 @@
         <div class="sticky-top">
 
             <div class="bg-light text-center">
-                <h4 class="pb-2 pt-2">Количество:</h4>
+                <h4 class="pb-2 pt-2">Корзина</h4>
                 <div class="border-bottom border-dark"></div>
                 <form id="@Model.Products.Id" asp-action="AddToCart" asp-controller="Cart" method="post" class="py-4">
 
                     <input type="hidden" name="Id" value="@Model.Products.Id" />
                     <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
 
-                    <div class="btn-group" role="group">
+                    <div class="btn-group py-2" role="group">
+                        <span class="mx-1">Размер:</span>
+                        @{ bool flag = true;
+                            foreach (var item in Model.Products.Remains)
+                            {
+                                if (flag == true)
+                                {
+                <input type="radio" class="btn-check btn-sm" name="Size" id="@item.Id" value="@item.Size" autocomplete="off" checked>
+                                    <label class="btn btn-outline-dark btn-sm" for="@item.Id">@item.Size</label> flag = false;
+                                }
+                                else
+                                {
+                <input type="radio" class="btn-check btn-sm" name="Size" id="@item.Id" value="@item.Size" autocomplete="off">
+                                    <label class="btn btn-outline-dark btn-sm" for="@item.Id">@item.Size</label> }
+                                                } }
 
-                        @foreach (var item in Model.Products.Remains)
-                        {
-                            <input type="radio" class="btn-check btn-sm" name="Size" id="@item.Id" value="@item.Size" autocomplete="off">
-                            <label class="btn btn-outline-dark btn-sm" for="@item.Id">@item.Size</label>
-                        }
 
                     </div>
 

@@ -15,15 +15,15 @@ namespace Cloth.Models
         [JsonIgnore]
         
         public ISession Session { get; set; }
-        public override void AddItem(Products product, int quantity, int size)
+        public override void AddItem(Products product, int quantity, string size)
         {
             base.AddItem(product, quantity, size);
             Session.SetJson("Cart", this);
         }
 
-        public override void RemoveLine(Products product)
+        public override void RemoveLine(Products product, string size)
         {
-            base.RemoveLine(product);
+            base.RemoveLine(product, size);
             Session.SetJson("Cart", this);
         }
 

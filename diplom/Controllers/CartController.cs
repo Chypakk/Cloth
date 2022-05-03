@@ -15,7 +15,7 @@ namespace Cloth.Controllers
             cart = cartServices;
         }
 
-        public RedirectToActionResult AddToCart(int Id, string returnUrl, int Quantity, int Size)
+        public RedirectToActionResult AddToCart(int Id, string returnUrl, int Quantity, string Size)
         {
             Products product = context.Products.FirstOrDefault(p => p.Id == Id);
             if (Quantity == 0)
@@ -29,23 +29,53 @@ namespace Cloth.Controllers
             return RedirectToAction("Index", new { returnUrl });
         }
 
-        public RedirectToActionResult RemoveFromCart(int Id, string returnUrl)
+        public RedirectToActionResult RemoveFromCart(int Id, string returnUrl, string Size)
         {
             Products product = context.Products.FirstOrDefault(p => p.Id == Id);
             if (product != null)
             {
-                cart.RemoveLine(product);
+                cart.RemoveLine(product, Size);
             }
             return RedirectToAction("Index", new { returnUrl });
         }
 
-        public IActionResult Index(string returnUrl)
+        public IActionResult Index(string returnUrl, string Promocodes, int flag)
         {
+            ViewBag.flag = flag;
+            if (Promocodes != null)
+            {
+                Promocode promocode = context.Promocodes.FirstOrDefault(a => a.Code.ToUpper() == Promocodes.ToUpper());
+                if (promocode != null)
+                {
+                    if (DateTime.Now >= promocode.StartDate && DateTime.Now <= promocode.EndDate)
+                    {
+                        ViewBag.PromocodeMessage = "Промокод действителен";
+                        ViewBag.Promocode = promocode.Percent;
+                    }
+                    else
+                    {
+                        ViewBag.PromocodeMessage = "Действие промокода закончилось";
+                    }
+                }
+                else
+                {
+                    ViewBag.PromocodeMessage = "Такого промокода не существует";
+                }
+            }
+            
+            
             return View(new CartIndexViewModel
             {
                 Cart = cart,
                 ReturnUrl = returnUrl,
             }) ;
+        }
+
+        public IActionResult CheckPromocode(string Promocodes, int flag)
+        {
+
+           
+            return RedirectToAction("Index", new {Promocodes, flag});
         }
 
     }

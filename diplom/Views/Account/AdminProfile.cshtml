@@ -33,6 +33,14 @@
             </thead>
             @foreach (var item in Model.Order)
             {
+                <tr>@if (item.UsingPromocode)
+                {
+                    <td>Использован промокд</td>
+                }
+                else
+                {
+                    <td>Промокод не использован</td>
+                }</tr>
                 <tr>
                     <th scope="row">@item.OrderDate</th>
                     <td>

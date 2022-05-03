@@ -6,24 +6,33 @@
     <div class="row py-3">
 
         <div class="col px-4">
-            <form asp-action="CheckPromocode" asp-controller="Cart" class="row">
+            <form asp-action="Index" asp-controller="Cart" class="row">
                 <div class="col-5">
-                    <input name="Promocode" class="form-control" placeholder="Введите промокод" />
+                    <input type="hidden" name="flag" value="1" />
+                    <input name="Promocodes" class="form-control" placeholder="Введите промокод" />
+                    @if (ViewBag.flag == 1)
+                    {
+                        <p>@ViewBag.PromocodeMessage</p>
+                    }
                 </div>
                 <div class="col-auto">
                     <button class="btn btn-outline-dark">Проверить</button>
                 </div>
-               
+
             </form>
         </div>
-        <div class="col px-4" >
-            <h4 class="text-center">Итого: @Model.Cart.ComputeTotalValue().ToString("c") <a class="btn btn-dark" asp-action="Checkout" asp-controller="Order">Заказать</a></h4>
-            
+        <div class="col px-4">
+            <form asp-action="Checkout" asp-controller="Order" method="get">
+                <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
+                <h4 class="text-center">Итого: @Model.Cart.ComputeTotalValue().ToString("c") <button class="btn btn-dark">Заказать</button></h4>
+
+            </form>
+
+
         </div>
     </div>
 
 </div>
-
 
 
 <table class="table table-bordered table-tripped mt-3">
@@ -31,14 +40,16 @@
     <thead>
         <tr>
             <th>Товар</th>
+            <th>Размер</th>
             <th>Количество</th>
-            <th>Size</th>
 
             <th class="text-right">Цена</th>
-            <th class="text-right">Subtotal</th>
+            <th class="text-right">Промежуточный мтог</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var line in Model.Cart.Lines)
         {
             <tr>
@@ -54,8 +65,9 @@
                 <td>
                     <form method="post" asp-action="RemoveFromCart">
                         <input type="hidden" name="Id" value="@line.Product.Id" />
+                        <input type="hidden" name="Size" value="@line.Size" />
                         <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
-                        <button type="submit" class="btn btn-danger btn-sm">Удалить товар</button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Удалить товар</button>
                     </form>
                 </td>
             </tr>
@@ -63,7 +75,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="3" class="text-right">Итого: </td>
+            <td colspan="5" class="text-right">Итого: </td>
             <td class="text-right">
                 @Model.Cart.ComputeTotalValue().ToString("c")
             </td>

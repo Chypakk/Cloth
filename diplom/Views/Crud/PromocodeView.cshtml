@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Promocode>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div>
+    <a class="btn btn-outline-dark" asp-action="PromocodeAdd">Добавить промокод</a>
+</div>
+
+<table class="table">
+    <tr>
+        <th class="p-2">Id</th>
+        <th class="p-2">Код</th>
+        <th class="p-2">Процент</th>
+        <th class="p-2">Дата начала</th>
+        <th class="p-2">Дата окончания</th>
+    </tr>
+    @foreach (Promocode p in Model)
+    {
+        <tr>
+            <td class="p-2">@p.Id</td>
+            <td class="p-2">@p.Code</td>
+            <td class="p-2">@p.Percent</td>
+            <td class="p-2">@p.StartDate</td>
+            <td class="p-2">@p.EndDate</td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td><a class="btn btn-outline-dark" asp-action="PromocodeUpdate" asp-route-id="@p.Id">Обновить</a></td>
+                <td><a class="btn btn-outline-danger" asp-action="PromocodeDelete" asp-route-id="@p.Id">Удалить</a></td>
+            }
+        </tr>
+    }
+</table>
+

@@ -194,5 +194,36 @@ namespace Cloth.Controllers
             Context.SaveChanges();
             return RedirectToAction("RemainsView");
         }
+
+        //Промокод
+        public IActionResult PromocodeView() => View(Context.Promocodes.OrderBy(a => a.Id));
+        public IActionResult PromocodeUpdate(int Id) => View(Context.Promocodes.FirstOrDefault(a => a.Id == Id));
+        public IActionResult PromocodeAdd() => View();
+        [HttpPost]
+        public IActionResult PromocodeAdd(Promocode promocode)
+        {
+            Context.Promocodes.Add(promocode);
+            Context.SaveChanges();
+            return RedirectToAction("PromocodeView");
+        }
+        [HttpPost]
+        public IActionResult PromocodeUpdate(Promocode promocode)
+        {
+            Promocode pr = Context.Promocodes.FirstOrDefault(a => a.Id == promocode.Id);
+            pr.StartDate = promocode.StartDate;
+            pr.EndDate = promocode.EndDate;
+            pr.Id = promocode.Id;
+            pr.Code = promocode.Code;
+            pr.Percent = promocode.Percent;
+            Context.SaveChanges();
+            return RedirectToAction("PromocodesView");
+        }
+        public IActionResult PromocodeDelete(int Id)
+        {
+            Promocode PromDelete = Context.Promocodes.FirstOrDefault(a => a.Id == Id);
+            Context.Promocodes.Remove(PromDelete);
+            Context.SaveChanges();
+            return RedirectToAction("PromocodesView");
+        }
     }
 }

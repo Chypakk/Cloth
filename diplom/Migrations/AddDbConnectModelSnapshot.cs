@@ -121,8 +121,9 @@ namespace Cloth.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CartLineId");
 
@@ -330,8 +331,11 @@ namespace Cloth.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("UsingPromocode")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

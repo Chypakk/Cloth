@@ -3,7 +3,7 @@
 <form asp-action="Checkout" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    @*<h3>Имя</h3>*@
+    <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
 
     <input type="hidden" class="form-control disabled" asp-for="Name" value="@User.Identity.Name" />
 
