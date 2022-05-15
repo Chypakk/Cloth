@@ -1,0 +1,108 @@
+﻿@model ProfileViewModel
+
+@{
+    Layout = "_AdminLayout";
+}
+
+@foreach (var item in Model.Picture)
+{
+    if (item.Name == User.Identity.Name)
+    {
+        @Html.Raw("<img style='width:100px; height:200px;' src=\"data:image/jpeg;base64,"
+                                        + Convert.ToBase64String(item.Image) + "\" />")
+    }
+}
+
+<h1>Добро пожаловать @User.Identity.Name</h1>
+
+<button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    История покупок
+</button>
+
+<div class="collapse" id="collapseExample">
+    <div style="overflow-y: scroll; height: 30rem; width: 60rem" tabindex="0" class="scrollarea mt-2">
+        <table class="table table-border">
+            <thead>
+                <tr>
+                    <th scope="col">День покупки</th>
+                    <th scope="col">Товар</th>
+                    <th scope="col">Количество</th>
+                    <th scope="col">Промежуточный итог</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.Order)
+            {
+
+                <tr>
+                    <th scope="row">@item.OrderDate</th>
+                    <td>
+                        <table>
+                            @if (User.Identity.Name == item.Name)
+                            {
+                                foreach (var i in Model.CartLines)
+                                {
+
+                                    @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                    {
+                                        <tr>
+                                            <td class="text-center">@product.Product.Name</td>
+
+                                        </tr>
+                                    }
+
+                                }
+                            }
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            @if (User.Identity.Name == item.Name)
+                            {
+                                foreach (var i in Model.CartLines)
+                                {
+
+                                    @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                    {
+                                        <tr>
+                                            <td class="text-center">@product.Quantity</td>
+                                        </tr>
+                                    }
+
+                                }
+                            }
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            @if (User.Identity.Name == item.Name)
+                            {
+                                foreach (var i in Model.CartLines)
+                                {
+
+                                    @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                    {
+                                        <tr>
+                                            <td class="text-center">@((product.Quantity*product.Product.Price).ToString("c"))</td>
+                                        </tr>
+                                    }
+
+                                }
+                            }
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    @if (item.UsingPromocode)
+                    {
+                        <th>Использован промокд</th>
+                    }
+                    else
+                    {
+                        <th>Промокод не использован</th>
+                    }
+                </tr>
+                <tr class="table-dark"><th colspan="3">Итого:</th><td>@item.TotalPrice.ToString("c")</td></tr>
+            }
+        </table>
+    </div>
+</div>

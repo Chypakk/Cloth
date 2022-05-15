@@ -1,0 +1,19 @@
+﻿@model Category
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="CategoriesUpdate" method="post">
+
+            <input type="hidden" asp-for="@Model.Id" />
+
+            <label>Имя</label>
+            <input class="form-control" asp-for="@Model.Name" />
+
+            <button type="submit" class="btn btn-outline-dark">Отправить</button>
+        </form>
+    </div>
+</div>

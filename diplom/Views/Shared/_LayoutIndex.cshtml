@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - cloth</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/diplom.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="https://kit.fontawesome.com/ab4899f3b5.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <header class="p-3 bg-white sticky-top" style="margin-bottom: 1%">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a asp-action="Index" asp-controller="Home" class="navbar-brand nav-link px-2 text-black">ClotH</a></li>
+                    <li><a asp-action="Index" asp-controller="Home" class="nav-link px-2  text-black">Главная</a></li>
+                    <li><a asp-action="Catalog" asp-controller="Catalog" class="nav-link px-2 text-black">Каталог</a></li>
+                    <li><a href="#" class="nav-link px-2 ">FAQs</a></li>
+                    <li><a href="#" class="nav-link px-2 ">About</a></li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="get" asp-action="Catalog" asp-controller="Catalog">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="search">
+                </form>
+
+                <div class="nav">
+
+
+                    <a class=" btn-sm px-2 me-2" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
+                        @*<i class="fa fa-shopping-cart"></i>*@ <img src="~/img/shopping-bag.png" width="25" height="25" />
+                    </a>
+
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+
+                            <a class="nav-link px-2" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a>
+
+
+                        }
+                        else
+                        {
+                            <div class="nav-item">
+                                <a class="nav-link px-2" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
+                            </div>
+
+                        }
+
+                    }
+                    else
+                    {
+                        <div class="nav-item">
+                            <a class="nav-link px-2" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/img/user.png" width="25" height="25" /></a>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+
+    <div class="bg-white border-top my-5">
+        <div class="container">
+            <footer class="footer text-muted">
+                <div class="row py-5 row-cols-4 ">
+
+                    <div class="col">
+                        <h4 style="font-size:54px" class="text-black">ClotH</h4>
+                        <p class="text-muted">
+                            все права зарегестрированы &copy; 2022
+                        </p>
+                    </div>
+                    <div class="col">
+                        <h4 class="text-black">Каталог</h4>
+                        <p>
+                            <a class="text-muted" style="text-decoration: none"
+                               asp-action="Catalog"
+                               asp-controller="Catalog"
+                               asp-route-category="Одежда"
+                               asp-route-productPage="1">
+                                Одежда
+                            </a>
+                        </p>
+                        <p>
+                            <a class="text-muted" style="text-decoration: none"
+                               asp-action="Catalog"
+                               asp-controller="Catalog"
+                               asp-route-category="Обувь"
+                               asp-route-productPage="1">
+                                Обувь
+                            </a>
+                        </p>
+                        <p>
+                            <a class="text-muted" style="text-decoration: none"
+                               asp-action="Catalog"
+                               asp-controller="Catalog"
+                               asp-route-category="Аксессуары"
+                               asp-route-productPage="1">
+                                Аксессуары
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class="col">
+                        <h4 class="text-black">Поддержка</h4>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="ChangeAndRefund" asp-controller="Home">Возврат и обмен товара</a></p>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="Delivery" asp-controller="Home">Доставка</a></p>
+                        <p><a class="text-muted" style="text-decoration-line: none" asp-action="FAQ" asp-controller="Home">Вопросы</a></p>
+                    </div>
+                    <div class="col">
+                        <h4 class="text-black">О нас</h4>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="CompanyInfo" asp-controller="Home">Информация о компании</a></p>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="ContactInfo" asp-controller="Home">Контакты</a></p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

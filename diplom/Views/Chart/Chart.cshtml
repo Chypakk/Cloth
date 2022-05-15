@@ -1,0 +1,146 @@
+﻿@model AnalyticsModel
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="table-responsive">
+    <div class="row">
+
+        <div class="col">
+            <h6>Дешевая категория</h6>
+            <table class="table table-striped table-sm">
+                <tr>
+                    <th scope="col">Название товара</th>
+                    <th scope="col">Цена</th>
+                </tr>
+                @foreach (var item in Model.Products.Where(q => ((Model.FirstPoint - q.Price) / (Model.Max - Model.FirstPoint)) + 1 > 0.7))
+                {
+                    <tr>
+
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="col">
+            <h6>Средняя категория</h6>
+            <table class="table table-striped table-sm">
+                <tr>
+                    <th>Название товара</th>
+                    <th>Цена</th>
+                </tr>
+                @foreach (var item in Model.Products.Where(q =>
+                 (
+                     ((q.Price - Model.Min) / (Model.SecondPoint - Model.Min)) > 0.7)
+                 &&
+                     ((Model.ThirdPoint - q.Price) / (Model.Max - Model.ThirdPoint) + 1 > 0.7))
+                 )
+                {
+                    <tr>
+
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="col">
+            <h6>Дорогая категория</h6>
+            <table class="table table-striped table-sm">
+                <tr>
+                    <th>Название товара</th>
+                    <th>Цена</th>
+                </tr>
+                @foreach (var item in Model.Products.Where(q => ((q.Price - Model.Min) / (Model.FourthPoint - Model.Min)) > 0.7))
+                {
+                    <tr>
+
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<canvas class="w-100" id="Total" width="800" height="500"></canvas>
+
+<script src="~/js/chart.min.js"></script>
+
+<script>
+    const ctx2 = document.getElementById('Total').getContext('2d');
+    const myChart2 = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: [@foreach (var item in Model.QuantityPoint)
+	{
+		 @item;
+	}],
+            datasets: [
+                {
+                    label: 'Максимальная принадлежность',
+                    data: [@foreach (var item in Model.MidlePrice)
+                    {
+                        @item;
+                    }],
+                    backgroundColor: ['rgba(255, 99, 132, 1)'],
+                    borderColor: ['rgba(255, 99, 132, 1)'],
+                    borderWidth: 2
+                },
+                {
+                    label: 'Минимальная принадлежность',
+                    data: [@foreach (var item in Model.TopPrice)
+	{
+		 @item;
+	}],
+                    backgroundColor: ['rgba(255, 159, 64, 1)'],
+                    borderColor: ['rgba(255, 159, 64, 1)'],
+                    borderWidth: 2
+                },
+                {
+                    label: 'Дорогая категория',
+                    data: [@foreach (var item in Model.First)
+                    {
+                        @item;
+                    }],
+                    backgroundColor: ['rgba(40, 66, 158, 1)'],
+                    borderColor: ['rgba(40, 66, 158, 1)'],
+                    borderWidth: 3
+                },
+                {
+                    label: 'Дешевая категория',
+                    data: [@foreach (var item in Model.Second)
+                    {
+                        @item;
+                    }],
+                    backgroundColor: ['#5E1756'],
+                    borderColor: ['#5E1756'],
+                    borderWidth: 3
+                },
+                {
+                    label: 'Средняя категория',
+                    data: [@foreach (var item in Model.Third)
+                    {
+                        @item;
+                    }],
+                    backgroundColor: ['#2FCA0C'],
+                    borderColor: ['#2FCA0C'],
+                    borderWidth: 3
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

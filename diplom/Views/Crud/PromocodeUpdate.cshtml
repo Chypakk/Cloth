@@ -1,0 +1,29 @@
+﻿@model Promocode
+
+@{ Layout = "_AdminLayout"; }
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="PromocodeUpdate" method="post">
+
+            <input type="hidden" asp-for="@Model.Id" />
+
+            <label>Код</label>
+            <input class="form-control" asp-for="@Model.Code" />
+
+            <label>Процент</label>
+            <input class="form-control" asp-for="@Model.Percent" />
+
+            <label>Дата начала</label>
+            <input class="form-control" asp-for="@Model.StartDate" />
+
+            <label>Дата окончания</label>
+            <input class="form-control" asp-for="@Model.EndDate" />
+
+
+
+            <button type="submit" class="btn btn-outline-dark">Отправить</button>
+        </form>
+    </div>
+</div>
+

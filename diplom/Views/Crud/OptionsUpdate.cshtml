@@ -1,0 +1,32 @@
+﻿@model Options
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="OptionsUpdate" method="post">
+
+            <input asp-for="@Model.Id" type="hidden" />
+
+            <label>Материал</label>
+            <input class="form-control" asp-for="@Model.Material" />
+
+            <label>Цвет</label>
+            <input class="form-control" asp-for="@Model.Color" />
+
+            <label>Узор</label>
+            <input class="form-control" asp-for="@Model.Design" />
+
+            <label>Примечание по уходу</label>
+            <input class="form-control" asp-for="@Model.CareNote" />
+
+            <label>Описание</label>
+            <input class="form-control" asp-for="@Model.Description" />
+
+            <button type="submit" class="btn btn-outline-dark">Отправить</button>
+
+        </form>
+    </div>
+</div>

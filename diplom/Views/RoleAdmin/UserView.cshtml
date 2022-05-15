@@ -1,23 +1,26 @@
 ﻿@model IEnumerable<Cloth.Models.AppUser>
 
-<div class="bg-primary m-1 p-1 text-white"><h4>Users</h4></div>
+@{
+    Layout = "_AdminLayout";
+}
 
-<table class="table table-sm table-bordered">
+<div class="bg-dark text-white p-3"><h4>Пользователи</h4></div>
 
-    <tr><th>Id</th><th>Name</th><th>Email</th></tr>
+<table class="table table-sm table-bordered mt-2">
+
+    <tr><th>Имя</th><th>Email</th></tr>
 
     @if (Model.Count() == 0)
     {
-        <tr><td colspan="3" class="text-center">No users</td></tr>
+        <tr><td colspan="3" class="text-center">Нет пользователей</td></tr>
     }
     else
     {
         foreach (Cloth.Models.AppUser user in Model)
         {
             <tr>
-                <td>@user.Id</td>
-                <td>@user.UserName</td>
-                <td>@user.Email</td>
+                <td class="text-center p-2">@user.UserName</td>
+                <td class="text-center p-2">@user.Email</td>
             </tr>
         }
     }

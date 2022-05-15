@@ -1,0 +1,40 @@
+﻿@model Products
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<h1>Поле "Изображение" обязательно!</h1>
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="ProductUpdate" method="post">
+
+            <input type="hidden" asp-for="@Model.Id" />
+
+            <label>Имя</label>
+            <input class="form-control" asp-for="@Model.Name" />
+
+            <label>Id категории</label>
+            <input class="form-control" asp-for="@Model.CategoryId" />
+
+            <label>Id бренда</label>
+            <input class="form-control" asp-for="@Model.BrandId" />
+
+            <label>Цена</label>
+            <input class="form-control" asp-for="@Model.Price" />
+
+            @*<label>Размер</label>
+            <input class="form-control" asp-for="@Model.Size" />*@
+
+            @*<label>Рейтинг</label>
+            <input class="form-control" asp-for="@Model.Rating" />*@
+
+            <label>Изображение</label>
+            <input class="form-control" type="file" asp-for="@Model.ProductImage" />
+
+            <button type="submit" class="btn btn-outline-dark">Отправить</button>
+        </form>
+    </div>
+</div>
+

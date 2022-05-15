@@ -2,12 +2,13 @@
 {
     public class Remains
     {
-        public int Id { get; set; }
-        public int WarehouseId { get; set; }
-        //public int ProductId { get; set; }
+        public Guid Id { get; set; }
+        //public int WarehouseId { get; set; }
+        public int ProductId { get; set; }
+        public string Size { get; set; }
         public int Count { get; set; }
 
-        //public List<Products> Products { get; set; }
-        public List<Warehouse> Warehouse { get; set; }
+        public Products Products { get; set; }
+        //public List<Warehouse> Warehouse { get; set; }
     }
 }

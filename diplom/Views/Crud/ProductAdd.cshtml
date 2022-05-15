@@ -1,23 +1,40 @@
 ﻿@model Products
 
+@{
+    Layout = "_AdminLayout";
+}
+
 <div class="row">
     <div class="col-auto">
-        <form asp-action="ProductAdd" method="post">
+        <form asp-action="ProductAdd" method="post" enctype="multipart/form-data">
+
             <label>Имя</label>
             <input class="form-control" asp-for="Name" />
+
             <label>Id категории</label>
             <input class="form-control" asp-for="CategoryId" />
+
             <label>Id бренда</label>
             <input class="form-control" asp-for="BrandId" />
+
+            <label>Дополнительная информация</label>
+            <input class="form-control" asp-for="OptionsId" />
+
             <label>Цена</label>
             <input class="form-control" asp-for="Price" />
-            <label>Цвет</label>
-            <input class="form-control" asp-for="Color" />
-            <label>Размер</label>
-            <input class="form-control" asp-for="Size" />
-            <label>Рейтинг</label>
-            <input class="form-control" asp-for="Rating" />
-            <button type="submit" class="btn btn-success">Отправить</button>
+
+            @*<label>Размер</label>
+            <input class="form-control" asp-for="Size" />*@
+
+            @*<label>Рейтинг</label>
+            <input class="form-control" asp-for="Rating" />*@
+
+            <fieldset>
+                <label>Картинка</label>
+                <input class="form-control" type="file" name="file" />
+            </fieldset>
+
+            <button type="submit" class="btn btn-outline-dark">Отправить</button>
         </form>
     </div>
 </div>

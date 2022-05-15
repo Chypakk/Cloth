@@ -1,8 +1,10 @@
 ﻿using Cloth.Models;
+using Cloth.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static Cloth.Models.UserModel;
 
 namespace Cloth.Controllers
@@ -11,11 +13,13 @@ namespace Cloth.Controllers
     {
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
+        private DataContext Context;
 
-        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr)
+        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, DataContext ctx)
         {
             userManager = userMngr;
             signInManager = signInMngr;
+            Context = ctx;
         }
 
         [AllowAnonymous]
@@ -32,7 +36,7 @@ namespace Cloth.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser user = await userManager.FindByEmailAsync(details.Email);
+                AppUser user = await userManager.FindByNameAsync(details.Login);
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
@@ -42,7 +46,7 @@ namespace Cloth.Controllers
                         return Redirect(returnUrl ?? "/");
                     }
                 }
-                ModelState.AddModelError(nameof(LoginModel.Email), "Неверный пароль или логин");
+                ModelState.AddModelError(nameof(LoginModel.Password), "Неверный пароль или логин");
             }
             return View(details);
         }
@@ -58,7 +62,7 @@ namespace Cloth.Controllers
             {
                 AppUser user = new AppUser
                 {
-                    UserName = model.Name,
+                    UserName = model.Login,
                     Email = model.Email
                 };
                 IdentityResult result = await userManager.CreateAsync(user, model.Password);
@@ -82,7 +86,28 @@ namespace Cloth.Controllers
         public async Task<IActionResult> LogOut()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AdminProfile()
+        {
+            var result = new ProfileViewModel
+            {
+                Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
+                CartLines = Context.CartLine.Include(a => a.Product),
+                Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
+            };
+            return View(result);
+        } 
+        public IActionResult Profile()
+        {
+            var result = new ProfileViewModel
+            {
+                Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
+                CartLines = Context.CartLine.Include(a => a.Product),
+                Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
+            };
+            return View(result);
         }
     }
 }

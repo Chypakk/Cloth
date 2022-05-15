@@ -20,8 +20,11 @@ namespace Cloth.Infrastructure
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
-        public PagingInfo PageModel { get; set; }
+        public ProductsListViewModel PageModel { get; set; }
         public string PageAction { get; set; }
+
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
 
         public bool PageClassesEnabled { get; set; } = false;
         public string PageClass { get; set; }
@@ -32,14 +35,22 @@ namespace Cloth.Infrastructure
         {
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
-            for (int i = 1; i <= PageModel.TotalPages; i++)
+            for (int i = 1; i <= PageModel.PagingInfo.TotalPages; i++)
             {
                 TagBuilder tag = new TagBuilder("a");
-                tag.Attributes["href"] = urlHelper.Action(PageAction, new { productPage = i });
+
+                PageUrlValues["productPage"] = i;
+                PageUrlValues["category"] = PageModel.CurrentCategory;
+                PageUrlValues["search"] = PageModel.Search;
+                PageUrlValues["brand"] = PageModel.CurrentBrand;
+                PageUrlValues["minPrice"] = PageModel.MinPrice;
+                PageUrlValues["maxPrice"] = PageModel.MaxPrice;
+
+                tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                 if (PageClassesEnabled)
                 {
                     tag.AddCssClass(PageClass);
-                    tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
+                    tag.AddCssClass(i == PageModel.PagingInfo.CurrentPage ? PageClassSelected : PageClassNormal);
                 }
                 tag.InnerHtml.Append(i.ToString());
                 result.InnerHtml.AppendHtml(tag);
@@ -47,5 +58,8 @@ namespace Cloth.Infrastructure
             output.Content.AppendHtml(result.InnerHtml);
         }
 
+
+
+
     }
-}
+    }

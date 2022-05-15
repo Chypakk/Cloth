@@ -11,6 +11,6 @@
         public int CardId { get; set; }
 
         public List<CreditCard> CreditCard { get; set; }
-        public List<Order> Orders { get; set; }
+        //public List<Order> Orders { get; set; }
     }
 }

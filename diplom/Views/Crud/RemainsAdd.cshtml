@@ -1,0 +1,23 @@
+﻿@model Remains
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-auto">
+        <form asp-action="RemainsAdd" method="post">
+
+            <label>Id продукта</label>
+            <input class="form-control" asp-for="ProductId" />
+
+            <label>Размер</label>
+            <input class="form-control" asp-for="Size" />
+
+            <label>Количество</label>
+            <input class="form-control" asp-for="Count" />
+
+            <button type="submit" class="btn btn-outline-dark">Отправить</button>
+        </form>
+    </div>
+</div>

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cloth.Migrations
 {
-    public partial class first : Migration
+    public partial class frst : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -93,6 +93,55 @@ namespace Cloth.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Options",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Material = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Design = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CareNote = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Options", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalPrice = table.Column<double>(type: "float", nullable: false),
+                    UsingPromocode = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Pictures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pictures", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Promocodes",
                 columns: table => new
                 {
@@ -109,17 +158,17 @@ namespace Cloth.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Remains",
+                name: "Warehouse",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WarehouseId = table.Column<int>(type: "int", nullable: false),
-                    Count = table.Column<int>(type: "int", nullable: false)
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Remains", x => x.Id);
+                    table.PrimaryKey("PK_Warehouse", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,37 +278,6 @@ namespace Cloth.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Rating = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_Brands_BrandId",
-                        column: x => x.BrandId,
-                        principalTable: "Brands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "CreditCards",
                 columns: table => new
                 {
@@ -282,55 +300,39 @@ namespace Cloth.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Warehouse",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RemainsId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: false),
+                    OptionsId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    ProductImage = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Warehouse", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Warehouse_Remains_RemainsId",
-                        column: x => x.RemainsId,
-                        principalTable: "Remains",
+                        name: "FK_Products_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClientId = table.Column<int>(type: "int", nullable: false),
-                    CardId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    Promocode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
-                        principalColumn: "Id");
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_CreditCards_CardId",
-                        column: x => x.CardId,
-                        principalTable: "CreditCards",
-                        principalColumn: "Id");
+                        name: "FK_Products_Options_OptionsId",
+                        column: x => x.OptionsId,
+                        principalTable: "Options",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -349,37 +351,77 @@ namespace Cloth.Migrations
                 {
                     table.PrimaryKey("PK_Deliveries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Deliveries_Products_ProductId",
+                        name: "FK_Deliveries_Warehouse_WarehouseId",
+                        column: x => x.WarehouseId,
+                        principalTable: "Warehouse",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CartLine",
+                columns: table => new
+                {
+                    CartLineId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartLine", x => x.CartLineId);
+                    table.ForeignKey(
+                        name: "FK_CartLine_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_CartLine_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Deliveries_Warehouse_WarehouseId",
-                        column: x => x.WarehouseId,
-                        principalTable: "Warehouse",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderProducts",
+                name: "Commentaries",
                 columns: table => new
                 {
-                    OrdersId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderProducts", x => new { x.OrdersId, x.ProductsId });
+                    table.PrimaryKey("PK_Commentaries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderProducts_Orders_OrdersId",
-                        column: x => x.OrdersId,
-                        principalTable: "Orders",
+                        name: "FK_Commentaries_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Remains",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Remains", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderProducts_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_Remains_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -425,34 +467,29 @@ namespace Cloth.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CartLine_OrderId",
+                table: "CartLine",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartLine_ProductId",
+                table: "CartLine",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Commentaries_ProductId",
+                table: "Commentaries",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CreditCards_ClientsDataId",
                 table: "CreditCards",
                 column: "ClientsDataId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Deliveries_ProductId",
-                table: "Deliveries",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Deliveries_WarehouseId",
                 table: "Deliveries",
                 column: "WarehouseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderProducts_ProductsId",
-                table: "OrderProducts",
-                column: "ProductsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_CardId",
-                table: "Orders",
-                column: "CardId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_ClientId",
-                table: "Orders",
-                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandId",
@@ -465,9 +502,14 @@ namespace Cloth.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Warehouse_RemainsId",
-                table: "Warehouse",
-                column: "RemainsId");
+                name: "IX_Products_OptionsId",
+                table: "Products",
+                column: "OptionsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Remains_ProductId",
+                table: "Remains",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -488,13 +530,25 @@ namespace Cloth.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CartLine");
+
+            migrationBuilder.DropTable(
+                name: "Commentaries");
+
+            migrationBuilder.DropTable(
+                name: "CreditCards");
+
+            migrationBuilder.DropTable(
                 name: "Deliveries");
 
             migrationBuilder.DropTable(
-                name: "OrderProducts");
+                name: "Pictures");
 
             migrationBuilder.DropTable(
                 name: "Promocodes");
+
+            migrationBuilder.DropTable(
+                name: "Remains");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -503,19 +557,16 @@ namespace Cloth.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Warehouse");
-
-            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
+                name: "Clients");
+
+            migrationBuilder.DropTable(
+                name: "Warehouse");
+
+            migrationBuilder.DropTable(
                 name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "Remains");
-
-            migrationBuilder.DropTable(
-                name: "CreditCards");
 
             migrationBuilder.DropTable(
                 name: "Brands");
@@ -524,7 +575,7 @@ namespace Cloth.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Clients");
+                name: "Options");
         }
     }
 }

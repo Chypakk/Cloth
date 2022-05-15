@@ -1,0 +1,37 @@
+﻿@model ProductsListViewModel
+
+@{
+    Layout = "_LayoutWithCategories";
+    ViewData["Tittle"] = "Каталог";
+}
+
+
+
+
+@if (ViewBag.SearchString != null)
+{
+    <h1>@ViewBag.SearchString</h1>
+}
+
+@if (Model.Products.Count() == 0)
+{
+    <p>Такого товара пока нет :(</p>
+}
+
+<div class="row row-cols-4">
+    @foreach (var p in Model.Products)
+    {
+        @Html.Partial("_Catalog", p);
+    }
+</div>
+
+
+<div page-model="@Model" page-action="Catalog" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-secondary"
+     page-class-selected="btn-dark"
+     page-url-category="@Model.CurrentCategory"
+     page-url-search="@Model.Search"
+     page-url-brand="@Model.CurrentBrand"
+     class="btn-group pull-right m-1"></div>
+
+
