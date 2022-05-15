@@ -1,9 +1,51 @@
 ﻿@model Order
 
+
+<div class="border">
+    <div class="row py-3">
+
+        <div class="col px-4">
+
+            <form asp-action="Checkout" asp-controller="Order" method="get" class="row">
+                <div class="col-5">
+
+                    <input name="Promocodes" class="form-control" placeholder="Введите промокод" />
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-dark">Проверить</button>
+                </div>
+
+            </form>
+        </div>
+        <div class="col px-4">
+            @*<form asp-action="Checkout" asp-controller="Order" method="get">
+                    <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
+                    <h4 class="text-center">Итого: @Model.Cart.ComputeTotalValue().ToString("c") <button class="btn btn-dark">Заказать</button></h4>
+
+                </form>*@
+
+            <h4>@ViewBag.PromocodeMessage</h4>
+            @if (ViewBag.PromocodeMessage == "Промокод действителен")
+            {
+                <p>Использован промокод на @ViewBag.Promocode%</p>
+            }
+
+        </div>
+    </div>
+
+</div>
+
 <form asp-action="Checkout" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
+    @if (ViewBag.Promocode == null)
+    {
+        <input type="hidden" name="Promocode" value="0" />
+    }
+    else
+    {
+        <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
+    }
 
     <input type="hidden" class="form-control disabled" asp-for="Name" value="@User.Identity.Name" />
 

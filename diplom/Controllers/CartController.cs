@@ -8,9 +8,9 @@ namespace Cloth.Controllers
 {
     public class CartController : Controller
     {
-        private AddDbConnect context;
+        private DataContext context;
         private Cart cart;
-        public CartController(AddDbConnect ctx, Cart cartServices) { 
+        public CartController(DataContext ctx, Cart cartServices) { 
             context = ctx;
             cart = cartServices;
         }

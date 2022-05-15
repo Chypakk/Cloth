@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cloth.Migrations
 {
-    [DbContext(typeof(AddDbConnect))]
+    [DbContext(typeof(DataContext))]
     partial class AddDbConnectModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

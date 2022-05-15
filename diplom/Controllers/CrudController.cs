@@ -1,12 +1,15 @@
 ﻿using Cloth.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace Cloth.Controllers
 {
     public class CrudController : Controller
     {
-        private AddDbConnect Context { get; set; }
+        private DataContext Context { get; set; }
+        public CrudController(DataContext ctx) { Context = ctx; }
 
+        public IActionResult CrudView() => View();
         private byte[] ConvertToBytes(IFormFile file)
         {
             Stream stream = file.OpenReadStream();
@@ -16,10 +19,6 @@ namespace Cloth.Controllers
                 return memoryStream.ToArray();
             }
         }
-
-        public CrudController(AddDbConnect ctx) { Context = ctx; }
-
-        public IActionResult CrudView() => View();
 
         //бренды
         public IActionResult BrandsView() => View(Context.Brands.OrderBy(a => a.Id));
@@ -108,8 +107,6 @@ namespace Cloth.Controllers
             up.OptionsId = product.OptionsId;
             up.Price = product.Price;
             up.BrandId = product.BrandId;
-            //up.Rating = product.Rating;
-            //up.Size = product.Size;
             up.ProductImage = ImageData;
             Context.SaveChanges();
             return RedirectToAction("ProductView");
@@ -202,6 +199,7 @@ namespace Cloth.Controllers
         [HttpPost]
         public IActionResult PromocodeAdd(Promocode promocode)
         {
+            promocode.Code = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
             Context.Promocodes.Add(promocode);
             Context.SaveChanges();
             return RedirectToAction("PromocodeView");

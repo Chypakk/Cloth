@@ -6,27 +6,37 @@
     <div class="row py-3">
 
         <div class="col px-4">
-            <form asp-action="Index" asp-controller="Cart" class="row">
-                <div class="col-5">
-                    <input type="hidden" name="flag" value="1" />
-                    <input name="Promocodes" class="form-control" placeholder="Введите промокод" />
-                    @if (ViewBag.flag == 1)
-                    {
-                        <p>@ViewBag.PromocodeMessage</p>
-                    }
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-outline-dark">Проверить</button>
-                </div>
+            @*<form asp-action="Index" asp-controller="Cart" class="row">
+                    <div class="col-5">
+                        <input type="hidden" name="flag" value="1" />
+                        <input name="Promocodes" class="form-control" placeholder="Введите промокод" />
+                        @if (ViewBag.flag == 1)
+                        {
+                            <p>@ViewBag.PromocodeMessage</p>
+                        }
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-outline-dark">Проверить</button>
+                    </div>
 
-            </form>
+                </form>*@
         </div>
         <div class="col px-4">
-            <form asp-action="Checkout" asp-controller="Order" method="get">
-                <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
-                <h4 class="text-center">Итого: @Model.Cart.ComputeTotalValue().ToString("c") <button class="btn btn-dark">Заказать</button></h4>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form asp-action="Checkout" asp-controller="Order" method="get">
+                    <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
+                    <h4 class="text-center">Итого: @Model.Cart.ComputeTotalValue().ToString("c") <button class="btn btn-dark">Заказать</button></h4>
 
-            </form>
+                </form>
+            }
+            else
+            {
+                <form asp-action="Login" asp-controller="Account" method="get">
+                    <h4 class="text-center">Итого: @Model.Cart.ComputeTotalValue().ToString("c") <button class="btn btn-dark">Заказать</button></h4>
+                </form>
+            }
+
 
 
         </div>

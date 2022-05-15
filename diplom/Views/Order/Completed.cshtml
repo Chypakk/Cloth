@@ -1,3 +1,15 @@
 ﻿@model Order
 
 <h1>Спасибо что заказали у нас товар!</h1>
+
+<a class="btn btn-outline-dark" asp-action="Catalog" asp-controller="Catalog">Вернуться в каталог</a>
+@if (User.IsInRole("Admin"))
+{
+    <a class="btn btn-outline-dark" asp-action="AdminProfile" asp-controller="Account">Перейти в профиль</a>
+}
+else
+{
+    <a class="btn btn-outline-dark" asp-action="Profile" asp-controller="Account">Перейти в профиль</a>
+}
+
+

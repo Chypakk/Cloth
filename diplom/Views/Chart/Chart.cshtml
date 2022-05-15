@@ -4,7 +4,6 @@
     Layout = "_AdminLayout";
 }
 
-
 <div class="table-responsive">
     <div class="row">
 
@@ -70,67 +69,11 @@
     </div>
 </div>
 
-
-@*<canvas class="my-4 w-100" id="myChart" width="800" height="500"></canvas>*@
 <canvas class="w-100" id="Total" width="800" height="500"></canvas>
-
 
 <script src="~/js/chart.min.js"></script>
 
-
 <script>
-
-    @*@{
-        var ListData = new List<string>();
-        var ListLabel = new List<string>();
-
-        foreach (var item in Model)
-        {
-            ListData.Add(item.Quantity.ToString() + ",");
-            ListLabel.Add(item.Product.Id.ToString() + ",");
-        }
-
-    }*@
-
-    @*const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [@foreach (var item in ListLabel){@item;}],
-            datasets: [{
-            label: ' продано: ',
-                data: [@foreach (var item in ListData)
-                {
-                    @item
-                }],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });*@
-
     const ctx2 = document.getElementById('Total').getContext('2d');
     const myChart2 = new Chart(ctx2, {
         type: 'line',
@@ -200,7 +143,4 @@
             }
         }
     });
-
-
-
 </script>

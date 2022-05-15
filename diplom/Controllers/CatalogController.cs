@@ -8,10 +8,10 @@ namespace Cloth.Controllers
     public class CatalogController : Controller
     {
 
-        private AddDbConnect Context;
+        private DataContext Context;
         private int PageSize = 8;
 
-        public CatalogController(AddDbConnect ctx)
+        public CatalogController(DataContext ctx)
         {
             Context = ctx;
         }

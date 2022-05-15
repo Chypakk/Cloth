@@ -5,8 +5,8 @@ namespace Cloth.Controllers
 {
     public class PictureController : Controller
     {
-        private AddDbConnect Data { get; set; }
-        public PictureController(AddDbConnect DC) => Data = DC;
+        private DataContext Data { get; set; }
+        public PictureController(DataContext DC) => Data = DC;
 
         public IActionResult Picture()
         {

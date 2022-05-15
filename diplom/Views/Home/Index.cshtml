@@ -1,316 +1,107 @@
-﻿@{
+﻿@model IEnumerable<Products>
+
+@{
     ViewData["Title"] = "Главная";
+    Layout = "_LayoutIndex";
 }
 
-
-@*карусель*@
-<section>
-    <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<section class="mb-3">
+    <div style="background-color: #212529; color: #fff ">
+        <div class="container text-center p-5">
+            <h1>Добро пожаловать на наш сайт</h1>
+            <p>Онлайн магазин <b>ClotH</b> является довольно крупным магазином</p>
+            <p>На нашем сайте присутствует довольно обширный каталог товаров разного бренда</p>
         </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-
-                <div class="row row-cols-1 row-cols-md-4 g-4 row-cols-sm-3">
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col d-sm-none d-md-block">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-                <div class="row row-cols-1 row-cols-md-4 g-4 row-cols-sm-3">
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col d-sm-none d-md-block">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="row row-cols-1 row-cols-md-4 g-4 row-cols-sm-3">
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col d-sm-none d-md-block">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top img-fluid" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Заглушка</h5>
-                                <p class="card-text">Заглушка</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Предыдущий</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Следующий</span>
-        </button>`
     </div>
 </section>
 
-@*коллекции*@
-<section>
-    <div class=row>
-        <div class="col">
 
-            <div class="card mb-3">
-                <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Заглушка</h5>
-                    <p class="card-text">Заглушка</p>
-                </div>
+
+<div class="container">
+    <div class="row my-3 py-2">
+        <div class="col"><h3>Каталог</h3></div>
+        <div class="col"><a asp-action="Catalog" asp-controller="Catalog" class="btn btn-dark" style="float:right">Перейти в каталог</a></div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+
+            <div class="text-center" style="background-color: #212529; ">
+                <p class="py-4">
+                    <a class="text-white" style="text-decoration: none; font-size: 24px"
+                       asp-action="Catalog"
+                       asp-controller="Catalog"
+                       asp-route-category="Одежда"
+                       asp-route-productPage="1">
+                        <span class="p-3"><b>ОДЕЖДА</b></span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="text-center" style="background-color: #212529; ">
+                <p class="py-4">
+                    <a class="text-white" style="text-decoration: none; font-size:24px;"
+                       asp-action="Catalog"
+                       asp-controller="Catalog"
+                       asp-route-category="Обувь"
+                       asp-route-productPage="1">
+                        <span class="p-3"><b>ОБУВЬ</b></span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="text-center" style="background-color: #212529; ">
+                <p class="py-4">
+                    <a class="text-white" style="text-decoration: none; font-size:24px"
+                       asp-action="Catalog"
+                       asp-controller="Catalog"
+                       asp-route-category="Аксессуары"
+                       asp-route-productPage="1">
+                        <span class="p-3"><b>АКСЕССУАРЫ</b></span>
+                    </a>
+                </p>
+            </div>
+
+            <div class="bg-light text-center">
+                <h4 class="pb-2 pt-2">Рассылка</h4>
+                <div class="border-bottom border-dark"></div>
+                <p class="pt-2">Введите вашу почту</p>
+                <input type="text" class="form-control w-75 form-item-center text-center" />
+                <button class="btn btn-dark my-3">Подписаться</button>
             </div>
 
         </div>
         <div class="col">
+            <div class="text-center py-2 mb-4"><h4><b>НОВИНКИ</b></h4></div>
+            <div class="row row-cols-4">
 
-            <div class="card mb-3">
-                <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Заглушка</h5>
-                    <p class="card-text">Заглушка</p>
-                </div>
-            </div>
-
-        </div>
-        <div class="col">
-
-            <div class="card mb-3">
-                <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Заглушка</h5>
-                    <p class="card-text">Заглушка</p>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</section>
-
-@*Тут ещё одна карусель с карточками должна быть*@
-<section>
-    <div id="Geralt" class="carousel carousel-dark slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#Geralt" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#Geralt" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#Geralt" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="~/img/boots.jpeg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Геральт принёс букет</h5>
-                                <p class="card-text">Букет самых лучших цветов и он для тебя</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#Geralt" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Предыдущий</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#Geralt" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Следующий</span>
-        </button>
-    </div>
-</section>
-
-@*Рассылка*@
-<section>
-    <div style="min-height:10rem; background-color:#22B522; color: #fff; width: 100%; margin: 0;">
-        <div class="row">
-            <div class="col-4" style="padding-top: 2%; padding-bottom: 2%">
-                <h2>Подпишись на рассылку новостей и получи скидку 10%</h2>
-            </div>
-            <div class="col" style="padding-top: 5%; padding-bottom: 2%">
-                <button type="button" class="btn btn-dark">Подписаться</button>
+                @foreach (var p in Model)
+                {
+                    @Html.Partial("_Catalog", p);
+                }
             </div>
         </div>
     </div>
-</section>
+    <div class="border-top">
+        <div class="row text-center mt-4">
+            <div class="col">
+                <h5><b>Подлинные вещи</b></h5>
+                <p>Никаких подделок, только оригинал</p>
+            </div>
+            <div class="col">
+                <h5><b>Бесплатная доставка</b></h5>
+                <p>На предоплаченные заказы от 5000 р.</p>
+            </div>
+            <div class="col">
+                <h5><b>Обширный каталог</b></h5>
+                <p>Мы продаём довольно много вещей от самый различных брендов</p>
+            </div>
+            <div class="col">
+                <h5><b>Тут я ничего не придумал</b></h5>
+                <p>Но не беда, рано или поздно что-то обязательно придумается</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 

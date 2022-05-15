@@ -4,8 +4,8 @@ namespace Cloth.Models
 {
     public class EFOrderRepository : IOrderRepository
     {
-        private AddDbConnect context;
-        public EFOrderRepository(AddDbConnect ctx) { context = ctx; }
+        private DataContext context;
+        public EFOrderRepository(DataContext ctx) { context = ctx; }
 
         public IQueryable<Order> Orders => context.Orders.Include(a => a.Lines).ThenInclude(a => a.Product);
 

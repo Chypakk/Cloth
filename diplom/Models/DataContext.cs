@@ -8,9 +8,9 @@ using Cloth.Models.ViewModel;
 
 namespace Cloth.Models
 {
-    public class AddDbConnect : IdentityDbContext<AppUser>
+    public class DataContext : IdentityDbContext<AppUser>
     {
-        public AddDbConnect(DbContextOptions<AddDbConnect> option) : base(option) { }
+        public DataContext(DbContextOptions<DataContext> option) : base(option) { }
 
         public static async Task CreateAdminUser(IServiceProvider serviceProvider, IConfiguration configuration)
         {

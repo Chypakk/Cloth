@@ -7,17 +7,38 @@ namespace Cloth.Controllers
     {
         private IOrderRepository repository;
         private Cart cart;
-        private AddDbConnect Context;
-        public OrderController(IOrderRepository orderRepository, Cart cartServices, AddDbConnect ctx)
+        private DataContext Context;
+        public OrderController(IOrderRepository orderRepository, Cart cartServices, DataContext ctx)
         {
             repository = orderRepository;
             cart = cartServices;
             Context = ctx;
         }
 
-        public IActionResult Checkout(int Promocode) 
+        public IActionResult Checkout(string? Promocodes) 
         {
-            ViewBag.Promocode = Promocode;
+            if (Promocodes != null)
+            {
+                Promocode promocode = Context.Promocodes.FirstOrDefault(a => a.Code.ToUpper() == Promocodes.ToUpper());
+                if (promocode != null)
+                {
+                    if (DateTime.Now >= promocode.StartDate && DateTime.Now <= promocode.EndDate)
+                    {
+                        ViewBag.PromocodeMessage = "Промокод действителен";
+                        ViewBag.Promocode = promocode.Percent;
+                    }
+                    else
+                    {
+                        ViewBag.PromocodeMessage = "Действие промокода закончилось";
+                    }
+                }
+                else
+                {
+                    ViewBag.PromocodeMessage = "Такого промокода не существует";
+                }
+            }
+            
+            //ViewBag.Promocode = promocode;
             return View(new Order());
         } 
         public IActionResult Completed()
@@ -50,25 +71,27 @@ namespace Cloth.Controllers
                 ModelState.AddModelError("", "Корзина пуста");
             }
 
-            foreach (var item in cart.Lines)
-            {
-                Remains remains = Context.Remains.Where(a => a.ProductId == item.Product.Id && a.Size == item.Size).FirstOrDefault();
-                if (remains != null)
-                {
-                    if (remains.Count >= item.Quantity)
-                    {
-                        remains.Count -= item.Quantity;
-                        Context.SaveChanges();
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", $"К сожалению {item.Product.Name} {remains.Size} размера есть только {remains.Count} штук");
-                    }
-                }
-            }
+            
             if (ModelState.IsValid) 
             {
-                
+                foreach (var item in cart.Lines)
+                {
+                    Remains remains = Context.Remains.Where(a => a.ProductId == item.Product.Id && a.Size == item.Size).FirstOrDefault();
+                    if (remains != null)
+                    {
+                        if (remains.Count >= item.Quantity)
+                        {
+                            remains.Count -= item.Quantity;
+                            
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", $"К сожалению {item.Product.Name} {remains.Size} размера есть только {remains.Count} штук");
+                            return View(order);
+                        }
+                    }
+                }
+                Context.SaveChanges();
                 order.Lines = cart.Lines.ToArray();
                 repository.SaveOrder(order);
                 return RedirectToAction(nameof(Completed));

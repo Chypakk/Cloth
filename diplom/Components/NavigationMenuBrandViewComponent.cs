@@ -6,8 +6,8 @@ namespace Cloth.Components
 {
     public class NavigationMenuBrandViewComponent : ViewComponent
     {
-        private AddDbConnect context;
-        public NavigationMenuBrandViewComponent(AddDbConnect ctx)
+        private DataContext context;
+        public NavigationMenuBrandViewComponent(DataContext ctx)
         {
             context = ctx;
         }

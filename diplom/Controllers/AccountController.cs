@@ -13,9 +13,9 @@ namespace Cloth.Controllers
     {
         private UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
-        private AddDbConnect Context;
+        private DataContext Context;
 
-        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, AddDbConnect ctx)
+        public AccountController(UserManager<AppUser> userMngr, SignInManager<AppUser> signInMngr, DataContext ctx)
         {
             userManager = userMngr;
             signInManager = signInMngr;

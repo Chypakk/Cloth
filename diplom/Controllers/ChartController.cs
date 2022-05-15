@@ -9,10 +9,10 @@ namespace Cloth.Controllers
 {
     public class ChartController : Controller
     {
-        private AddDbConnect context;
+        private DataContext context;
         private AnalyticsModel analyticsModel;
 
-        public ChartController(AddDbConnect ctx, AnalyticsModel mdl)
+        public ChartController(DataContext ctx, AnalyticsModel mdl)
         {
             context = ctx;
             analyticsModel = mdl;
@@ -29,8 +29,6 @@ namespace Cloth.Controllers
                 BrandId = a.BrandId,
                 Price = a.Price,
                 OptionsId = a.OptionsId,
-                //Size = a.Size,
-                //Rating = a.Rating,
             });
 
             int MostBigPrice = 1;

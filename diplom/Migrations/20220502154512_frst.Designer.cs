@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cloth.Migrations
 {
-    [DbContext(typeof(AddDbConnect))]
+    [DbContext(typeof(DataContext))]
     [Migration("20220502154512_frst")]
     partial class frst
     {

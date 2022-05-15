@@ -9,14 +9,14 @@ string ConnectionString =  builder.Configuration.GetConnectionString("MyConnecti
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<AddDbConnect>(options => options.UseSqlServer(ConnectionString));
+builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(ConnectionString));
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     options.Password.RequiredLength = 5;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
-}).AddEntityFrameworkStores<AddDbConnect>().AddDefaultTokenProviders();
+}).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 builder.Services.AddMvc(s => s.EnableEndpointRouting = false);
 
 builder.Services.AddTransient<IOrderRepository, EFOrderRepository>();
@@ -87,7 +87,7 @@ app.UseMvcWithDefaultRoute();
 //    routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
 //});
 
-AddDbConnect.CreateAdminUser(app.Services, app.Configuration).Wait();
+DataContext.CreateAdminUser(app.Services, app.Configuration).Wait();
 
 //app.MapControllerRoute(
 //    name: "default",
