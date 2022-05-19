@@ -98,6 +98,7 @@ namespace Cloth.Controllers
         [HttpPost]
         public IActionResult ProductUpdate(Products product, IFormFile file)
         {
+
             byte[] ImageData = ConvertToBytes(file);
 
             Products up = Context.Products.FirstOrDefault(Product => Product.Id == product.Id);
@@ -214,14 +215,14 @@ namespace Cloth.Controllers
             pr.Code = promocode.Code;
             pr.Percent = promocode.Percent;
             Context.SaveChanges();
-            return RedirectToAction("PromocodesView");
+            return RedirectToAction("PromocodeView");
         }
         public IActionResult PromocodeDelete(int Id)
         {
             Promocode PromDelete = Context.Promocodes.FirstOrDefault(a => a.Id == Id);
             Context.Promocodes.Remove(PromDelete);
             Context.SaveChanges();
-            return RedirectToAction("PromocodesView");
+            return RedirectToAction("PromocodeView");
         }
     }
 }

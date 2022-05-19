@@ -89,10 +89,11 @@ namespace Cloth.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult AdminProfile()
+        public async Task<IActionResult> AdminProfile()
         {
             var result = new ProfileViewModel
             {
+                User = await userManager.FindByNameAsync(User.Identity.Name),
                 Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
                 CartLines = Context.CartLine.Include(a => a.Product),
                 Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
@@ -108,6 +109,36 @@ namespace Cloth.Controllers
                 Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
             };
             return View(result);
+        }
+
+        public async Task<IActionResult> UpdateProfile(AppUser user)
+        {
+            AppUser upUser = await userManager.FindByNameAsync(User.Identity.Name);
+            upUser.FirstName = user.FirstName;
+            IdentityResult resulting = await userManager.UpdateAsync(upUser);
+            bool Role = await userManager.IsInRoleAsync(upUser, "Admin");
+            if (Role)
+            {
+                var result = new ProfileViewModel
+                {
+                    User = await userManager.FindByNameAsync(User.Identity.Name),
+                    Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
+                    CartLines = Context.CartLine.Include(a => a.Product),
+                    Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
+                };
+                return RedirectToAction("AdminProfile", result);
+            }
+            else
+            {
+                var result = new ProfileViewModel
+                {
+                    User = await userManager.FindByNameAsync(User.Identity.Name),
+                    Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
+                    CartLines = Context.CartLine.Include(a => a.Product),
+                    Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
+                };
+                return RedirectToAction("Profile", result);
+            }
         }
     }
 }

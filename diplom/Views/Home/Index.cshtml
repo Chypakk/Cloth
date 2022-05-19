@@ -5,7 +5,7 @@
     Layout = "_LayoutIndex";
 }
 
-<section class="mb-3">
+<section class="">
     <div style="background-color: #212529; color: #fff ">
         <div class="container text-center p-5">
             <h1>Добро пожаловать на наш сайт</h1>
@@ -15,93 +15,94 @@
     </div>
 </section>
 
-
-
-<div class="container">
-    <div class="row my-3 py-2">
-        <div class="col"><h3>Каталог</h3></div>
-        <div class="col"><a asp-action="Catalog" asp-controller="Catalog" class="btn btn-dark" style="float:right">Перейти в каталог</a></div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-
-            <div class="text-center" style="background-color: #212529; ">
-                <p class="py-4">
-                    <a class="text-white" style="text-decoration: none; font-size: 24px"
-                       asp-action="Catalog"
-                       asp-controller="Catalog"
-                       asp-route-category="Одежда"
-                       asp-route-productPage="1">
-                        <span class="p-3"><b>ОДЕЖДА</b></span>
-                    </a>
-                </p>
-            </div>
-
-            <div class="text-center" style="background-color: #212529; ">
-                <p class="py-4">
-                    <a class="text-white" style="text-decoration: none; font-size:24px;"
-                       asp-action="Catalog"
-                       asp-controller="Catalog"
-                       asp-route-category="Обувь"
-                       asp-route-productPage="1">
-                        <span class="p-3"><b>ОБУВЬ</b></span>
-                    </a>
-                </p>
-            </div>
-
-            <div class="text-center" style="background-color: #212529; ">
-                <p class="py-4">
-                    <a class="text-white" style="text-decoration: none; font-size:24px"
-                       asp-action="Catalog"
-                       asp-controller="Catalog"
-                       asp-route-category="Аксессуары"
-                       asp-route-productPage="1">
-                        <span class="p-3"><b>АКСЕССУАРЫ</b></span>
-                    </a>
-                </p>
-            </div>
-
-            <div class="bg-light text-center">
-                <h4 class="pb-2 pt-2">Рассылка</h4>
-                <div class="border-bottom border-dark"></div>
-                <p class="pt-2">Введите вашу почту</p>
-                <input type="text" class="form-control w-75 form-item-center text-center" />
-                <button class="btn btn-dark my-3">Подписаться</button>
-            </div>
-
+<div>
+    <div class="container bg-white">
+        <div class="row my-3 py-2">
+            <div class="col"><h3>Каталог</h3></div>
+            <div class="col"><a asp-action="Catalog" asp-controller="Catalog" class="btn btn-dark" style="float:right">Перейти в каталог</a></div>
         </div>
-        <div class="col">
-            <div class="text-center py-2 mb-4"><h4><b>НОВИНКИ</b></h4></div>
-            <div class="row row-cols-4">
+        <div class="row">
+            <div class="col-3">
 
-                @foreach (var p in Model)
-                {
-                    @Html.Partial("_Catalog", p);
-                }
+                <div class="text-center" style="background-color: #212529; ">
+                    <p class="py-4">
+                        <a class="text-white" style="text-decoration: none; font-size: 24px"
+                           asp-action="Catalog"
+                           asp-controller="Catalog"
+                           asp-route-category="Одежда"
+                           asp-route-productPage="1">
+                            <span class="p-3"><b>ОДЕЖДА</b></span>
+                        </a>
+                    </p>
+                </div>
+
+                <div class="text-center" style="background-color: #212529; ">
+                    <p class="py-4">
+                        <a class="text-white" style="text-decoration: none; font-size:24px;"
+                           asp-action="Catalog"
+                           asp-controller="Catalog"
+                           asp-route-category="Обувь"
+                           asp-route-productPage="1">
+                            <span class="p-3"><b>ОБУВЬ</b></span>
+                        </a>
+                    </p>
+                </div>
+
+                <div class="text-center" style="background-color: #212529; ">
+                    <p class="py-4">
+                        <a class="text-white" style="text-decoration: none; font-size:24px"
+                           asp-action="Catalog"
+                           asp-controller="Catalog"
+                           asp-route-category="Аксессуары"
+                           asp-route-productPage="1">
+                            <span class="p-3"><b>АКСЕССУАРЫ</b></span>
+                        </a>
+                    </p>
+                </div>
+
+                <div class="bg-light text-center" style="float:inline-end">
+                    <h4 class="pb-2 pt-2">Рассылка</h4>
+                    <p class="pt-2">Введите вашу почту</p>
+                    <input type="text" class="form-control w-75 form-item-center text-center" />
+                    <button class="btn btn-dark my-3">Подписаться</button>
+                </div>
+
+            </div>
+            <div class="col">
+                <div class="text-center py-2 mb-4"><h4><b>НОВИНКИ</b></h4></div>
+                <div class="row row-cols-4">
+
+                    @foreach (var p in Model)
+                    {
+                        @Html.Partial("_Catalog", p);
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="border-top">
-        <div class="row text-center mt-4">
-            <div class="col">
-                <h5><b>Подлинные вещи</b></h5>
-                <p>Никаких подделок, только оригинал</p>
-            </div>
-            <div class="col">
-                <h5><b>Бесплатная доставка</b></h5>
-                <p>На предоплаченные заказы от 5000 р.</p>
-            </div>
-            <div class="col">
-                <h5><b>Обширный каталог</b></h5>
-                <p>Мы продаём довольно много вещей от самый различных брендов</p>
-            </div>
-            <div class="col">
-                <h5><b>Тут я ничего не придумал</b></h5>
-                <p>Но не беда, рано или поздно что-то обязательно придумается</p>
+        <div class="border-top">
+            <div class="row text-center mt-4">
+                <div class="col">
+                    <h5><b>Подлинные вещи</b></h5>
+                    <p>Никаких подделок, только оригинал</p>
+                </div>
+                <div class="col">
+                    <h5><b>Бесплатная доставка</b></h5>
+                    <p>На предоплаченные заказы от 5000 р.</p>
+                </div>
+                <div class="col">
+                    <h5><b>Обширный каталог</b></h5>
+                    <p>Мы продаём довольно много вещей от самый различных брендов</p>
+                </div>
+                <div class="col">
+                    <h5><b>Тут я ничего не придумал</b></h5>
+                    <p>Но не беда, рано или поздно что-то обязательно придумается</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 
 

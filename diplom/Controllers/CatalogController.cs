@@ -43,12 +43,12 @@ namespace Cloth.Controllers
                     ItemsPerPage = PageSize,
                     TotalItems = Context.Products.Count()
                 },
-                
+
                 CurrentCategory = category,
                 Search = search,
                 CurrentBrand = brand,
                 MinPrice = minPrice,
-                MaxPrice = maxPrice
+                MaxPrice = maxPrice,
             };
 
             if (search != null)

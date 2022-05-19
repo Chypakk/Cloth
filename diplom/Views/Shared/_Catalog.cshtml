@@ -4,7 +4,7 @@
     <form id="@Model.Id" asp-action="ProductCard" asp-controller="Catalog" method="post">
         <div class="card mb-2 h-100">
 
-            @Html.Raw("<img class='card-img-top img-carousel', style='height:210px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.ProductImage) + "\"/>")
+            @Html.Raw("<img class='card-img-top img-carousel', style='height:270px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.ProductImage) + "\"/>")
 
             <div class="card-body">
                 <input type="hidden" name="ComId" value="@Model.Id" />

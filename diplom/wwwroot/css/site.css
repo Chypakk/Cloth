@@ -53,3 +53,16 @@ body {
     margin-right:auto;
     margin-left:auto;
 }
+
+.bg-gray {
+    background-color: #E9E9E9;
+}
+
+.cart-text td {
+    vertical-align: sub;
+}
+
+.bg-index {
+    background-color: #212529; 
+    color: #fff;
+}

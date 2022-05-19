@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - cloth</title>
+    <title>@ViewData["Title"] - ClotH</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/diplom.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <script src="https://kit.fontawesome.com/ab4899f3b5.js" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body class="">
 
     <header class="p-3 bg-white sticky-top" style="margin-bottom: 1%">
         <div class="container">
@@ -18,24 +18,22 @@
 
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a asp-action="Index" asp-controller="Home" class="navbar-brand nav-link px-2 text-black">ClotH</a></li>
+                    <li><a asp-action="Index" asp-controller="Home" class="navbar-brand nav-link px-2 text-black"><b>ClotH</b></a></li>
                     <li><a asp-action="Index" asp-controller="Home" class="nav-link px-2  text-black">Главная</a></li>
                     <li><a asp-action="Catalog" asp-controller="Catalog" class="nav-link px-2 text-black">Каталог</a></li>
-                    <li><a href="#" class="nav-link px-2 ">FAQs</a></li>
-                    <li><a href="#" class="nav-link px-2 ">About</a></li>
+                    <li><a asp-action="FAQ" asp-controller="Home" class="nav-link px-2 text-black">Вопросы</a></li>
+                    <li><a asp-action="CompanyInfo" asp-controller="Home" class="nav-link px-2 text-black">О нас</a></li>
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="get" asp-action="Catalog" asp-controller="Catalog">
-                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="search">
+                    <input type="search" class="form-control" placeholder="Поиск" aria-label="Search" name="search">
                 </form>
 
                 <div class="nav">
 
-
                     <a class=" btn-sm px-2 me-2" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
                         @*<i class="fa fa-shopping-cart"></i>*@ <img src="~/img/shopping-bag.png" width="25" height="25" />
                     </a>
-
 
                     @if (User.Identity.IsAuthenticated)
                     {
@@ -68,11 +66,9 @@
         </div>
     </header>
 
-
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
-
 
     <div class="bg-white border-top my-5">
         <div class="container">
@@ -80,7 +76,7 @@
                 <div class="row py-5 row-cols-4 ">
 
                     <div class="col">
-                        <h4 style="font-size:54px" class="text-black">ClotH</h4>
+                        <h4 style="font-size:54px"><a asp-action="Index" asp-controller="Home" class="text-black" style="text-decoration:none"><b>ClotH</b></a></h4>
                         <p class="text-muted">
                             все права зарегестрированы &copy; 2022
                         </p>
@@ -131,8 +127,6 @@
             </footer>
         </div>
     </div>
-
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

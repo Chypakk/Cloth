@@ -23,6 +23,8 @@ namespace Cloth.Controllers
         public IActionResult CompanyInfo() => View();
         public IActionResult ContactInfo() => View();
         public IActionResult ChangeAndRefund() => View();
+        public IActionResult FAQ() => View();
+        public IActionResult Delivery() => View();
         public IActionResult Index() => View(Context.Products.OrderByDescending(a => a.Id).Take(PageSize).ToList());
         public IActionResult Privacy() => View();
 

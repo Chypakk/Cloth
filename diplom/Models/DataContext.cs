@@ -18,6 +18,7 @@ namespace Cloth.Models
             RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             string username = configuration["Data:AdminUser:Name"];
+            string firstname = configuration["Data:AdminUser:FirstName"];
             string email = configuration["Data:AdminUser:Email"];
             string password = configuration["Data:AdminUser:Password"];
             string role = configuration["Data:AdminUser:Role"];
@@ -33,6 +34,7 @@ namespace Cloth.Models
                 {
                     UserName = username,
                     Email = email,
+                    FirstName = firstname
                 };
 
                 IdentityResult result = await userManager.CreateAsync(user, password);

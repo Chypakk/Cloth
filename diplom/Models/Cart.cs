@@ -16,6 +16,8 @@
                 {
                     Product = product,
                     Quantity = quantity,
+                    ProductName = product.Name,
+                    ProductPrice = product.Price,
                     Size = size
                 });
 
@@ -48,6 +50,8 @@
     {
         public int CartLineId { get; set; }
         public Products Product { get; set; }
+        public string ProductName { get; set; }
+        public int ProductPrice { get; set; }
         public int Quantity { get; set; }
         public string Size { get; set; }
     }

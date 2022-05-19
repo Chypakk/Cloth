@@ -13,7 +13,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active img-carousel">
 
-                            @Html.Raw("<img class='d-block img-carousel', style='height: 300px; width: 200px ' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Products.ProductImage) + "\" />")
+                            @Html.Raw("<img class='d-block img-carousel', style='height: 480px; ' src=\"data:image/jpeg;base64," + Convert.ToBase64String(Model.Products.ProductImage) + "\" />")
 
                         </div>
                         @foreach (var item in Model.Picture)
@@ -102,26 +102,38 @@
                             if (Model.Products.Remains.Count() != 0)
                             {
                                 <span class="mx-1">Размер:</span>
-                            }
-                            foreach (var item in Model.Products.Remains)
-                            {
-                                if (flag == true)
+                                foreach (var item in Model.Products.Remains)
                                 {
-                                    <input type="radio" class="btn-check btn-sm" name="Size" id="@item.Id" value="@item.Size" autocomplete="off" checked>
-                                    <label class="btn btn-outline-dark btn-sm" for="@item.Id">@item.Size</label> flag = false;
+                                    if (flag == true)
+                                    {
+                                        <input type="radio" class="btn-check btn-sm" name="Size" id="@item.Id" value="@item.Size" autocomplete="off" checked>
+                                        <label class="btn btn-outline-dark btn-sm" for="@item.Id">@item.Size</label> flag = false;
+                                    }
+                                    else
+                                    {
+                                        <input type="radio" class="btn-check btn-sm" name="Size" id="@item.Id" value="@item.Size" autocomplete="off">
+                                        <label class="btn btn-outline-dark btn-sm" for="@item.Id">@item.Size</label> }
                                 }
-                                else
-                                {
-                                    <input type="radio" class="btn-check btn-sm" name="Size" id="@item.Id" value="@item.Size" autocomplete="off">
-                                    <label class="btn btn-outline-dark btn-sm" for="@item.Id">@item.Size</label> }
-                            } }
+                            }
+                        }
+
 
 
                     </div>
 
-                    <input class="form-control w-50 form-item-center text-center" value="1" type="number" name="Quantity" />
+                    @if (Model.Products.Remains.Count() != 0)
+                    {
+                        <input class="form-control w-50 form-item-center text-center" value="1" type="number" name="Quantity" />
 
-                    <button type="submit" class="w-50 btn btn-dark text-white form-item-center" style="display:block; margin-top:15px;">Купить <i class="fa-solid fa-cart-arrow-down"></i></button>
+                        <button type="submit" class="w-50 btn btn-dark text-white form-item-center" style="display:block; margin-top:15px;">Купить <i class="fa-solid fa-cart-arrow-down"></i></button>
+                    }
+                    else
+                    {
+                        <p>К сожалению товар закончился :(</p>
+                        <button type="submit" class="w-50 btn btn-dark text-white form-item-center disabled" style="display:block; margin-top:15px;">Купить <i class="fa-solid fa-cart-arrow-down"></i></button>
+                    }
+
+
                 </form>
             </div>
 

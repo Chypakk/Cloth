@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-auto">
-        <form asp-action="ProductUpdate" method="post">
+        <form asp-action="ProductUpdate" method="post" enctype="multipart/form-data">
 
             <input type="hidden" asp-for="@Model.Id" />
 
@@ -24,14 +24,19 @@
             <label>Цена</label>
             <input class="form-control" asp-for="@Model.Price" />
 
+            <label>Дополнительная инфа</label>
+            <input class="form-control" asp-for="@Model.OptionsId" />
+
             @*<label>Размер</label>
-            <input class="form-control" asp-for="@Model.Size" />*@
+        <input class="form-control" asp-for="@Model.Size" />*@
 
             @*<label>Рейтинг</label>
-            <input class="form-control" asp-for="@Model.Rating" />*@
+        <input class="form-control" asp-for="@Model.Rating" />*@
 
-            <label>Изображение</label>
-            <input class="form-control" type="file" asp-for="@Model.ProductImage" />
+            <fieldset>
+                <label>Изображение</label>
+                <input class="form-control" type="file" name="file" asp-for="@Model.ProductImage" />
+            </fieldset>
 
             <button type="submit" class="btn btn-outline-dark">Отправить</button>
         </form>

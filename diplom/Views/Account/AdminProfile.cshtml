@@ -13,96 +13,114 @@
     }
 }
 
-<h1>Добро пожаловать @User.Identity.Name</h1>
+<div class="row">
+    <div class="col-6">
+        <h1>Добро пожаловать @User.Identity.Name</h1>
+        <form method="post" asp-action="UpdateProfile" asp-controller="Account">
 
-<button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    История покупок
-</button>
+            <input asp-for="@Model.User.FirstName" placeholder="@Model.User.FirstName" />
 
-<div class="collapse" id="collapseExample">
-    <div style="overflow-y: scroll; height: 30rem; width: 60rem" tabindex="0" class="scrollarea mt-2">
-        <table class="table table-border">
-            <thead>
-                <tr>
-                    <th scope="col">День покупки</th>
-                    <th scope="col">Товар</th>
-                    <th scope="col">Количество</th>
-                    <th scope="col">Промежуточный итог</th>
-                </tr>
-            </thead>
-            @foreach (var item in Model.Order)
-            {
+            <button type="submit" class="btn btn-dark">Подтвердить</button>
 
-                <tr>
-                    <th scope="row">@item.OrderDate</th>
-                    <td>
-                        <table>
-                            @if (User.Identity.Name == item.Name)
-                            {
-                                foreach (var i in Model.CartLines)
-                                {
+        </form>
+    </div>
 
-                                    @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+    <div class="col-6">
+        <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            История покупок
+        </button>
+
+        <div class="collapse" id="collapseExample">
+            <div style="overflow-y: scroll; height: 50rem; width: 50rem" tabindex="0" class="scrollarea mt-2">
+
+                @foreach (var item in Model.Order)
+                {
+                    <table class="table table-border">
+                        <thead>
+                            <tr>
+                                <th scope="col">День покупки</th>
+                                <th scope="col">Товар</th>
+                                <th scope="col">Количество</th>
+                                <th scope="col">Промежуточный итог</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <th scope="row">@item.OrderDate</th>
+                            <td>
+                                <table>
+                                    @if (User.Identity.Name == item.Name)
                                     {
-                                        <tr>
-                                            <td class="text-center">@product.Product.Name</td>
+                                        foreach (var i in Model.CartLines)
+                                        {
 
-                                        </tr>
+                                            @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                            {
+                                                <tr>
+                                                    <td class="text-center">@product.ProductName</td>
+
+                                                </tr>
+                                            }
+
+                                        }
                                     }
-
-                                }
-                            }
-                        </table>
-                    </td>
-                    <td>
-                        <table>
-                            @if (User.Identity.Name == item.Name)
-                            {
-                                foreach (var i in Model.CartLines)
-                                {
-
-                                    @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    @if (User.Identity.Name == item.Name)
                                     {
-                                        <tr>
-                                            <td class="text-center">@product.Quantity</td>
-                                        </tr>
+                                        foreach (var i in Model.CartLines)
+                                        {
+
+                                            @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                            {
+                                                <tr>
+                                                    <td class="text-center">@product.Quantity</td>
+                                                </tr>
+                                            }
+
+                                        }
                                     }
-
-                                }
-                            }
-                        </table>
-                    </td>
-                    <td>
-                        <table>
-                            @if (User.Identity.Name == item.Name)
-                            {
-                                foreach (var i in Model.CartLines)
-                                {
-
-                                    @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    @if (User.Identity.Name == item.Name)
                                     {
-                                        <tr>
-                                            <td class="text-center">@((product.Quantity*product.Product.Price).ToString("c"))</td>
-                                        </tr>
-                                    }
+                                        foreach (var i in Model.CartLines)
+                                        {
 
-                                }
+                                            @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                            {
+                                                <tr>
+                                                    <td class="text-center">@((product.Quantity*product.ProductPrice).ToString("c"))</td>
+                                                </tr>
+                                            }
+
+                                        }
+                                    }
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            @if (item.UsingPromocode)
+                            {
+                                <th>Использован промокд</th>
                             }
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    @if (item.UsingPromocode)
-                    {
-                        <th>Использован промокд</th>
-                    }
-                    else
-                    {
-                        <th>Промокод не использован</th>
-                    }
-                </tr>
-                <tr class="table-dark"><th colspan="3">Итого:</th><td>@item.TotalPrice.ToString("c")</td></tr>
-            }
-        </table>
+                            else
+                            {
+                                <th>Промокод не использован</th>
+                            }
+                        </tr>
+                        <tr class="table-dark"><th colspan="3">Итого:</th><td>@item.TotalPrice.ToString("c")</td></tr>
+                    </table>
+                }
+
+            </div>
+        </div>
+
     </div>
 </div>
+
+
+
