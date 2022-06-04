@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/ab4899f3b5.js" crossorigin="anonymous"></script>
 
 </head>
-<body class="">
+<body class="bg-gray">
 
     <header class="p-3 border-bottom bg-white" style="margin-bottom: 1%">
         <div class="container">
@@ -42,26 +42,26 @@
                         if (User.IsInRole("Admin"))
                         {
 
-        <a class="nav-link px-2" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a> }
+                            <a class="nav-link px-2" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a> }
                         else
                         {
-        <div class="nav-item">
-            <a class="nav-link px-2" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
-        </div> }
+                            <div class="nav-item">
+                                <a class="nav-link px-2" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
+                            </div> }
 
                     }
                     else
                     {
-        <div class="nav-item">
-            <a class="nav-link px-2" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/img/user.png" width="25" height="25" /></a>
-        </div>}
+                        <div class="nav-item">
+                            <a class="nav-link px-2" asp-area="" asp-controller="Account" asp-action="Login"><img src="~/img/user.png" width="25" height="25" /></a>
+                        </div>}
 
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="container bg-white">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

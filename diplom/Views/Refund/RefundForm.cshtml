@@ -1,0 +1,21 @@
+﻿@model Refund
+
+@if (User.IsInRole("Admin"))
+{
+    Layout = "_AdminLayout";
+}
+else
+{
+    Layout = "_Layout";
+}
+@{
+    
+    ViewData["Title"] = "Возврат";
+}
+
+<form asp-action="RefundFormSave" asp-controller="Refund" method="post">
+    <input type="hidden" name="OrderId" value="@ViewBag.OrderId" />
+    <label class="form-label">Напишите причину возврата</label>
+    <textarea class="form-control" asp-for="UserText"></textarea>
+    <button class="btn btn-dark">Отправить</button>
+</form>

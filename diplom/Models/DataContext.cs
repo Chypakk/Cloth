@@ -49,20 +49,17 @@ namespace Cloth.Models
         public DbSet<Options> Options { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Commentaries> Commentaries { get; set; }
-        public DbSet<ClientsData> Clients { get; set; }
-        public DbSet<CreditCard> CreditCards { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Products> Products { get; set; }
         public DbSet<Promocode> Promocodes { get; set; }
         public DbSet<Remains> Remains { get; set; }
-        public DbSet<Deliveries> Deliveries { get; set; }
         public DbSet<CartLine> CartLine { get; set; }
         public DbSet<Picture> Pictures { get; set; }
+        public DbSet<Refund> Refunds { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
 
             //продукт - бренд - категория - доп инфа - комментарии - остатки
             modelBuilder.Entity<Products>()
@@ -89,34 +86,6 @@ namespace Cloth.Models
                 .HasOne(a => a.Products)
                 .WithMany(a => a.Remains)
                 .HasForeignKey(a => a.ProductId);
-
-            ////заказ - продукты - кредитка - клиент
-            //modelBuilder.Entity<Order>()
-            //    .HasMany(b => b.Products)
-            //    .WithMany(a => a.Orders)
-            //    .UsingEntity(b => b.ToTable("OrderProducts"));
-
-            //modelBuilder.Entity<Order>()
-            //    .HasOne(b => b.CreditCard)
-            //    .WithMany(a => a.Orders)
-            //    .HasForeignKey(b => b.CardId).OnDelete(DeleteBehavior.NoAction);
-
-            //modelBuilder.Entity<Order>()
-            //    .HasOne(b => b.ClientsData)
-            //    .WithMany(a => a.Orders)
-            //    .HasForeignKey(b => b.ClientId).OnDelete(DeleteBehavior.NoAction);
-
-            ////остатки - продукты
-            //modelBuilder.Entity<Products>()
-            //    .HasOne(b => b.Remains)
-            //    .WithMany(a => a.Products)
-            //    .HasForeignKey(b => b.RemainsId);
-
-            ////поставщики - склад
-            //modelBuilder.Entity<Deliveries>()
-            //    .HasOne(b => b.Warehouse)
-            //    .WithMany(a => a.Deliveries)
-            //    .HasForeignKey(b => b.WarehouseId).OnDelete(DeleteBehavior.NoAction);
 
         }
     }

@@ -9,7 +9,7 @@ namespace Cloth.Controllers
     {
 
         private DataContext Context;
-        private int PageSize = 8;
+        private int PageSize = 9;
 
         public CatalogController(DataContext ctx)
         {

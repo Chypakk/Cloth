@@ -100,10 +100,11 @@ namespace Cloth.Controllers
             };
             return View(result);
         } 
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
             var result = new ProfileViewModel
             {
+                User = await userManager.FindByNameAsync(User.Identity.Name),
                 Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
                 CartLines = Context.CartLine.Include(a => a.Product),
                 Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
@@ -115,6 +116,11 @@ namespace Cloth.Controllers
         {
             AppUser upUser = await userManager.FindByNameAsync(User.Identity.Name);
             upUser.FirstName = user.FirstName;
+            upUser.LastName = user.LastName;
+            upUser.Country = user.Country;
+            upUser.City = user.City;
+            upUser.Adress = user.Adress;
+            upUser.Index = user.Index;
             IdentityResult resulting = await userManager.UpdateAsync(upUser);
             bool Role = await userManager.IsInRoleAsync(upUser, "Admin");
             if (Role)

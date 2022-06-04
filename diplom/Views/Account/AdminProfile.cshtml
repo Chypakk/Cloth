@@ -2,6 +2,7 @@
 
 @{
     Layout = "_AdminLayout";
+    ViewData["Title"] = "Профиль админа";
 }
 
 @foreach (var item in Model.Picture)
@@ -14,18 +15,62 @@
 }
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-6" style="width: 35rem">
         <h1>Добро пожаловать @User.Identity.Name</h1>
         <form method="post" asp-action="UpdateProfile" asp-controller="Account">
 
-            <input asp-for="@Model.User.FirstName" placeholder="@Model.User.FirstName" />
+            <div class="row py-2">
+                <label class="col-form-label col-6">Имя</label>
+                <div class="col-6">
+                    <input asp-for="@Model.User.FirstName" placeholder="@Model.User.FirstName" class="form-control" />
+                </div>
 
-            <button type="submit" class="btn btn-dark">Подтвердить</button>
+            </div>
+
+            <div class="row py-2">
+                <label class="col-form-label col-6">Фамилия</label>
+                <div class="col-6">
+                    <input asp-for="@Model.User.LastName" placeholder="@Model.User.LastName" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row py-2">
+                <label class="col-form-label col-6">Страна</label>
+                <div class="col-6">
+                    <input asp-for="@Model.User.Country" placeholder="@Model.User.Country" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row py-2">
+                <label class="col-form-label col-6">Город</label>
+                <div class="col-6">
+                    <input asp-for="@Model.User.City" placeholder="@Model.User.City" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row py-2">
+                <label class="col-form-label col-6">Адрес</label>
+                <div class="col-6">
+                    <input asp-for="@Model.User.Adress" placeholder="@Model.User.Adress" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row py-2">
+                <label class="col-form-label col-6">Индекс</label>
+                <div class="col-6">
+                    <input asp-for="@Model.User.Index" placeholder="@Model.User.Index" class="form-control" />
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-dark">Подтвердить</button>
+            </div>
+
 
         </form>
     </div>
 
-    <div class="col-6">
+    <div class="col-auto">
         <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
             История покупок
         </button>
@@ -46,72 +91,100 @@
                         </thead>
                         <tr>
                             <th scope="row">@item.OrderDate</th>
-                            <td>
-                                <table>
-                                    @if (User.Identity.Name == item.Name)
-                                    {
-                                        foreach (var i in Model.CartLines)
+                            @if (Model.CartLines.Count() == 0)
+                            {
+                                <td colspan="3">кажется что-то поломалось :(</td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <table>
+                                        @if (User.Identity.Name == item.Name)
                                         {
-
-                                            @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                            foreach (var i in Model.CartLines)
                                             {
-                                                <tr>
-                                                    <td class="text-center">@product.ProductName</td>
 
-                                                </tr>
+                                                @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                                {
+                                                    <tr>
+                                                        <td class="text-center">@product.ProductName</td>
+
+                                                    </tr>
+                                                }
                                             }
-
                                         }
-                                    }
-                                </table>
-                            </td>
-                            <td>
-                                <table>
-                                    @if (User.Identity.Name == item.Name)
-                                    {
-                                        foreach (var i in Model.CartLines)
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        @if (User.Identity.Name == item.Name)
                                         {
-
-                                            @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                            foreach (var i in Model.CartLines)
                                             {
-                                                <tr>
-                                                    <td class="text-center">@product.Quantity</td>
-                                                </tr>
-                                            }
 
+                                                @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                                {
+                                                    <tr>
+                                                        <td class="text-center">@product.Quantity</td>
+                                                    </tr>
+                                                }
+
+                                            }
                                         }
-                                    }
-                                </table>
-                            </td>
-                            <td>
-                                <table>
-                                    @if (User.Identity.Name == item.Name)
-                                    {
-                                        foreach (var i in Model.CartLines)
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        @if (User.Identity.Name == item.Name)
                                         {
-
-                                            @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                            foreach (var i in Model.CartLines)
                                             {
-                                                <tr>
-                                                    <td class="text-center">@((product.Quantity*product.ProductPrice).ToString("c"))</td>
-                                                </tr>
-                                            }
 
+                                                @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                                {
+                                                    <tr>
+                                                        <td class="text-center">@((product.Quantity*product.ProductPrice).ToString("c"))</td>
+                                                    </tr>
+                                                }
+
+                                            }
                                         }
-                                    }
-                                </table>
-                            </td>
+                                    </table>
+                                </td>
+
+                            }
+
                         </tr>
                         <tr>
                             @if (item.UsingPromocode)
                             {
-                                <th>Использован промокд</th>
+                                <th>Использован промокд на @item.PromocodePercent%</th>
                             }
                             else
                             {
                                 <th>Промокод не использован</th>
                             }
                         </tr>
+                        <tr>
+                            <th>Статус заказа: </th><td>@item.Status</td>
+                            @if (item.Refund == null)
+                            {
+                                <td>
+                                    <form asp-action="RefundForm" asp-controller="Refund" method="post">
+                                        <input value="@item.Id" name="Id" type="hidden" />
+                                        <input value="@User.Identity.Name" name="Username" type="hidden" />
+                                        <button type="submit" class="btn btn-outline-dark">Запросить возврат</button>
+                                    </form>
+                                </td>
+                            }
+
+                        </tr>
+                        @if (item.Refund != null)
+                        {
+                            <tr>
+                                <th>Итог возврата: </th><td>@item.Refund</td>
+                            </tr>
+                        }
                         <tr class="table-dark"><th colspan="3">Итого:</th><td>@item.TotalPrice.ToString("c")</td></tr>
                     </table>
                 }

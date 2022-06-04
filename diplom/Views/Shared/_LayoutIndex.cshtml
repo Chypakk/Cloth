@@ -10,9 +10,9 @@
     <script src="https://kit.fontawesome.com/ab4899f3b5.js" crossorigin="anonymous"></script>
 
 </head>
-<body class="">
+<body class="bg-gray">
 
-    <header class="p-3 bg-white sticky-top" style="margin-bottom: 1%">
+    <header class="p-3 bg-white sticky-top">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
@@ -70,63 +70,68 @@
         @RenderBody()
     </main>
 
-    <div class="bg-white border-top my-5">
-        <div class="container">
-            <footer class="footer text-muted">
-                <div class="row py-5 row-cols-4 ">
+    
 
-                    <div class="col">
-                        <h4 style="font-size:54px"><a asp-action="Index" asp-controller="Home" class="text-black" style="text-decoration:none"><b>ClotH</b></a></h4>
-                        <p class="text-muted">
-                            все права зарегестрированы &copy; 2022
-                        </p>
-                    </div>
-                    <div class="col">
-                        <h4 class="text-black">Каталог</h4>
-                        <p>
-                            <a class="text-muted" style="text-decoration: none"
-                               asp-action="Catalog"
-                               asp-controller="Catalog"
-                               asp-route-category="Одежда"
-                               asp-route-productPage="1">
-                                Одежда
-                            </a>
-                        </p>
-                        <p>
-                            <a class="text-muted" style="text-decoration: none"
-                               asp-action="Catalog"
-                               asp-controller="Catalog"
-                               asp-route-category="Обувь"
-                               asp-route-productPage="1">
-                                Обувь
-                            </a>
-                        </p>
-                        <p>
-                            <a class="text-muted" style="text-decoration: none"
-                               asp-action="Catalog"
-                               asp-controller="Catalog"
-                               asp-route-category="Аксессуары"
-                               asp-route-productPage="1">
-                                Аксессуары
-                            </a>
-                        </p>
-                    </div>
+    <div class="bg-white">
+        <div class=" border-top mt-5">
+            <div class="container">
+                <footer class="footer text-muted">
+                    <div class="row py-5 row-cols-4 ">
 
-                    <div class="col">
-                        <h4 class="text-black">Поддержка</h4>
-                        <p><a class="text-muted" style="text-decoration: none" asp-action="ChangeAndRefund" asp-controller="Home">Возврат и обмен товара</a></p>
-                        <p><a class="text-muted" style="text-decoration: none" asp-action="Delivery" asp-controller="Home">Доставка</a></p>
-                        <p><a class="text-muted" style="text-decoration-line: none" asp-action="FAQ" asp-controller="Home">Вопросы</a></p>
+                        <div class="col">
+                            <h4 style="font-size:54px"><a asp-action="Index" asp-controller="Home" class="text-black" style="text-decoration:none"><b>ClotH</b></a></h4>
+                            <p class="text-muted">
+                                все права зарегестрированы &copy; 2022
+                            </p>
+                        </div>
+                        <div class="col">
+                            <h4 class="text-black">Каталог</h4>
+                            <p>
+                                <a class="text-muted" style="text-decoration: none"
+                                   asp-action="Catalog"
+                                   asp-controller="Catalog"
+                                   asp-route-category="Одежда"
+                                   asp-route-productPage="1">
+                                    Одежда
+                                </a>
+                            </p>
+                            <p>
+                                <a class="text-muted" style="text-decoration: none"
+                                   asp-action="Catalog"
+                                   asp-controller="Catalog"
+                                   asp-route-category="Обувь"
+                                   asp-route-productPage="1">
+                                    Обувь
+                                </a>
+                            </p>
+                            <p>
+                                <a class="text-muted" style="text-decoration: none"
+                                   asp-action="Catalog"
+                                   asp-controller="Catalog"
+                                   asp-route-category="Аксессуары"
+                                   asp-route-productPage="1">
+                                    Аксессуары
+                                </a>
+                            </p>
+                        </div>
+
+                        <div class="col">
+                            <h4 class="text-black">Поддержка</h4>
+                            <p><a class="text-muted" style="text-decoration: none" asp-action="ChangeAndRefund" asp-controller="Home">Возврат и обмен товара</a></p>
+                            <p><a class="text-muted" style="text-decoration: none" asp-action="Delivery" asp-controller="Home">Доставка</a></p>
+                            <p><a class="text-muted" style="text-decoration-line: none" asp-action="FAQ" asp-controller="Home">Вопросы</a></p>
+                        </div>
+                        <div class="col">
+                            <h4 class="text-black">О нас</h4>
+                            <p><a class="text-muted" style="text-decoration: none" asp-action="CompanyInfo" asp-controller="Home">Информация о компании</a></p>
+                            <p><a class="text-muted" style="text-decoration: none" asp-action="ContactInfo" asp-controller="Home">Контакты</a></p>
+                        </div>
                     </div>
-                    <div class="col">
-                        <h4 class="text-black">О нас</h4>
-                        <p><a class="text-muted" style="text-decoration: none" asp-action="CompanyInfo" asp-controller="Home">Информация о компании</a></p>
-                        <p><a class="text-muted" style="text-decoration: none" asp-action="ContactInfo" asp-controller="Home">Контакты</a></p>
-                    </div>
-                </div>
-            </footer>
+                </footer>
+            </div>
         </div>
     </div>
+   
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

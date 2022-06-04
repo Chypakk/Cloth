@@ -1,0 +1,22 @@
+﻿@model Refund
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Ответ возврата";
+}
+
+<h5>Комментарий пользователя</h5>
+<p>@Model.UserText</p>
+
+<form asp-action="AdminRefundForm" method="post">
+
+    <input type="hidden" name="RefundId" value="@ViewBag.Id" />
+    <select name="Status" class="form-select">
+        <option selected>Выберите решение</option>
+        <option value="Возврат одобрен">Одобрить</option>
+        <option value="Возврат отклонен">Отклонить</option>
+    </select>
+    <label class="form-label">Напишите комментарий</label>
+    <textarea class="form-control" asp-for="AdminText"></textarea>
+    <button type="submit" class="btn btn-dark">Подтвердить</button>
+</form>

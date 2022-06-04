@@ -1,4 +1,6 @@
 ﻿using Cloth.Models;
+using Cloth.Models.ViewModel;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cloth.Controllers
@@ -8,14 +10,17 @@ namespace Cloth.Controllers
         private IOrderRepository repository;
         private Cart cart;
         private DataContext Context;
-        public OrderController(IOrderRepository orderRepository, Cart cartServices, DataContext ctx)
+        private UserManager<AppUser> userManager;
+
+        public OrderController(IOrderRepository orderRepository, Cart cartServices, DataContext ctx, UserManager<AppUser> usr)
         {
             repository = orderRepository;
             cart = cartServices;
             Context = ctx;
+            userManager = usr;
         }
 
-        public IActionResult Checkout(string? Promocodes) 
+        public async Task<IActionResult> Checkout(string? Promocodes)
         {
             if (Promocodes != null)
             {
@@ -37,10 +42,20 @@ namespace Cloth.Controllers
                     ViewBag.PromocodeMessage = "Такого промокода не существует";
                 }
             }
-            
+            var user = userManager.Users.FirstOrDefault(a => a.UserName == User.Identity.Name);
+            var order = new Order
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Adress = user.Adress,
+                City = user.City,
+                Country = user.Country,
+                Index = user.Index,
+            };
+
             //ViewBag.Promocode = promocode;
-            return View(new Order());
-        } 
+            return View(order);
+        }
         public IActionResult Completed()
         {
             cart.Clear();
@@ -50,6 +65,7 @@ namespace Cloth.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order, int Promocode)
         {
+
             if (Promocode == 0)
             {
                 order.TotalPrice = cart.ComputeTotalValue();
@@ -61,10 +77,12 @@ namespace Cloth.Controllers
                 double price = cart.ComputeTotalValue() * percent;
                 order.TotalPrice = cart.ComputeTotalValue() - price;
                 order.UsingPromocode = true;
+                order.PromocodePercent = Promocode;
             }
-            
+
             order.OrderDate = DateTime.Now;
             order.Name = User.Identity.Name;
+            order.Status = "Ожидание";
 
             if (cart.Lines.Count() == 0)
             {
@@ -72,7 +90,7 @@ namespace Cloth.Controllers
             }
 
             
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 foreach (var item in cart.Lines)
                 {
@@ -82,7 +100,6 @@ namespace Cloth.Controllers
                         if (remains.Count >= item.Quantity)
                         {
                             remains.Count -= item.Quantity;
-                            
                         }
                         else
                         {
@@ -91,6 +108,7 @@ namespace Cloth.Controllers
                         }
                     }
                 }
+                
                 Context.SaveChanges();
                 order.Lines = cart.Lines.ToArray();
                 repository.SaveOrder(order);

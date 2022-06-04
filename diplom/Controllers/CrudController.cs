@@ -1,5 +1,7 @@
 ﻿using Cloth.Models;
+using Cloth.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
 namespace Cloth.Controllers
@@ -224,5 +226,25 @@ namespace Cloth.Controllers
             Context.SaveChanges();
             return RedirectToAction("PromocodeView");
         }
+
+        //статус заказов
+        public IActionResult Orders() => View(new OrdersViewModel
+        {
+            Order = Context.Orders.Include(a => a.Lines),
+            CartLines = Context.CartLine.Include(a => a.Product)
+        });
+        [HttpPost]
+        public IActionResult OrdersStatus(int Id, string Status)
+        {
+            var result = Context.Orders.FirstOrDefault(a => a.Id == Id);
+            result.Status = Status;
+            Context.SaveChanges();
+            return RedirectToAction("Orders", new OrdersViewModel
+            {
+                Order = Context.Orders.Include(a => a.Lines),
+                CartLines = Context.CartLine.Include(a => a.Product)
+            });
+        }
+        
     }
 }

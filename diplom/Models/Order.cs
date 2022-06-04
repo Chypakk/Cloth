@@ -34,7 +34,10 @@ namespace Cloth.Models
         public DateTime OrderDate { get; set; }
         public double TotalPrice { get; set; }
         public bool UsingPromocode { get; set; }
-        //public string Status { get; set; }
+        public int PromocodePercent { get; set; }
+
+        public string? Status { get; set; }
+        public string? Refund { get; set; }
 
     }
 }

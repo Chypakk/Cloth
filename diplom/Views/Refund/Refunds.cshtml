@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Refund>
+
+@{
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "_AdminLayout";
+    }
+
+    ViewData["Title"] = "Возвраты";
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <table class="table table-border">
+
+        <thead>
+            <tr>
+                <th scope="col">Id возврата</th>
+                <th scope="col">Id заказа</th>
+                <th scope="col">Логин пользователя</th>
+                <th scope="col">Логин администратора</th>
+                <th scope="col">Дата обращения</th>
+                <th scope="col">Дата ответа</th>
+                <th scope="col">Комментарий пользователя</th>
+                <th scope="col">Комментарий администратора</th>
+                <th scope="col">Резальтат</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td scope="row">@item.Id</td>
+                    <td scope="row">@item.OrderId</td>
+                    <td scope="row">@item.UserName</td>
+                    <td scope="row">@item.AdminName</td>
+                    <td scope="row">@item.CreatedDate</td>
+                    <td scope="row">@item.UpdatedDate</td>
+                    <td scope="row">@item.UserText</td>
+                    <td scope="row">@item.AdminText</td>
+                    <td scope="row">@item.Result</td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td scope="row"><a class="btn btn-outline-dark" asp-action="AdminRefundForm" asp-route-Id="@item.Id">Изменить</a></td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="row">
+        <div class="col-2">
+            <button class="btn button-text-left border-bottom my-2" type="button" data-bs-toggle="collapse" data-bs-target="#brand" aria-expanded="false" aria-controls="brand">
+                Профиль
+            </button>
+
+            <div class="collapse multi-collapse" id="brand">
+                <div class="card card-body border-0">
+                    <a asp-action="ProfileRefunds" asp-controller="Refund" class="btn btn-dark">Мои возвраты</a>
+                    <a asp-action="LogOut" asp-controller="Account" class="btn btn-dark">Выйти</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-10">
+            <table class="table table-border">
+
+                <thead>
+                    <tr>
+                        <th scope="col">Id возврата</th>
+                        <th scope="col">Id заказа</th>
+                        <th scope="col">Логин пользователя</th>
+                        <th scope="col">Логин администратора</th>
+                        <th scope="col">Дата обращения</th>
+                        <th scope="col">Дата ответа</th>
+                        <th scope="col">Комментарий пользователя</th>
+                        <th scope="col">Комментарий администратора</th>
+                        <th scope="col">Резальтат</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td scope="row">@item.Id</td>
+                            <td scope="row">@item.OrderId</td>
+                            <td scope="row">@item.UserName</td>
+                            <td scope="row">@item.AdminName</td>
+                            <td scope="row">@item.CreatedDate</td>
+                            <td scope="row">@item.UpdatedDate</td>
+                            <td scope="row">@item.UserText</td>
+                            <td scope="row">@item.AdminText</td>
+                            <td scope="row">@item.Result</td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <td scope="row"><a class="btn btn-outline-dark" asp-action="AdminRefundForm" asp-route-Id="@item.Id">Изменить</a></td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+}
+

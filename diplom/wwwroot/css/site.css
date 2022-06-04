@@ -14,7 +14,8 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
+    margin-bottom: 0;
+    height:100%;
 }
 
 .button-text:active, .button-text:focus, .button-text:hover, .button-text {
@@ -65,4 +66,8 @@ body {
 .bg-index {
     background-color: #212529; 
     color: #fff;
+}
+
+.card-radius {
+    border-radius: 10px;
 }

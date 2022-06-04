@@ -1,0 +1,131 @@
+﻿@model OrdersViewModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Профиль админа";
+}
+
+<table class="table table-border">
+    <thead>
+        <tr>
+            <th scope="col">День покупки</th>
+            <th scope="col">Логин пользователя</th>
+            <th scope="col">Товар</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Промежуточный итог</th>
+            <th scope="col">Промокод</th>
+            <th scope="col">Итог</th>
+            <th scope="col" colspan="2">Статус</th>
+
+
+        </tr>
+    </thead>
+    @foreach (var item in Model.Order)
+    {
+
+        <tr>
+            <th scope="row">@item.OrderDate</th>
+            <th scope="row">@item.Name</th>
+            @if (Model.CartLines.Count() == 0)
+            {
+                <td colspan="3">кажется что-то поломалось :(</td>
+            }
+            else
+            {
+                <td>
+                    <table>
+
+                            @foreach (var i in Model.CartLines)
+                            {
+
+                                @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                {
+                                    <tr>
+                                        <td class="text-center">@product.ProductName</td>
+
+                                    </tr>
+                                }
+                            }
+                        
+                    </table>
+                </td>
+                <td>
+                    <table>
+
+                            @foreach (var i in Model.CartLines)
+                            {
+
+                                @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                {
+                                    <tr>
+                                        <td class="text-center">@product.Quantity</td>
+                                    </tr>
+                                }
+
+                            }
+                        
+                    </table>
+                </td>
+                <td>
+                    <table>
+
+                            @foreach (var i in Model.CartLines)
+                            {
+
+                                @foreach (var product in item.Lines.Where(a => a.CartLineId == i.CartLineId))
+                                {
+                                    <tr>
+                                        <td class="text-center">@((product.Quantity*product.ProductPrice).ToString("c"))</td>
+                                    </tr>
+                                }
+                            }
+                        
+                    </table>
+                </td>
+            }
+            @if (item.UsingPromocode)
+            {
+                <th>Использован промокд на @item.PromocodePercent%</th>
+            }
+            else
+            {
+                <th>Промокод не использован</th>
+            }
+            <td>@item.TotalPrice.ToString("c")</td>
+            <td colspan="3">
+                <form asp-action="OrdersStatus" method="post">
+                    <input type="hidden" value="@item.Id" name="Id" />
+                    @if (item.Status != "Возврат")
+                    {
+                        <div class="row">
+                            <div class="col-6">
+                                <select class="form-select" name="Status">
+                                    @if (item.Status == "Ожидание")
+                                    {
+                                        <option value="Ожидание" selected>Ожидание</option>
+                                        <option value="Отправлено">Отправлено</option>
+                                    }
+
+                                    @if (item.Status == "Отправлено")
+                                    {
+                                        <option value="Ожидание">Ожидание</option>
+                                        <option value="Отправлено" selected>Отправлено</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-outline-dark" type="submit">Изменить</button>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Возврат</p>
+                    }
+                </form>
+            </td>
+
+        </tr>
+
+    }
+</table>

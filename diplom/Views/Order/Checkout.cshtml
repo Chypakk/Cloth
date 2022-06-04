@@ -1,14 +1,14 @@
 ﻿@model Order
 
-@{ 
+@{
     Layout = "_LayoutIndex";
 }
 
-<div class="bg-gray text-center py-5 mb-4">
+<div class="bg-index text-center py-5 mb-4">
     <h1><b>Оформление заказа</b></h1>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb justify-content-center">
-            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home" style="text-decoration: none; color:black">Главная</a></li>
+            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home" style="text-decoration: none; color: #fff" >Главная</a></li>
             <li class="breadcrumb-item active" aria-current="page">Оформление заказа</li>
         </ol>
     </nav>
@@ -18,77 +18,6 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="row">
-        <div class="col-6">
-
-            <form asp-action="Checkout" method="post">
-
-                <div class="row g-3">
-
-                    @if (ViewBag.Promocode == null)
-                    {
-                        <input type="hidden" name="Promocode" value="0" />
-                    }
-                    else
-                    {
-                        <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
-                    }
-
-                    <input type="hidden" asp-for="Name" value="@User.Identity.Name" />
-
-
-
-                    <div class="col-6">
-                        <div class="form-group form-floating">
-                            <input asp-for="FirstName" class="form-control" id="floatingInput" placeholder="asd" />
-                            <label for="floatingInput">Имя</label>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="form-group form-floating">
-                            <input asp-for="LastName" class="form-control" id="floatingInput" placeholder="asd" />
-                            <label for="floatingInput">Фамилия</label>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-group form-floating">
-                            <input asp-for="Adress" class="form-control" id="floatingInput" placeholder="asd" />
-                            <label for="floatingInput">Адрес</label>
-                        </div>
-                    </div>
-
-                    <div class="col-5">
-                        <div class="form-group form-floating">
-                            <input asp-for="Country" class="form-control" id="floatingInput" placeholder="asd" />
-                            <label for="floatingInput">Страна</label>
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="form-group form-floating">
-                            <input asp-for="City" class="form-control" id="floatingInput" placeholder="asd" />
-                            <label for="floatingInput">Город</label>
-                        </div>
-                    </div>
-
-                    <div class="col-3">
-                        <div class="form-group form-floating">
-                            <input asp-for="Index" class="form-control" id="floatingInput" placeholder="asd" />
-                            <label for="floatingInput">Индекс</label>
-                        </div>
-                    </div>
-
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-dark" value="Оформить заказ">
-                    </div>
-
-                </div>
-
-            </form>
-
-        </div>
-
         <div class="col">
             <div class="bg-light">
                 <div class="row py-3">
@@ -123,6 +52,148 @@
 
             </div>
         </div>
+
+        <div class="col-6 bg-white card-radius">
+
+            <form asp-action="Checkout" method="post" class="py-2">
+
+                <div class="row g-3">
+                   
+                    @if (ViewBag.Promocode == null)
+                    {
+                        <input type="hidden" name="Promocode" value="0" />
+                    }
+                    else
+                    {
+                        <input type="hidden" name="Promocode" value="@ViewBag.Promocode" />
+                    }
+
+                    <input type="hidden" asp-for="Name" value="@User.Identity.Name" />
+
+                    @if (Model.FirstName != null)
+                    {
+                        <div class="col-6">
+                            <div class="form-group form-floating disabled">
+                                <input asp-for="FirstName" name="FirstName" class="form-control" id="floatingInput" placeholder="" value="@Model.FirstName" />
+                                <label for="floatingInput">Имя</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-6">
+                            <div class="form-group form-floating">
+                                <input asp-for="FirstName" name="FirstName" class="form-control" id="floatingInput" placeholder="asd" />
+                                <label for="floatingInput">Имя</label>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.LastName != null)
+                    {
+                        <div class="col-6">
+                            <div class="form-group form-floating">
+                                <input asp-for="LastName" name="LastName" class="form-control" id="floatingInput" placeholder="" value="@Model.LastName"  />
+                                <label for="floatingInput">Фамилия</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-6">
+                            <div class="form-group form-floating">
+                                <input asp-for="LastName" name="LastName" class="form-control" id="floatingInput" placeholder="asd" />
+                                <label for="floatingInput">Фамилия</label>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.Adress != null)
+                    {
+                        <div class="col-12">
+                            <div class="form-group form-floating">
+                                <input asp-for="Adress" name="Adress" class="form-control" id="floatingInput" placeholder="" value="@Model.Adress" />
+                                <label for="floatingInput">Адрес</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12">
+                            <div class="form-group form-floating">
+                                <input asp-for="Adress" name="Adress" class="form-control" id="floatingInput" placeholder="asd" />
+                                <label for="floatingInput">Адрес</label>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.Country != null)
+                    {
+                        <div class="col-5">
+                            <div class="form-group form-floating">
+                                <input asp-for="Country" name="Country" class="form-control" id="floatingInput" placeholder="" value="@Model.Country"  />
+                                <label for="floatingInput">Страна</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-5">
+                            <div class="form-group form-floating">
+                                <input asp-for="Country" name="Country" class="form-control" id="floatingInput" placeholder="asd" />
+                                <label for="floatingInput">Страна</label>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.City != null)
+                    {
+                        <div class="col-4">
+                            <div class="form-group form-floating">
+                                <input asp-for="City" name="City" class="form-control" id="floatingInput" placeholder="" value="@Model.City"  />
+                                <label for="floatingInput">Город</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-4">
+                            <div class="form-group form-floating">
+                                <input asp-for="City" name="City" class="form-control" id="floatingInput" placeholder="asd" />
+                                <label for="floatingInput">Город</label>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.Index != null)
+                    {
+                        <div class="col-3">
+                            <div class="form-group form-floating">
+                                <input asp-for="Index" name="Index" class="form-control" id="floatingInput" placeholder="" value="@Model.Index" />
+                                <label for="floatingInput">Индекс</label>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-3">
+                            <div class="form-group form-floating">
+                                <input asp-for="Index" name="Index" class="form-control" id="floatingInput" placeholder="asd" />
+                                <label for="floatingInput">Индекс</label>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-dark" value="Оформить заказ">
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
 
 </div>
