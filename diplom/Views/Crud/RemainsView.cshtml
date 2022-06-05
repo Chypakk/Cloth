@@ -4,14 +4,21 @@
     Layout = "_AdminLayout";
 }
 
+<div class="row">
+    <div class="col">
+        <h1>Остатки</h1>
+    </div>
+    <div class="col">
+        <a class="btn btn-outline-dark mt-2" asp-action="RemainsAdd">Добавить остатки</a>
+    </div>
+</div>
 <div>
-    <a class="btn btn-outline-dark" asp-action="RemainsAdd">Добавить остатки</a>
 </div>
 
-<table class="table">
+<table class="table mt-2">
     <tr>
         <th class="p-2">Id</th>
-        <th class="p-2">Id продукта</th>
+        <th class="p-2">Наименование продукта</th>
         <th class="p-2">Размер</th>
         <th class="p-2">Количество</th>
 
@@ -20,14 +27,14 @@
     {
         <tr>
             <td class="p-2">@p.Id</td>
-            <td class="p-2">@p.ProductId</td>
+            <td class="p-2">@p.Products.Name</td>
             <td class="p-2">@p.Size</td>
             <td class="p-2">@p.Count</td>
 
 
             @if (User.Identity.IsAuthenticated)
             {
-                <td><a class="btn btn-outline-dark" asp-action="RemainsUpdate" asp-route-id="@p.Id">Обновить</a></td>
+                <td><a class="btn btn-outline-dark" asp-action="RemainsUpdate" asp-route-id="@p.Id">Изменить</a></td>
                 <td><a class="btn btn-outline-danger" asp-action="RemainsDelete" asp-route-id="@p.Id">Удалить</a></td>
             }
         </tr>

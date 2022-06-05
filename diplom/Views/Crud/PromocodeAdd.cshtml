@@ -1,6 +1,7 @@
 ﻿@model Promocode
 @{ Layout = "_AdminLayout"; }
 
+<h1>Добавление промокода</h1>
 <div class="row">
     <div class="col-auto">
         <form asp-action="PromocodeAdd" method="post" enctype="multipart/form-data">
@@ -16,7 +17,7 @@
             <input type="date" class="form-control" asp-for="EndDate" />
 
 
-            <button type="submit" class="btn btn-outline-dark">Отправить</button>
+            <button type="submit" class="btn btn-outline-dark mt-2">Отправить</button>
         </form>
     </div>
 </div>

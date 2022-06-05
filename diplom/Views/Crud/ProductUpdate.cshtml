@@ -1,44 +1,76 @@
-﻿@model Products
+﻿@model CRUDVIewModel
 
 @{
     Layout = "_AdminLayout";
 }
 
-<h1>Поле "Изображение" обязательно!</h1>
+<h1>Изменение продукта</h1>
+<h3>Поле "Изображение" обязательно!</h3>
 
 <div class="row">
     <div class="col-auto">
         <form asp-action="ProductUpdate" method="post" enctype="multipart/form-data">
 
-            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.ProductId" value="@Model.Products.First().Id" />
 
-            <label>Имя</label>
-            <input class="form-control" asp-for="@Model.Name" />
+            <label>Название продукта</label>
+            <input class="form-control" asp-for="@Model.ProductName" value="@Model.Products.First().Name" />
 
-            <label>Id категории</label>
-            <input class="form-control" asp-for="@Model.CategoryId" />
+            <label>Категория</label>
+            <select class="form-control" asp-for="CategoryId">
+                @foreach (var item in Model.Categories)
+                {
+                    if (item.Id == Model.Products.First().CategoryId)
+                    {
+                        <option value="@item.Id" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                }
+            </select>
 
-            <label>Id бренда</label>
-            <input class="form-control" asp-for="@Model.BrandId" />
+            <label>Бренд</label>
+            <select class="form-control" asp-for="BrandId">
+                @foreach (var item in Model.Brands)
+                {
+                    if (item.Id == Model.Products.First().BrandId)
+                    {
+                        <option value="@item.Id" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                }
+            </select>
+
+            <label>Дополнительная информация</label>
+            <select class="form-select" asp-for="OptionsId">
+                @foreach (var item in Model.Options)
+                {
+                    if (item.Id == Model.Products.First().OptionsId)
+                    {
+                        <option value="@item.Id" selected>@item.Description</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.Description</option>
+
+                    }
+                }
+            </select>
 
             <label>Цена</label>
-            <input class="form-control" asp-for="@Model.Price" />
-
-            <label>Дополнительная инфа</label>
-            <input class="form-control" asp-for="@Model.OptionsId" />
-
-            @*<label>Размер</label>
-        <input class="form-control" asp-for="@Model.Size" />*@
-
-            @*<label>Рейтинг</label>
-        <input class="form-control" asp-for="@Model.Rating" />*@
+            <input class="form-control" asp-for="@Model.Price"  value="@Model.Products.First().Price"/>
 
             <fieldset>
                 <label>Изображение</label>
-                <input class="form-control" type="file" name="file" asp-for="@Model.ProductImage" />
+                <input class="form-control" type="file" name="file"/>
             </fieldset>
 
-            <button type="submit" class="btn btn-outline-dark">Отправить</button>
+            <button type="submit" class="btn btn-outline-dark mt-2">Отправить</button>
         </form>
     </div>
 </div>

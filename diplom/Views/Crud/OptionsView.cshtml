@@ -3,9 +3,13 @@
 @{
     Layout = "_AdminLayout";
 }
-
-<div>
-    <a class="btn btn-outline-dark" asp-action="OptionsAdd">Добавить допольнительную информацию</a>
+<div class="row">
+    <div class="col">
+        <h1>Допольнительная информация о продукте</h1>
+    </div>
+    <div class="col">
+        <a class="mt-2 btn btn-outline-dark" asp-action="OptionsAdd">Добавить допольнительную информацию</a>
+    </div>
 </div>
 
 <table class="table">
@@ -36,7 +40,7 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <td><a class="btn btn-outline-dark" asp-action="OptionsUpdate" asp-route-id="@p.Id">Обновить</a></td>
+                    <td><a class="btn btn-outline-dark" asp-action="OptionsUpdate" asp-route-id="@p.Id">Изменить</a></td>
                     <td><a class="btn btn-outline-danger" asp-action="OptionsDelete" asp-route-id="@p.Id">Удалить</a></td>
 
                 }

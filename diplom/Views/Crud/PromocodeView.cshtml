@@ -3,9 +3,13 @@
 @{
     Layout = "_AdminLayout";
 }
-
-<div>
-    <a class="btn btn-outline-dark" asp-action="PromocodeAdd">Добавить промокод</a>
+<div class="row">
+    <div class="col">
+        <h1>Промокоды</h1>
+    </div>
+    <div class="col">
+        <a class="btn btn-outline-dark mt-2" asp-action="PromocodeAdd">Добавить промокод</a>
+    </div>
 </div>
 
 <table class="table">
@@ -26,7 +30,7 @@
             <td class="p-2">@p.EndDate</td>
             @if (User.Identity.IsAuthenticated)
             {
-                <td><a class="btn btn-outline-dark" asp-action="PromocodeUpdate" asp-route-id="@p.Id">Обновить</a></td>
+                <td><a class="btn btn-outline-dark" asp-action="PromocodeUpdate" asp-route-id="@p.Id">Изменить</a></td>
                 <td><a class="btn btn-outline-danger" asp-action="PromocodeDelete" asp-route-id="@p.Id">Удалить</a></td>
             }
         </tr>

@@ -19,7 +19,7 @@ namespace Cloth.Controllers
         public IActionResult Catalog(string search, string category, string brand, int minPrice, int maxPrice, int productPage = 1)
         {
             ViewBag.SearchString = search;
-            Console.WriteLine($"MINAMAL PRICE = {minPrice} AND MAXIMAL PRICE {maxPrice}");
+            
             var result = new ProductsListViewModel
             {
                 Products = Context.Products.Include(b => b.Brands).Include(b => b.Categories)

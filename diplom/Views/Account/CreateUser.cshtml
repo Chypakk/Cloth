@@ -2,20 +2,29 @@
 
 <div class="row">
     <div class="col-auto">
+        <h1>Регистрация</h1>
         <form asp-action="CreateUser" method="post">
 
             <div asp-validation-summary=" All" class="text-danger"></div>
 
-            <label>Имя пользователя</label>
-            <input asp-for="Login" class="form-control" />
+            <div class="form-group form-floating">
+                <input asp-for="Login" class="form-control" id="floatingInput" placeholder="Login" />
+                <label for="floatingInput">Логин</label>
+            </div>
 
-            <label>Email</label>
-            <input asp-for="Email" class="form-control" />
+            <div class="form-group form-floating my-2">
 
-            <label>Пароль</label>
-            <input asp-for="Password" class="form-control" />
+                <input class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="Email" />
+                <label for="floatingInput">Email</label>
+            </div>
 
-            <button type="submit" class="btn btn-success">Создать</button>
+            <div class="form-group form-floating">
+
+                <input type="password" class="form-control" id="floatingInput" placeholder="Password" asp-for="Password" />
+                <label for="floatingInput">Пароль</label>
+            </div>
+
+            <button type="submit" class="btn btn-outline-dark mt-2">Создать</button>
         </form>
     </div>
 </div>

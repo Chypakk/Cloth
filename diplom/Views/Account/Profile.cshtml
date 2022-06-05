@@ -1,6 +1,7 @@
 ﻿@model ProfileViewModel
 
 @{
+    Layout = "_LayoutProfile";
     ViewData["Title"] = "Профиль";
 }
 
@@ -12,8 +13,8 @@
 
         <div class="collapse multi-collapse" id="brand">
             <div class="card card-body border-0">
-                <a asp-action="ProfileRefunds" asp-controller="Refund" class="btn btn-dark">Мои возвраты</a>
-                <a asp-action="LogOut" asp-controller="Account" class="btn btn-dark">Выйти</a>
+                <a asp-action="ProfileRefunds" asp-controller="Refund" class="btn btn-outline-dark my-3">Мои возвраты</a>
+                <a asp-action="LogOut" asp-controller="Account" class="btn btn-outline-dark">Выйти</a>
             </div>
         </div>
         

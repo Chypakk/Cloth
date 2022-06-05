@@ -78,41 +78,72 @@ namespace Cloth.Controllers
             return RedirectToAction("CategoriesView");
         }
 
-        
-
-
-        //public IActionResult WarehouseView() => View(Context.)
-
         //продукты
-        public IActionResult ProductView() => View(Context.Products.OrderBy(a => a.Id));
-        public IActionResult ProductUpdate(int Id) => View(Context.Products.Where(p => p.Id == Id).FirstOrDefault());
-        public IActionResult ProductAdd() => View();
-        [HttpPost]
-        public IActionResult ProductAdd(Products products, IFormFile file)
+        public IActionResult ProductView() => View(Context.Products.OrderBy(a => a.Id).Include(a => a.Brands).Include(a => a.Categories).Include(a => a.Options));
+        public IActionResult ProductUpdate(int Id)
         {
-            byte[] ImageData = ConvertToBytes(file);
-            products.ProductImage = ImageData;
-
-            Context.Products.Add(products);
-            Context.SaveChanges();
-            return RedirectToAction("ProductView");
+            var result = new CRUDVIewModel
+            {
+                Products = Context.Products.Where(p => p.Id == Id),
+                Brands = Context.Brands,
+                Categories = Context.Categories,
+                Options = Context.Options
+            };
+            return View(result);
         }
-        [HttpPost]
-        public IActionResult ProductUpdate(Products product, IFormFile file)
+        public IActionResult ProductAdd() => View(new CRUDVIewModel
         {
-
+            Brands = Context.Brands,
+            Options = Context.Options,
+            Categories = Context.Categories,
+        });
+        [HttpPost]
+        public IActionResult ProductAdd(CRUDVIewModel model, IFormFile file)
+        {
             byte[] ImageData = ConvertToBytes(file);
+            if (model.CategoryId != 0 && model.BrandId != 0 && model.OptionsId != 0 && model.Price != 0 && model.ProductName != null)
+            {
+                Products products = new Products
+                {
+                    BrandId = model.BrandId,
+                    CategoryId = model.CategoryId,
+                    OptionsId = model.OptionsId,
+                    Price = model.Price,
+                    Name = model.ProductName
+                };
+                products.ProductImage = ImageData;
 
-            Products up = Context.Products.FirstOrDefault(Product => Product.Id == product.Id);
-            up.Id = product.Id;
-            up.Name = product.Name;
-            up.CategoryId = product.CategoryId;
-            up.OptionsId = product.OptionsId;
-            up.Price = product.Price;
-            up.BrandId = product.BrandId;
-            up.ProductImage = ImageData;
-            Context.SaveChanges();
-            return RedirectToAction("ProductView");
+                Context.Products.Add(products);
+                Context.SaveChanges();
+                return RedirectToAction("ProductView");
+            }
+            else
+            {
+                return RedirectToAction("ProductAdd");
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult ProductUpdate(CRUDVIewModel model, IFormFile file)
+        {
+            if (file != null)
+            {
+                byte[] ImageData = ConvertToBytes(file);
+                Products product = Context.Products.FirstOrDefault(a => a.Id == model.ProductId);
+                product.Name = model.ProductName;
+                product.OptionsId = model.OptionsId;
+                product.CategoryId = model.CategoryId;
+                product.BrandId = model.BrandId;
+                product.Price = model.Price;
+                product.ProductImage = ImageData;
+                Context.SaveChanges();
+                return RedirectToAction("ProductView");
+            }
+            else
+            {
+                return RedirectToAction("ProductUpdate");
+            }
         }
         public IActionResult ProductDelete(int Id)
         {
@@ -162,19 +193,42 @@ namespace Cloth.Controllers
             commentaries.CreatedDate = DateTime.Now;
             Context.Commentaries.Add(commentaries);
             Context.SaveChanges();
-            return RedirectToAction("ProductCard", "Catalog", new {ComId, ComName });
+            return RedirectToAction("ProductCard", "Catalog", new { ComId, ComName });
         }
 
         //остатки
-        public IActionResult RemainsView() => View(Context.Remains.OrderBy(a => a.Id));
-        public IActionResult RemainsUpdate(Guid Id) => View(Context.Remains.FirstOrDefault(a => a.Id == Id));
-        public IActionResult RemainsAdd() => View();
-        [HttpPost]
-        public IActionResult RemainsAdd(Remains remains)
+        public IActionResult RemainsView() => View(Context.Remains.Include(a => a.Products));
+        public IActionResult RemainsUpdate(Guid Id) => View(Context.Remains.Include(a => a.Products).FirstOrDefault(a => a.Id == Id));
+        public IActionResult RemainsAdd()
         {
-            Context.Remains.Add(remains);
-            Context.SaveChanges();
-            return RedirectToAction("RemainsView");
+            var result = new CRUDVIewModel
+            {
+                Products = Context.Products
+            };
+            return View(result);
+        }
+        [HttpPost]
+        public IActionResult RemainsAdd(CRUDVIewModel model)
+        {
+            if (model.ProductId != null && model.Count != null && model.Size != null)
+            {
+                Remains remAdd = new Remains
+                {
+                    ProductId = model.ProductId,
+                    Size = model.Size,
+                    Count = model.Count
+
+                };
+                Context.Remains.Add(remAdd);
+                Context.SaveChanges();
+                return RedirectToAction("RemainsView");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Введите данные");
+                return RedirectToAction("RemainsAdd");
+            }
+
         }
         [HttpPost]
         public IActionResult RemainsUpdate(Remains remains)
@@ -245,6 +299,6 @@ namespace Cloth.Controllers
                 CartLines = Context.CartLine.Include(a => a.Product)
             });
         }
-        
+
     }
 }

@@ -65,7 +65,6 @@ namespace Cloth.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order, int Promocode)
         {
-
             if (Promocode == 0)
             {
                 order.TotalPrice = cart.ComputeTotalValue();
@@ -79,17 +78,13 @@ namespace Cloth.Controllers
                 order.UsingPromocode = true;
                 order.PromocodePercent = Promocode;
             }
-
             order.OrderDate = DateTime.Now;
             order.Name = User.Identity.Name;
             order.Status = "Ожидание";
-
             if (cart.Lines.Count() == 0)
             {
                 ModelState.AddModelError("", "Корзина пуста");
-            }
-
-            
+            }            
             if (ModelState.IsValid)
             {
                 foreach (var item in cart.Lines)
@@ -108,7 +103,6 @@ namespace Cloth.Controllers
                         }
                     }
                 }
-                
                 Context.SaveChanges();
                 order.Lines = cart.Lines.ToArray();
                 repository.SaveOrder(order);

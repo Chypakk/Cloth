@@ -29,8 +29,7 @@ namespace Cloth.Controllers
         [HttpPost]
         public IActionResult Create(Picture picture, IFormFile uploadImage)
         {
-            if (ModelState.IsValid)
-            {
+
                 if (uploadImage != null)
                 {
                     byte[] ImageData = ConvertToBytes(uploadImage);
@@ -42,12 +41,8 @@ namespace Cloth.Controllers
                     return RedirectToAction("Picture");
                 }
                 return View(picture);
-            }
-            else
-            {
-                ModelState.AddModelError("", "");
-                return View(picture);
-            }
+            
+
 
         }
     }

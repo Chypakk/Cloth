@@ -3,9 +3,13 @@
 @{
     Layout = "_AdminLayout";
 }
-
-<div>
-    <a class="btn btn-outline-dark" asp-action="BrandsAdd">Добавить бренд</a>
+<div class="row">
+    <div class="col">
+        <h1>Бренды</h1>
+    </div>
+    <div class="col">
+        <a class="btn btn-outline-dark mt-3" asp-action="BrandsAdd">Добавить бренд</a>
+    </div>
 </div>
 
 <table class="table">
@@ -15,7 +19,7 @@
             <th scope="col">Название бренда</th>
         </tr>
     </thead>
-    
+
     @foreach (Brand b in Model)
     {
         <tr>
@@ -25,7 +29,7 @@
             @if (User.Identity.IsAuthenticated)
             {
 
-                <td><a class="btn btn-outline-dark" asp-action="BrandsUpdate" asp-route-id="@b.Id">Обновить</a></td>
+                <td><a class="btn btn-outline-dark" asp-action="BrandsUpdate" asp-route-id="@b.Id">Изменить</a></td>
                 <td><a class="btn btn-outline-danger" asp-action="BrandsDelete" asp-route-id="@b.Id">Удалить</a></td>
             }
         </tr>

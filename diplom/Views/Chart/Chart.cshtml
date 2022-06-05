@@ -17,14 +17,12 @@
                 @foreach (var item in Model.Products.Where(q => ((Model.FirstPoint - q.Price) / (Model.Max - Model.FirstPoint)) + 1 > 0.7))
                 {
                     <tr>
-
                         <td>@item.Name</td>
                         <td>@item.Price</td>
                     </tr>
                 }
             </table>
         </div>
-
         <div class="col">
             <h6>Средняя категория</h6>
             <table class="table table-striped table-sm">
@@ -40,14 +38,12 @@
                  )
                 {
                     <tr>
-
                         <td>@item.Name</td>
                         <td>@item.Price</td>
                     </tr>
                 }
             </table>
         </div>
-
         <div class="col">
             <h6>Дорогая категория</h6>
             <table class="table table-striped table-sm">
@@ -58,7 +54,6 @@
                 @foreach (var item in Model.Products.Where(q => ((q.Price - Model.Min) / (Model.FourthPoint - Model.Min)) > 0.7))
                 {
                     <tr>
-
                         <td>@item.Name</td>
                         <td>@item.Price</td>
                     </tr>
