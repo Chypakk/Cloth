@@ -78,7 +78,7 @@ namespace Cloth.Controllers
                 order.UsingPromocode = true;
                 order.PromocodePercent = Promocode;
             }
-            order.OrderDate = DateTime.Now;
+            order.OrderDate = DateTime.Now.ToLocalTime().ToUniversalTime();
             order.Name = User.Identity.Name;
             order.Status = "Ожидание";
             if (cart.Lines.Count() == 0)

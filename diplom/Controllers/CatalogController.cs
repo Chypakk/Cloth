@@ -9,7 +9,7 @@ namespace Cloth.Controllers
     {
 
         private DataContext Context;
-        private int PageSize = 9;
+        private int PageSize = 1;
 
         public CatalogController(DataContext ctx)
         {
@@ -95,13 +95,16 @@ namespace Cloth.Controllers
             
             var result = new ProductCardViewModel
             {
-                Products = Context.Products.Include(a => a.Brands).Include(a => a.Categories).Include(a => a.Options).Include(a => a.Remains)
+                Products = Context.Products.Include(a => a.Brands)
+                    .Include(a => a.Categories).Include(a => a.Options)
+                    .Include(a => a.Remains)
                     .FirstOrDefault(a => a.Id == ComId),
                 Picture = Context.Pictures.Where(a => a.Name == ComName),
                 ProductId = ComId,
                 Commentaries = Context.Commentaries.Where(a => a.ProductId == ComId),
                 UserName = User.Identity.Name,
             };
+            
             return View(result);
 
         }

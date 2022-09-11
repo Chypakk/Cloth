@@ -20,5 +20,6 @@ namespace Cloth.Models.ViewModel
         public int BrandId { get; set; }
         public int OptionsId { get; set; }
         public int Price { get; set; }
+        
     }
 }

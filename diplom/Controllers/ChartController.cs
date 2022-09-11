@@ -24,11 +24,7 @@ namespace Cloth.Controllers
             source.Products = context.Products.Select(a => new Products
             {
                 Name = a.Name,
-                Id = a.Id,
-                CategoryId = a.CategoryId,
-                BrandId = a.BrandId,
                 Price = a.Price,
-                OptionsId = a.OptionsId,
             });
 
             int MostBigPrice = 1;
@@ -58,17 +54,15 @@ namespace Cloth.Controllers
                 source.QuantityPoint.Add(Convert.ToString(MostSmallPrice) + ",");
                 source.MidlePrice.Add(Convert.ToString(1) + ",");
                 source.TopPrice.Add(Convert.ToString(0.7, CultureInfo.InvariantCulture) + ", ");
-
                 if (MostSmallPrice < source.FourthPoint + 1)
                 {
-                    source.First.Add(Convert.ToString((MostSmallPrice - SmallPriceFlag) / (source.FourthPoint - SmallPriceFlag), CultureInfo.InvariantCulture) + ",");
+                    source.First.Add(Convert.ToString((MostSmallPrice - SmallPriceFlag) 
+                        / (source.FourthPoint - SmallPriceFlag), CultureInfo.InvariantCulture) + ",");
                 }
                 else
                 {
                     source.First.Add(1 + ",");
                 }
-
-
                 if (MostSmallPrice > source.FirstPoint + 1)
                 {
                     double var = (source.FirstPoint - MostSmallPrice) / (MostBigPrice - source.FirstPoint) + 1;
@@ -78,8 +72,6 @@ namespace Cloth.Controllers
                 {
                     source.Second.Add(1 + ",");
                 }
-
-
                 if (MostSmallPrice < source.SecondPoint)
                 {
                     double var = (MostSmallPrice - SmallPriceFlag) / (source.SecondPoint - SmallPriceFlag);
@@ -94,7 +86,6 @@ namespace Cloth.Controllers
                 {
                     source.Third.Add(1 + ",");
                 }
-
                 MostSmallPrice += SmallPriceFlag;
             }
             return View(source);

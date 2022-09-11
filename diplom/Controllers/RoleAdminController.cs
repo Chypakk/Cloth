@@ -17,7 +17,7 @@ namespace Cloth.Controllers
             this.userManager = userMrg;
         }
 
-        public IActionResult AdminPage() => View(roleManager.Roles);
+        public IActionResult AdminPage() => View(roleManager.Roles.ToList());
         public IActionResult UserView() => View(userManager.Users);
 
         private void AddErrorsFromResult(IdentityResult result)
@@ -73,7 +73,7 @@ namespace Cloth.Controllers
             IdentityRole role = await roleManager.FindByIdAsync(id);
             List<AppUser> members = new List<AppUser>();
             List<AppUser> nonmembers = new List<AppUser>();
-            foreach (AppUser user in userManager.Users)
+            foreach (AppUser user in userManager.Users.ToList())
             {
                 var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonmembers;
                 list.Add(user);

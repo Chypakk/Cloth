@@ -26,7 +26,7 @@ namespace Cloth.Infrastructure
             IdentityRole role = await roleManager.FindByIdAsync(Role);
             if (role != null)
             {
-                foreach (var users in userManager.Users)
+                foreach (var users in userManager.Users.ToList())
                 {
                     if (users != null && await userManager.IsInRoleAsync(users, role.Name))
                     {

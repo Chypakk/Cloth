@@ -14,6 +14,8 @@
                     <th scope="col">Название товара</th>
                     <th scope="col">Цена</th>
                 </tr>
+                <tr>
+                </tr>
                 @foreach (var item in Model.Products.Where(q => ((Model.FirstPoint - q.Price) / (Model.Max - Model.FirstPoint)) + 1 > 0.7))
                 {
                     <tr>
@@ -31,11 +33,11 @@
                     <th>Цена</th>
                 </tr>
                 @foreach (var item in Model.Products.Where(q =>
-                 (
-                     ((q.Price - Model.Min) / (Model.SecondPoint - Model.Min)) > 0.7)
-                 &&
-                     ((Model.ThirdPoint - q.Price) / (Model.Max - Model.ThirdPoint) + 1 > 0.7))
-                 )
+              (
+                  ((q.Price - Model.Min) / (Model.SecondPoint - Model.Min)) > 0.7)
+              &&
+                  ((Model.ThirdPoint - q.Price) / (Model.Max - Model.ThirdPoint) + 1 > 0.7))
+              )
                 {
                     <tr>
                         <td>@item.Name</td>
@@ -74,9 +76,9 @@
         type: 'line',
         data: {
             labels: [@foreach (var item in Model.QuantityPoint)
-	{
-		 @item;
-	}],
+	                  {
+		                @item;
+	                  }],
             datasets: [
                 {
                     label: 'Максимальная принадлежность',
@@ -91,9 +93,9 @@
                 {
                     label: 'Минимальная принадлежность',
                     data: [@foreach (var item in Model.TopPrice)
-	{
-		 @item;
-	}],
+	                        {
+		                        @item;
+	                        }],
                     backgroundColor: ['rgba(255, 159, 64, 1)'],
                     borderColor: ['rgba(255, 159, 64, 1)'],
                     borderWidth: 2
@@ -101,9 +103,9 @@
                 {
                     label: 'Дорогая категория',
                     data: [@foreach (var item in Model.First)
-                    {
-                        @item;
-                    }],
+                            {
+                                @item;
+                            }],
                     backgroundColor: ['rgba(40, 66, 158, 1)'],
                     borderColor: ['rgba(40, 66, 158, 1)'],
                     borderWidth: 3
@@ -111,9 +113,9 @@
                 {
                     label: 'Дешевая категория',
                     data: [@foreach (var item in Model.Second)
-                    {
-                        @item;
-                    }],
+                            {
+                                @item;
+                            }],
                     backgroundColor: ['#5E1756'],
                     borderColor: ['#5E1756'],
                     borderWidth: 3
@@ -121,9 +123,9 @@
                 {
                     label: 'Средняя категория',
                     data: [@foreach (var item in Model.Third)
-                    {
-                        @item;
-                    }],
+                            {
+                                @item;
+                            }],
                     backgroundColor: ['#2FCA0C'],
                     borderColor: ['#2FCA0C'],
                     borderWidth: 3

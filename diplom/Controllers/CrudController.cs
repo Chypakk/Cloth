@@ -1,14 +1,51 @@
 ﻿using Cloth.Models;
 using Cloth.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
 
 namespace Cloth.Controllers
 {
+    //[Authorize(Roles = "Admin")]
+    public class CrudCommand<T> where T : class
+    {
+        private DataContext context;
+
+        public CrudCommand(DataContext dataContext)
+        {
+            context = dataContext;
+        }
+
+        public async Task Create(T model)
+        {
+            context.Set<T>().Add(model);
+            context.SaveChanges();
+        }
+        public async Task Update(T model)
+        {
+            context.Set<T>().Update(model);
+            context.SaveChanges();
+        }
+        public async Task Delete(int id)
+        {
+            T item = context.Set<T>().Find(id);
+            context.Set<T>().Remove(item);
+            context.SaveChanges();
+        }
+        public async Task Delete(Guid id)
+        {
+            T item = context.Set<T>().Find(id);
+            context.Set<T>().Remove(item);
+            context.SaveChanges();
+        }
+    }
+
+    [Authorize(Roles = "Admin")]
     public class CrudController : Controller
     {
         private DataContext Context { get; set; }
+
         public CrudController(DataContext ctx) { Context = ctx; }
 
         public IActionResult CrudView() => View();
@@ -26,27 +63,25 @@ namespace Cloth.Controllers
         public IActionResult BrandsView() => View(Context.Brands.OrderBy(a => a.Id));
         public IActionResult BrandsUpdate(int Id) => View(Context.Brands.FirstOrDefault(a => a.Id == Id));
         public IActionResult BrandsAdd() => View();
+
         [HttpPost]
-        public IActionResult BrandsAdd(Brand brand)
+        public async Task<IActionResult> BrandsAdd(Brand brand)
         {
-            Context.Brands.Add(brand);
-            Context.SaveChanges();
+            CrudCommand<Brand> crud = new CrudCommand<Brand>(Context);
+            await crud.Create(brand);
             return RedirectToAction("BrandsView", Context.Brands);
         }
         [HttpPost]
-        public IActionResult BrandsUpdate(Brand brand)
+        public async Task<IActionResult> BrandsUpdate(Brand brand)
         {
-            Brand br = Context.Brands.FirstOrDefault(a => a.Id == brand.Id);
-            br.Id = brand.Id;
-            br.Name = brand.Name;
-            Context.SaveChanges();
+            CrudCommand<Brand> crud = new CrudCommand<Brand>(Context);
+            await crud.Update(brand);
             return RedirectToAction("BrandsView");
         }
-        public IActionResult BrandsDelete(int Id)
+        public async Task<IActionResult> BrandsDelete(int Id)
         {
-            Brand DelBrand = Context.Brands.Where(a => a.Id == Id).FirstOrDefault();
-            Context.Brands.Remove(DelBrand);
-            Context.SaveChanges();
+            CrudCommand<Brand> crud = new CrudCommand<Brand>(Context);
+            await crud.Delete(Id);
             return RedirectToAction("BrandsView");
         }
 
@@ -55,26 +90,23 @@ namespace Cloth.Controllers
         public IActionResult CategoriesUpdate(int Id) => View(Context.Categories.FirstOrDefault(a => a.Id == Id));
         public IActionResult CategoriesAdd() => View();
         [HttpPost]
-        public IActionResult CategoriesAdd(Category category)
+        public async Task<IActionResult> CategoriesAdd(Category category)
         {
-            Context.Categories.Add(category);
-            Context.SaveChanges();
+            CrudCommand<Category> crud = new CrudCommand<Category>(Context);
+            await crud.Create(category);
             return RedirectToActionPermanent("CategoriesView", Context.Categories);
         }
         [HttpPost]
-        public IActionResult CategoriesUpdate(Category category)
+        public async Task<IActionResult> CategoriesUpdate(Category category)
         {
-            Category ct = Context.Categories.Where(a => a.Id == category.Id).FirstOrDefault();
-            ct.Id = category.Id;
-            ct.Name = category.Name;
-            Context.SaveChanges();
+            CrudCommand<Category> crud = new CrudCommand<Category>(Context);
+            await crud.Update(category);
             return RedirectToAction("CategoriesView");
         }
-        public IActionResult CategoriesDelete(int Id)
+        public async Task<IActionResult> CategoriesDelete(int Id)
         {
-            Category DelCtg = Context.Categories.FirstOrDefault(a => a.Id == Id);
-            Context.Categories.Remove(DelCtg);
-            Context.SaveChanges();
+            CrudCommand<Category> crud = new CrudCommand<Category>(Context);
+            await crud.Delete(Id);
             return RedirectToAction("CategoriesView");
         }
 
@@ -97,11 +129,13 @@ namespace Cloth.Controllers
             Options = Context.Options,
             Categories = Context.Categories,
         });
+
         [HttpPost]
-        public IActionResult ProductAdd(CRUDVIewModel model, IFormFile file)
+        public async Task<IActionResult> ProductAdd(CRUDVIewModel model, IFormFile file)
         {
             byte[] ImageData = ConvertToBytes(file);
-            if (model.CategoryId != 0 && model.BrandId != 0 && model.OptionsId != 0 && model.Price != 0 && model.ProductName != null)
+            if (model.CategoryId != 0 && model.BrandId != 0
+                && model.OptionsId != 0 && model.Price != 0 && model.ProductName != null)
             {
                 Products products = new Products
                 {
@@ -113,8 +147,8 @@ namespace Cloth.Controllers
                 };
                 products.ProductImage = ImageData;
 
-                Context.Products.Add(products);
-                Context.SaveChanges();
+                CrudCommand<Products> crud = new CrudCommand<Products>(Context);
+                await crud.Create(products);
                 return RedirectToAction("ProductView");
             }
             else
@@ -125,19 +159,17 @@ namespace Cloth.Controllers
         }
 
         [HttpPost]
-        public IActionResult ProductUpdate(CRUDVIewModel model, IFormFile file)
+        public async Task<IActionResult> ProductUpdate(CRUDVIewModel model, IFormFile file)
         {
             if (file != null)
             {
                 byte[] ImageData = ConvertToBytes(file);
-                Products product = Context.Products.FirstOrDefault(a => a.Id == model.ProductId);
-                product.Name = model.ProductName;
-                product.OptionsId = model.OptionsId;
-                product.CategoryId = model.CategoryId;
-                product.BrandId = model.BrandId;
-                product.Price = model.Price;
+                Products product = Context.Products
+                    .FirstOrDefault(a => a.Id == model.ProductId);
                 product.ProductImage = ImageData;
-                Context.SaveChanges();
+
+                CrudCommand<Products> crud = new CrudCommand<Products>(Context);
+                await crud.Update(product);
                 return RedirectToAction("ProductView");
             }
             else
@@ -145,11 +177,10 @@ namespace Cloth.Controllers
                 return RedirectToAction("ProductUpdate");
             }
         }
-        public IActionResult ProductDelete(int Id)
+        public async Task<IActionResult> ProductDelete(int Id)
         {
-            Products DelProduct = Context.Products.Where(a => a.Id == Id).FirstOrDefault();
-            Context.Products.Remove(DelProduct);
-            Context.SaveChanges();
+            CrudCommand<Products> crud = new CrudCommand<Products>(Context);
+            await crud.Delete(Id);
             return RedirectToAction("ProductView");
         }
 
@@ -159,40 +190,33 @@ namespace Cloth.Controllers
         public IActionResult OptionsUpdate(int Id) => View(Context.Options.FirstOrDefault(a => a.Id == Id));
         public IActionResult OptionsAdd() => View();
         [HttpPost]
-        public IActionResult OptionsAdd(Options options)
+        public async Task<IActionResult> OptionsAdd(Options options)
         {
-            Context.Options.Add(options);
-            Context.SaveChanges();
+            CrudCommand<Options> crud = new CrudCommand<Options>(Context);
+            await crud.Create(options);
             return RedirectToAction("OptionsView");
         }
         [HttpPost]
-        public IActionResult OptionsUpdate(Options options)
+        public async Task<IActionResult> OptionsUpdate(Options options)
         {
-            Options op = Context.Options.FirstOrDefault(o => o.Id == options.Id);
-            op.Id = options.Id;
-            op.Material = options.Material;
-            op.CareNote = options.CareNote;
-            op.Description = options.Description;
-            op.Design = options.Design;
-            Context.SaveChanges();
+            CrudCommand<Options> crud = new CrudCommand<Options>(Context);
+            await crud.Update(options);
             return RedirectToAction("OptionsView");
         }
-        public IActionResult OptionsDelete(int Id)
+        public async Task<IActionResult> OptionsDelete(int Id)
         {
-            Options DelOpt = Context.Options.Where(a => a.Id == Id).FirstOrDefault();
-            Context.Options.Remove(DelOpt);
-            Context.SaveChanges();
+            CrudCommand<Options> crud = new CrudCommand<Options>(Context);
+            await crud.Delete(Id);
             return RedirectToAction("OptionsView");
         }
-
 
         //комментарии
         [HttpPost]
-        public IActionResult Commentaries(Commentaries commentaries, int ComId, string ComName)
+        public async Task<IActionResult> Commentaries(Commentaries commentaries, int ComId, string ComName)
         {
-            commentaries.CreatedDate = DateTime.Now;
-            Context.Commentaries.Add(commentaries);
-            Context.SaveChanges();
+            commentaries.CreatedDate = DateTime.Now.ToLocalTime().ToUniversalTime();
+            CrudCommand<Commentaries> crud = new CrudCommand<Commentaries>(Context);
+            await crud.Create(commentaries);
             return RedirectToAction("ProductCard", "Catalog", new { ComId, ComName });
         }
 
@@ -208,7 +232,7 @@ namespace Cloth.Controllers
             return View(result);
         }
         [HttpPost]
-        public IActionResult RemainsAdd(CRUDVIewModel model)
+        public async Task<IActionResult> RemainsAdd(CRUDVIewModel model)
         {
             if (model.ProductId != null && model.Count != null && model.Size != null)
             {
@@ -219,8 +243,8 @@ namespace Cloth.Controllers
                     Count = model.Count
 
                 };
-                Context.Remains.Add(remAdd);
-                Context.SaveChanges();
+                CrudCommand<Remains> crud = new CrudCommand<Remains>(Context);
+                await crud.Create(remAdd);
                 return RedirectToAction("RemainsView");
             }
             else
@@ -231,21 +255,16 @@ namespace Cloth.Controllers
 
         }
         [HttpPost]
-        public IActionResult RemainsUpdate(Remains remains)
+        public async Task<IActionResult> RemainsUpdate(Remains remains)
         {
-            Remains r = Context.Remains.Where(a => a.Id == remains.Id).FirstOrDefault();
-            r.Id = remains.Id;
-            r.ProductId = remains.ProductId;
-            r.Size = remains.Size;
-            r.Count = remains.Count;
-            Context.SaveChanges();
+            CrudCommand<Remains> crud = new CrudCommand<Remains>(Context);
+            await crud.Update(remains);
             return RedirectToAction("RemainsView");
         }
-        public IActionResult RemainsDelete(Guid Id)
+        public async Task<IActionResult> RemainsDelete(Guid Id)
         {
-            Remains DelRem = Context.Remains.FirstOrDefault(a => a.Id == Id);
-            Context.Remains.Remove(DelRem);
-            Context.SaveChanges();
+            CrudCommand<Remains> crud = new CrudCommand<Remains>(Context);
+            await crud.Delete(Id);
             return RedirectToAction("RemainsView");
         }
 
@@ -254,39 +273,38 @@ namespace Cloth.Controllers
         public IActionResult PromocodeUpdate(int Id) => View(Context.Promocodes.FirstOrDefault(a => a.Id == Id));
         public IActionResult PromocodeAdd() => View();
         [HttpPost]
-        public IActionResult PromocodeAdd(Promocode promocode)
+        public async Task<IActionResult> PromocodeAdd(Promocode promocode)
         {
-            promocode.Code = Regex.Replace(Convert.ToBase64String(Guid.NewGuid().ToByteArray()), "[/+=]", "");
-            Context.Promocodes.Add(promocode);
-            Context.SaveChanges();
+            Promocode.PromocodeRemake(promocode);
+
+            CrudCommand<Promocode> crud = new CrudCommand<Promocode>(Context);
+            await crud.Create(promocode);
             return RedirectToAction("PromocodeView");
         }
         [HttpPost]
-        public IActionResult PromocodeUpdate(Promocode promocode)
+        public async Task<IActionResult> PromocodeUpdate(Promocode promocode)
         {
-            Promocode pr = Context.Promocodes.FirstOrDefault(a => a.Id == promocode.Id);
-            pr.StartDate = promocode.StartDate;
-            pr.EndDate = promocode.EndDate;
-            pr.Id = promocode.Id;
-            pr.Code = promocode.Code;
-            pr.Percent = promocode.Percent;
-            Context.SaveChanges();
+            CrudCommand<Promocode> crud = new CrudCommand<Promocode>(Context);
+            await crud.Update(promocode);
             return RedirectToAction("PromocodeView");
         }
-        public IActionResult PromocodeDelete(int Id)
+        public async Task<IActionResult> PromocodeDelete(int Id)
         {
-            Promocode PromDelete = Context.Promocodes.FirstOrDefault(a => a.Id == Id);
-            Context.Promocodes.Remove(PromDelete);
-            Context.SaveChanges();
+            CrudCommand<Promocode> crud = new CrudCommand<Promocode>(Context);
+            await crud.Delete(Id);
             return RedirectToAction("PromocodeView");
         }
 
         //статус заказов
-        public IActionResult Orders() => View(new OrdersViewModel
+        public IActionResult Orders()
         {
-            Order = Context.Orders.Include(a => a.Lines),
-            CartLines = Context.CartLine.Include(a => a.Product)
-        });
+            OrdersViewModel result = new OrdersViewModel
+            {
+                Order = Context.Orders.Include(a => a.Lines).ToList(),
+                CartLines = Context.CartLine.Include(a => a.Product).ToList()
+            };
+            return View(result);
+        }
         [HttpPost]
         public IActionResult OrdersStatus(int Id, string Status)
         {
@@ -296,7 +314,7 @@ namespace Cloth.Controllers
             return RedirectToAction("Orders", new OrdersViewModel
             {
                 Order = Context.Orders.Include(a => a.Lines),
-                CartLines = Context.CartLine.Include(a => a.Product)
+                
             });
         }
 

@@ -11,6 +11,7 @@
         public byte[] ProductImage { get; set; }
 
         public Brand Brands { get; set; }
+       
         public Category Categories { get; set; }
         public Options Options { get; set; }
         public List<Commentaries> Commentaries { get; set; }

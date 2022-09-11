@@ -1,24 +1,38 @@
 ﻿@model ProfileViewModel
 
 @{
-    Layout = "_LayoutProfile";
-    ViewData["Title"] = "Профиль";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "_AdminLayout";
+        ViewData["Title"] = "Профиль админа";
+    }
+    else
+    {
+        Layout = "_LayoutProfile";
+        ViewData["Title"] = "Профиль";
+    }
 }
 
-<div class="row mt-2 ">
-    <div class="col-2 text-center">
-        <button class="btn border-bottom my-2" type="button" data-bs-toggle="collapse" data-bs-target="#brand" aria-expanded="false" aria-controls="brand">
-            Профиль
-        </button>
+<div class="row mt-2">
 
-        <div class="collapse multi-collapse" id="brand">
-            <div class="card card-body border-0">
-                <a asp-action="ProfileRefunds" asp-controller="Refund" class="btn btn-outline-dark my-3">Мои возвраты</a>
-                <a asp-action="LogOut" asp-controller="Account" class="btn btn-outline-dark">Выйти</a>
+    @if (!User.IsInRole("Admin"))
+    {
+        <div class="col-1 text-center">
+
+            <button class="btn border-bottom my-2" type="button" data-bs-toggle="collapse" data-bs-target="#brand" aria-expanded="false" aria-controls="brand">
+                Профиль
+            </button>
+
+            <div class="collapse multi-collapse" id="brand">
+                <div class="card card-body border-0">
+                    @*<a asp-action="ProfileRefunds" asp-controller="Refund" class="btn btn-outline-dark my-3">Мои возвраты</a>*@
+                    <a asp-action="LogOut" asp-controller="Account" class="btn btn-outline-dark">Выйти</a>
+                </div>
             </div>
+
         </div>
-        
-    </div>
+    }
+
     <div class="col-10">
         <div class="container">
             <div class="row">
@@ -83,7 +97,7 @@
                     </button>
 
                     <div class="collapse" id="collapseExample">
-                        <div style="overflow-y: scroll; height: 50rem; width: 45rem" tabindex="0" class="scrollarea mt-2">
+                        <div style="overflow-y: hidden; height: 50rem;" tabindex="0" class="scrollarea mt-2">
 
                             @foreach (var item in Model.Order)
                             {
@@ -175,25 +189,25 @@
                                     <tr>
                                         <th>Статус заказа: </th>
                                         <td>@item.Status</td>
-                                        @if (item.Refund == null)
-                                        {
-                                            <td>
-                                                <form asp-action="RefundForm" asp-controller="Refund" method="post">
-                                                    <input value="@item.Id" name="Id" type="hidden" />
-                                                    <input value="@User.Identity.Name" name="Username" type="hidden" />
-                                                    <button type="submit" class="btn btn-outline-dark">Запросить возврат</button>
-                                                </form>
-                                            </td>
-                                        }
+                                        @*@if (item.Refund == null)
+                                            {
+                                                <td>
+                                                    <form asp-action="RefundForm" asp-controller="Refund" method="post">
+                                                        <input value="@item.Id" name="Id" type="hidden" />
+                                                        <input value="@User.Identity.Name" name="Username" type="hidden" />
+                                                        <button type="submit" class="btn btn-outline-dark">Запросить возврат</button>
+                                                    </form>
+                                                </td>
+                                            }*@
 
                                     </tr>
-                                    @if (item.Refund != null)
-                                    {
-                                        <tr>
-                                            <th>Итог возврата: </th>
-                                            <td>@item.Refund</td>
-                                        </tr>
-                                    }
+                                    @*@if (item.Refund != null)
+                                        {*@
+                                    <tr>
+                                        <th>Итог возврата: </th>
+                                        <td>@item.Refund</td>
+                                    </tr>
+                                    @*}*@
                                     <tr class="table-dark"><th colspan="3">Итого:</th><td>@item.TotalPrice.ToString("c")</td></tr>
                                 </table>
                             }

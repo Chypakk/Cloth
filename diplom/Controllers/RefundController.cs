@@ -56,7 +56,6 @@ namespace Cloth.Controllers
             return RedirectToAction("Refunds", Context.Refunds);
         }
 
-
         public async Task<IActionResult> RefundFormSave(Refund refund, int OrderId)
         {
             AppUser upUser = await userManager.FindByNameAsync(User.Identity.Name);

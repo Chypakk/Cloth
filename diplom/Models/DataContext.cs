@@ -87,6 +87,7 @@ namespace Cloth.Models
                 .WithMany(a => a.Remains)
                 .HasForeignKey(a => a.ProductId);
 
+
         }
     }
 }

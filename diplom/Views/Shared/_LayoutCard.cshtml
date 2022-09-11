@@ -16,7 +16,6 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
-
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a asp-action="Index" asp-controller="Home" class="navbar-brand nav-link px-2 text-black"><b>ClotH</b></a></li>
                     <li><a asp-action="Index" asp-controller="Home" class="nav-link px-2  text-black">Главная</a></li>
@@ -31,24 +30,15 @@
 
                 <div class="nav">
 
-
                     <a class=" btn-sm px-2 me-2" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
                         @*<i class="fa fa-shopping-cart"></i>*@ <img src="~/img/shopping-bag.png" width="25" height="25" />
                     </a>
 
-
                     @if (User.Identity.IsAuthenticated)
                     {
-                        if (User.IsInRole("Admin"))
-                        {
-
-                            <a class="nav-link px-2" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a> }
-                        else
-                        {
                             <div class="nav-item">
                                 <a class="nav-link px-2" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
-                            </div> }
-
+                            </div> 
                     }
                     else
                     {
@@ -67,9 +57,9 @@
         </main>
     </div>
 
-    <div class="bg-white border-top my-5">
+    <div class="footer bg-white border-top my-5">
         <div class="container">
-            <footer class="footer text-muted">
+            <footer class="text-muted">
                 <div class="row py-5 row-cols-4 ">
 
                     <div class="col">
@@ -124,8 +114,6 @@
             </footer>
         </div>
     </div>
-
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -38,18 +38,15 @@
         }
 
         public virtual void RemoveLine(Products product, string size) => lineCollection.RemoveAll(l => l.Product.Id == product.Id && l.Size == size);
-
         public virtual double ComputeTotalValue() => lineCollection.Sum(e => e.Product.Price * e.Quantity);
-
         public virtual void Clear() => lineCollection.Clear();
-
         public virtual IEnumerable<CartLine> Lines => lineCollection;
     }
 
     public class CartLine
     {
         public int CartLineId { get; set; }
-        public Products Product { get; set; }
+        public Products? Product { get; set; }
         public string ProductName { get; set; }
         public int ProductPrice { get; set; }
         public int Quantity { get; set; }

@@ -3,13 +3,13 @@ using Cloth.Models;
 using Microsoft.AspNetCore.Identity;
 using Cloth.Models.ViewModel;
 
+
 var builder = WebApplication.CreateBuilder(args);
-string ConnectionString =  builder.Configuration.GetConnectionString("MyConnection");
+builder.Services.AddDbContext<DataContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("MyConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(ConnectionString));
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     options.Password.RequiredLength = 5;
     options.Password.RequireNonAlphanumeric = false;
@@ -57,40 +57,6 @@ app.UseSession();
 
 app.UseMvcWithDefaultRoute();
 
-//app.UseMvc(routes =>
-//{
-
-
-//    routes.MapRoute(
-//        name: null,
-//        template: "{Category}/Page{productPage}",
-//        defaults: new { controller = "Catalog", action = "Catalog" }
-//        );
-//    routes.MapRoute(
-//        name: null,
-//        template: "Page{productPage:int}",
-//        defaults: new { controller = "Catalog", action = "Catalog", productPage = 1 }
-//        );
-//    routes.MapRoute(
-//        name: null,
-//        template: "{category}",
-//        defaults: new { controller = "Catalog", action = "Catalog", productPage = 1 }
-//        );
-
-
-
-//    routes.MapRoute(
-//        name: null,
-//        template: "",
-//        defaults: new { controller = "Home", action = "Index", productPage = 1 }
-//        );
-//    routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
-//});
-
 DataContext.CreateAdminUser(app.Services, app.Configuration).Wait();
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

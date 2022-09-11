@@ -7,10 +7,8 @@ namespace Cloth.Models
     {
         [BindNever]
         public int Id { get; set; }
-
         [BindNever]
         public ICollection<CartLine>? Lines { get; set; }
-
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Введите Имя")]
@@ -35,7 +33,6 @@ namespace Cloth.Models
         public double TotalPrice { get; set; }
         public bool UsingPromocode { get; set; }
         public int PromocodePercent { get; set; }
-
         public string? Status { get; set; }
         public string? Refund { get; set; }
 

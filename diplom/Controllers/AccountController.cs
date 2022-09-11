@@ -89,25 +89,14 @@ namespace Cloth.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> AdminProfile()
-        {
-            var result = new ProfileViewModel
-            {
-                User = await userManager.FindByNameAsync(User.Identity.Name),
-                Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
-                CartLines = Context.CartLine.Include(a => a.Product),
-                Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
-            };
-            return View(result);
-        } 
         public async Task<IActionResult> Profile()
         {
             var result = new ProfileViewModel
             {
                 User = await userManager.FindByNameAsync(User.Identity.Name),
-                Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
-                CartLines = Context.CartLine.Include(a => a.Product),
-                Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
+
+                CartLines = Context.CartLine.Include(a => a.Product).ToList(),
+                Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name).ToList()
             };
             return View(result);
         }
@@ -121,30 +110,16 @@ namespace Cloth.Controllers
             upUser.City = user.City;
             upUser.Adress = user.Adress;
             upUser.Index = user.Index;
+
             IdentityResult resulting = await userManager.UpdateAsync(upUser);
-            bool Role = await userManager.IsInRoleAsync(upUser, "Admin");
-            if (Role)
+            var result = new ProfileViewModel
             {
-                var result = new ProfileViewModel
-                {
-                    User = await userManager.FindByNameAsync(User.Identity.Name),
-                    Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
-                    CartLines = Context.CartLine.Include(a => a.Product),
-                    Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
-                };
-                return RedirectToAction("AdminProfile", result);
-            }
-            else
-            {
-                var result = new ProfileViewModel
-                {
-                    User = await userManager.FindByNameAsync(User.Identity.Name),
-                    Picture = Context.Pictures.Where(a => a.Name == User.Identity.Name),
-                    CartLines = Context.CartLine.Include(a => a.Product),
-                    Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name)
-                };
-                return RedirectToAction("Profile", result);
-            }
+                User = await userManager.FindByNameAsync(User.Identity.Name),
+
+                CartLines = Context.CartLine.Include(a => a.Product).ToList(),
+                Order = Context.Orders.Include(a => a.Lines).Where(a => a.Name == User.Identity.Name).ToList()
+            };
+            return RedirectToAction("Profile", result);
         }
     }
 }

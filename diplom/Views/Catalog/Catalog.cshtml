@@ -5,9 +5,6 @@
     ViewData["Tittle"] = "Каталог";
 }
 
-
-
-
 @if (ViewBag.SearchString != null)
 {
     <h1>@ViewBag.SearchString</h1>
@@ -15,7 +12,9 @@
 
 @if (Model.Products.Count() == 0)
 {
-    <p>Такого товара пока нет :(</p>
+    <div class="bg-white card-radius py-3 text-center">
+        <p>Такого товара пока нет :(</p>
+    </div>
 }
 
 <div class="row row-cols-3">
@@ -24,7 +23,6 @@
         @Html.Partial("_Catalog", p);
     }
 </div>
-
 
 <div page-model="@Model" page-action="Catalog" page-classes-enabled="true"
      page-class="btn" page-class-normal="btn-secondary"

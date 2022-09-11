@@ -29,7 +29,6 @@
 
                 <div class="nav">
 
-
                     <a class="btn btn-dark px-2 me-2" asp-controller="Cart" asp-action="Index" sp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">
                         <i class="fa fa-shopping-cart"></i>
                     </a>
@@ -37,21 +36,9 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        if (User.IsInRole("Admin"))
-                        {
-
-                            <a class="nav-link px-2" asp-controller="Account" asp-action="AdminProfile"><img src="~/img/user.png" width="25" height="25" /></a>
-
-
-                        }
-                        else
-                        {
-                            <div class="nav-item">
-                                <a class="nav-link px-2" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
-                            </div>
-
-                        }
-
+                        <div class="nav-item">
+                            <a class="nav-link px-2" asp-controller="Account" asp-action="Profile"><img src="~/img/user.png" width="25" height="25" /></a>
+                        </div>
                     }
                     else
                     {
@@ -69,35 +56,39 @@
     <div class="container">
 
         <div class="row m-1 p-1">
-            <div class="col-3 bg-white card-radius">
-                <div class="border-bottom">
-                    <a class="btn btn-block button-text"
-                       asp-action="Catalog"
-                       asp-controller="Catalog"
-                       asp-route-category="">
-                        Отменить фильтры
-                    </a>
-                </div>
+            <div class="col-3 ">
+                <div class="bg-white card-radius px-1">
+                    <div class="border-bottom">
+                        <a class="btn btn-block button-text"
+                           asp-action="Catalog"
+                           asp-controller="Catalog"
+                           asp-route-category="">
+                            Отменить фильтры
+                        </a>
+                    </div>
+                    <div>
+                        @await Component.InvokeAsync("NavigationMenu")
+                    </div>
+                    <div id="brands">
+                        @await Component.InvokeAsync("NavigationMenuBrand")
+                    </div>
+                    <div>
+                        <form class="row g-2" method="get" asp-action="Catalog" asp-controller="Catalog">
+                            <div class="col">
+                                <input class="form-control " name="minPrice" type="number" placeholder="Мин. цена" />
+                            </div>
+                            <div class="col">
+                                <input class="form-control " name="maxPrice" type="number" placeholder="Макс. цена" />
+                            </div>
 
-                <div>
-                    @await Component.InvokeAsync("NavigationMenu")
-                </div>
-                <div id="brands">
-                    @await Component.InvokeAsync("NavigationMenuBrand")
-                </div>
-                <div>
-                    <form class="row g-2" method="get" asp-action="Catalog" asp-controller="Catalog">
-                        <div class="col">
-                            <input class="form-control " name="minPrice" type="number" placeholder="Мин. цена" />
-                        </div>
-                        <div class="col">
-                            <input class="form-control " name="maxPrice" type="number" placeholder="Макс. цена"  />
-                        </div>
+                            <button class="btn btn-dark btn-sm" type="submit">Найти</button>
 
-                        <button class="btn btn-dark btn-sm" type="submit">Найти</button>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
+                
+
+                
             </div>
             <main class="col-9">
                 @RenderBody()
@@ -106,67 +97,63 @@
 
     </div>
 
+    <div class="footer bg-white border-top my-5">
+        <div class="container">
+            <footer class="text-muted">
+                <div class="row py-5 row-cols-4 ">
 
+                    <div class="col">
+                        <h4 style="font-size:54px"><a asp-action="Index" asp-controller="Home" class="text-black" style="text-decoration:none"><b>ClotH</b></a></h4>
+                        <p class="text-muted">
+                            все права зарегестрированы &copy; 2022
+                        </p>
+                    </div>
+                    <div class="col">
+                        <h4 class="text-black">Каталог</h4>
+                        <p>
+                            <a class="text-muted" style="text-decoration: none"
+                               asp-action="Catalog"
+                               asp-controller="Catalog"
+                               asp-route-category="Одежда"
+                               asp-route-productPage="1">
+                                Одежда
+                            </a>
+                        </p>
+                        <p>
+                            <a class="text-muted" style="text-decoration: none"
+                               asp-action="Catalog"
+                               asp-controller="Catalog"
+                               asp-route-category="Обувь"
+                               asp-route-productPage="1">
+                                Обувь
+                            </a>
+                        </p>
+                        <p>
+                            <a class="text-muted" style="text-decoration: none"
+                               asp-action="Catalog"
+                               asp-controller="Catalog"
+                               asp-route-category="Аксессуары"
+                               asp-route-productPage="1">
+                                Аксессуары
+                            </a>
+                        </p>
+                    </div>
 
-
-<div class="bg-white border-top my-5">
-    <div class="container">
-        <footer class="footer text-muted">
-            <div class="row py-5 row-cols-4 ">
-
-                <div class="col">
-                    <h4 style="font-size:54px" ><a asp-action="Index" asp-controller="Home"class="text-black" style="text-decoration:none"><b>ClotH</b></a></h4>
-                    <p class="text-muted">
-                        все права зарегестрированы &copy; 2022
-                    </p>
+                    <div class="col">
+                        <h4 class="text-black">Поддержка</h4>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="ChangeAndRefund" asp-controller="Home">Возврат и обмен товара</a></p>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="Delivery" asp-controller="Home">Доставка</a></p>
+                        <p><a class="text-muted" style="text-decoration-line: none" asp-action="FAQ" asp-controller="Home">Вопросы</a></p>
+                    </div>
+                    <div class="col">
+                        <h4 class="text-black">О нас</h4>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="CompanyInfo" asp-controller="Home">Информация о компании</a></p>
+                        <p><a class="text-muted" style="text-decoration: none" asp-action="ContactInfo" asp-controller="Home">Контакты</a></p>
+                    </div>
                 </div>
-                <div class="col">
-                    <h4 class="text-black">Каталог</h4>
-                    <p>
-                        <a class="text-muted" style="text-decoration: none"
-                           asp-action="Catalog"
-                           asp-controller="Catalog"
-                           asp-route-category="Одежда"
-                           asp-route-productPage="1">
-                            Одежда
-                        </a>
-                    </p>
-                    <p>
-                        <a class="text-muted" style="text-decoration: none"
-                           asp-action="Catalog"
-                           asp-controller="Catalog"
-                           asp-route-category="Обувь"
-                           asp-route-productPage="1">
-                            Обувь
-                        </a>
-                    </p>
-                    <p>
-                        <a class="text-muted" style="text-decoration: none"
-                           asp-action="Catalog"
-                           asp-controller="Catalog"
-                           asp-route-category="Аксессуары"
-                           asp-route-productPage="1">
-                            Аксессуары
-                        </a>
-                    </p>
-                </div>
-
-                <div class="col">
-                    <h4 class="text-black">Поддержка</h4>
-                    <p><a class="text-muted" style="text-decoration: none" asp-action="ChangeAndRefund" asp-controller="Home">Возврат и обмен товара</a></p>
-                    <p><a class="text-muted" style="text-decoration: none" asp-action="Delivery" asp-controller="Home">Доставка</a></p>
-                    <p><a class="text-muted" style="text-decoration-line: none" asp-action="FAQ" asp-controller="Home">Вопросы</a></p>
-                </div>
-                <div class="col">
-                    <h4 class="text-black">О нас</h4>
-                    <p><a class="text-muted" style="text-decoration: none" asp-action="CompanyInfo" asp-controller="Home">Информация о компании</a></p>
-                    <p><a class="text-muted" style="text-decoration: none" asp-action="ContactInfo" asp-controller="Home">Контакты</a></p>
-                </div>
-            </div>
-        </footer>
+            </footer>
+        </div>
     </div>
-</div>
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
